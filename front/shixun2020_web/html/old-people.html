@@ -32,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../app-assets/css/pages/dashboard-analytics.css">
     <link rel="stylesheet" type="text/css" href="../app-assets/css/pages/card-analytics.css">
     <link rel="stylesheet" type="text/css" href="../app-assets/css/plugins/tour/tour.css">
+	<link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -186,7 +187,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">John Doe</span><span class="user-status">Available</span></div><span><img class="round" src="../app-assets/images/portrait/small/avatar-s-11.png" alt="avatar" height="40" width="40" /></span>
+                                    <div class="user-nav d-sm-flex d-none"><h1 id="head-username" class="mb-2">null</h1><span class="user-status">Available</span></div><span><img class="round" src="../app-assets/images/portrait/small/avatar-s-11.png" alt="avatar" height="40" width="40" /></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
@@ -203,149 +204,47 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-                <!-- Dashboard Analytics Start -->
-                <section id="dashboard-analytics">
+                <section id="column-selectors">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="mb-0">Dispatched Orders</h4>
+                                    <h4 class="mb-0">老人信息</h4>
+                                	<button type="button" class="btn btn-success mr-1 mb-1" onclick="window.location.href='newoldpeople.html'">新增老人</button>
                                 </div>
                                 <div class="card-content">
-                                    <div class="table-responsive mt-1">
-                                        <table class="table table-hover-animation mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ORDER</th>
-                                                    <th>STATUS</th>
-                                                    <th>OPERATORS</th>
-                                                    <th>LOCATION</th>
-                                                    <th>DISTANCE</th>
-                                                    <th>START DATE</th>
-                                                    <th>EST DEL. DT</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>#879985</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Moving</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Elicia Rieske" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-7.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Julee Rossignol" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-10.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Darcey Nooner" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-8.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                    <td>Anniston, Alabama</td>
-                                                    <td>
-                                                        <span>130 km</span>
-                                                        <div class="progress progress-bar-success mt-1 mb-0">
-                                                            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>14:58 26/07/2018</td>
-                                                    <td>28/07/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#156897</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-warning mr-50"></i>Pending</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Trina Lynes" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-1.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Lilian Nenez" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-2.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Alberto Glotzbach" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-3.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                    <td>Cordova, Alaska</td>
-                                                    <td>
-                                                        <span>234 km</span>
-                                                        <div class="progress progress-bar-warning mt-1 mb-0">
-                                                            <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>14:58 26/07/2018</td>
-                                                    <td>28/07/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#568975</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-success mr-50"></i>Moving</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Lai Lewandowski" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-6.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Elicia Rieske" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-7.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Darcey Nooner" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-8.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Julee Rossignol" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-10.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Jeffrey Gerondale" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-9.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                    <td>Florence, Alabama</td>
-                                                    <td>
-                                                        <span>168 km</span>
-                                                        <div class="progress progress-bar-success mt-1 mb-0">
-                                                            <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>14:58 26/07/2018</td>
-                                                    <td>28/07/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#245689</td>
-                                                    <td><i class="fa fa-circle font-small-3 text-danger mr-50"></i>Canceled</td>
-                                                    <td class="p-1">
-                                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Elicia Rieske" class="avatar pull-up">
-                                                                <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-7.png" alt="Avatar" height="30" width="30">
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                    <td>Clifton, Arizona</td>
-                                                    <td>
-                                                        <span>125 km</span>
-                                                        <div class="progress progress-bar-danger mt-1 mb-0">
-                                                            <div class="progress-bar" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        </div>
-                                                    </td>
-                                                    <td>14:58 26/07/2018</td>
-                                                    <td>28/07/2018</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="card-body card-dashboard">
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-striped dataex-html5-selectors">
+                                                <thead>
+                                                    <tr>
+                                                        <tr>
+                                                        	<th>姓名</th>
+                                                        	<th>照片</th>
+                                                        	<th>性别</th>
+                                                        	<th>电话</th>
+                                                        	<th>身份证号</th>
+                                                        	<th>入院日期</th>
+                                                        	<th>房间号</th>
+                                                        	<th>健康状态</th>
+                                                        	<th>查看</th>
+                                                        </tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tablebody">
+                                                    
+                                                </tbody>
+                                                
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                 
                 </section>
-                <!-- Dashboard Analytics end -->
+                
             </div>
         </div>
 		<div class="content-wrapper">
@@ -359,28 +258,13 @@
 		                    </div>
 		                    <div class="card-content">
 		                        <div class="card-body">
-		                            <div id="bar-chart" class="height-400"></div>
+		                            <div id="bar-chart-oldpeople" class="height-400"></div>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 		        </div>
 		
-		        <!-- Line Chart -->
-		        <div class="row">
-		            <div class="col-12">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Line Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="line-chart" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
 		
 		        <!-- Pie Chart -->
 		        <div class="row">
@@ -391,64 +275,258 @@
 		                    </div>
 		                    <div class="card-content">
 		                        <div class="card-body">
-		                            <div id="pie-chart" class="height-400"></div>
+		                            <div id="pie-chart-oldpeople" class="height-400"></div>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 		        </div>
 		
-		        <!-- Scatter Chart -->
-		        <div class="row">
-		            <div class="col-12">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Scatter Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="scatter-chart" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
 		
-		        <div class="row">
-		            <!-- Polar Chart -->
-		            <div class="col-md-6">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Polar Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="polar-chart" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		
-		            <!-- Radar Chart -->
-		            <div class="col-md-6">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Radar Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="radar-chart" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
+		       
 		
 		    </div>
 		</div>
     </div>
     <!-- END: Content-->
-
+	<script>
+		function seemore(i,data){
+			alert('in');
+			$.cookie("detial_oldpeople",data);
+			$.cookie("detial_oldpeople_num",i);
+			window.location.href='oldpeople-detail.html';
+		}
+		window.onload=function(){
+			var param = $.cookie("username"); 
+			console.log(param); 
+		
+			var headusername=document.getElementById('head-username');
+			headusername.innerHTML=param;
+			var test=document.getElementById('test');
+			var data=[{"name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
+			var tablebody=document.getElementById('tablebody');
+			tablebody.innerHTML='';
+			for(var i in data){//遍历packJson 数组时，i为索引
+				
+				var tabletr = document.createElement("tr");
+				var tabletd1 = document.createElement("td");
+				var tabletd2 = document.createElement("td");
+				var tabletd3 = document.createElement("td");
+				var tabletd4 = document.createElement("td");
+				var tabletd5 = document.createElement("td");
+				var tabletd6 = document.createElement("td");
+				var tabletd7 = document.createElement("td");
+				var tabletd8 = document.createElement("td");
+				var tabletd9 = document.createElement("td");
+				
+				tabletd1.innerHTML=data[i].name;
+				tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
+				tabletd2.setAttribute('class','p-1');
+				tabletd3.innerHTML=data[i].sex;
+				tabletd4.innerHTML=data[i].phone;
+				tabletd5.innerHTML=data[i].cardid;
+				tabletd6.innerHTML=data[i].intime;
+				tabletd7.innerHTML=data[i].roomnum;
+				switch(data[i].state){
+					case '很好':
+						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
+						break;
+					case '好':
+						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
+						break;
+					case '一般':
+						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
+						break;
+					case '差':
+						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
+						break;
+					case '很差':
+						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
+						break;
+						
+				}
+				tabletd9.innerHTML='<button id="seemorebutton" type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="window.location.href="oldpeople-detail.html"">查看</button>';
+				
+				tabletr.appendChild(tabletd1);
+				tabletr.appendChild(tabletd2);
+				tabletr.appendChild(tabletd3);
+				tabletr.appendChild(tabletd4);
+				tabletr.appendChild(tabletd5);
+				tabletr.appendChild(tabletd6);
+				tabletr.appendChild(tabletd7);
+				tabletr.appendChild(tabletd8);
+				tabletr.appendChild(tabletd9);
+				tablebody.appendChild(tabletr);
+				
+			}
+			
+			
+			
+			
+			// mui.ajax('',{
+			// 	data:{
+					
+					
+			// 	},
+			// 	dataType:'json',//服务器返回json格式数据
+			// 	type:'post',//HTTP请求类型
+			// 	timeout:10000,//超时时间设置为10秒；
+			// 	success:function(data){
+			//		var tablebody=document.getElementById('tablebody');
+			// 		tablebody.innerHTML='';
+			// 		for(var i in data){//遍历packJson 数组时，i为索引
+			// 			
+			// 			var tabletr = document.createElement("tr");
+			// 			var tabletd1 = document.createElement("td");
+			// 			var tabletd2 = document.createElement("td");
+			// 			var tabletd3 = document.createElement("td");
+			// 			var tabletd4 = document.createElement("td");
+			// 			var tabletd5 = document.createElement("td");
+			// 			var tabletd6 = document.createElement("td");
+			// 			var tabletd7 = document.createElement("td");
+			// 			var tabletd8 = document.createElement("td");
+			// 			var tabletd9 = document.createElement("td");
+						
+			// 			tabletd1.innerHTML=data[i].name;
+			// 			tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
+			// 			tabletd2.setAttribute('class','p-1');
+			// 			tabletd3.innerHTML=data[i].sex;
+			// 			tabletd4.innerHTML=data[i].phone;
+			// 			tabletd5.innerHTML=data[i].cardid;
+			// 			tabletd6.innerHTML=data[i].intime;
+			// 			tabletd7.innerHTML=data[i].roomnum;
+			// 			switch(data[i].state){
+			// 				case '很好':
+			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
+			// 					break;
+			// 				case '好':
+			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
+			// 					break;
+			// 				case '一般':
+			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
+			// 					break;
+			// 				case '差':
+			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
+			// 					break;
+			// 				case '很差':
+			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
+			// 					break;
+								
+			// 			}
+			// 			tabletd9.innerHTML='<button type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="seemore(i,data)">查看</button>';
+			// 			tabletr.appendChild(tabletd1);
+			// 			tabletr.appendChild(tabletd2);
+			// 			tabletr.appendChild(tabletd3);
+			// 			tabletr.appendChild(tabletd4);
+			// 			tabletr.appendChild(tabletd5);
+			// 			tabletr.appendChild(tabletd6);
+			// 			tabletr.appendChild(tabletd7);
+			// 			tabletr.appendChild(tabletd8);
+			// 			tabletr.appendChild(tabletd9);
+			// 			tablebody.appendChild(tabletr);
+			// 		}
+			// 	},
+			// 	error:function(xhr,type,errorThrown){
+					
+			// 	}
+			// });
+			
+			var $dark_green = '#4ea397';
+			var $green = '#22c3aa';
+			var $light_green = '#7bd9a5';
+			var $lighten_green = '#a8e7d2';
+			
+			
+			
+			// Bar chart
+			// ------------------------------
+			
+			var barChart = echarts.init(document.getElementById('bar-chart-oldpeople'));
+			
+			
+			// var i;
+			function randomize() {
+			    return Math.round(300 + Math.random() * 700) / 10
+			};
+			
+			var barChartoption = {
+			    legend: {},
+			    tooltip: {},
+			    dataset: {
+			        source: [
+			            ['sex', '男', '女'],
+			            ['50-60', 50, 60],
+			            ['60-70', 20, 50],
+			            ['70-80', 80, 70],
+			            ['80-90', 20, 10],
+			        ],
+			
+			    },
+			
+			    xAxis: {
+			        type: 'category',
+			        splitLine: { show: true },
+			    },
+			    yAxis: {},
+			    // Declare several bar series, each will be mapped
+			    // to a column of dataset.source by default.
+			    series: [
+			        {
+			            type: 'bar',
+			            itemStyle: {color: $dark_green},
+			        },
+			        {
+			            type: 'bar',
+			            itemStyle: {color: $light_green},
+			        }
+			    ]
+			};
+			barChart.setOption(barChartoption);
+			
+			
+			// Pie chart
+			// ------------------------------
+			
+			var pieChart = echarts.init(document.getElementById('pie-chart-oldpeople'));
+			
+			var pieChartoption = {
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient: 'vertical',
+			        left: 'left',
+			        data: ['50-60', '60-70', '70-80', '80-90']
+			    },
+			    series : [
+			        {
+			            name: 'Age',
+			            type: 'pie',
+			            radius : '55%',
+			            center: ['50%', '60%'],
+			            color: ['#FF9F43','#28C76F','#EA5455','#87ceeb','#7367F0'],
+			            data: [
+			              {value: 335, name: '50-60'},
+			              {value: 310, name: '60-70'},
+			              {value: 234, name: '70-80'},
+			              {value: 135, name: '80-90'},
+			            ],
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ],
+			};
+			
+			pieChart.setOption(pieChartoption);
+			
+		}
+	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -477,6 +555,26 @@
 	<script src="../app-assets/js/scripts/charts/chart-echart.js"></script>
 	<!-- END: Page JS-->
 
+	
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	
+	<!-- BEGIN: Page Vendor JS-->
+	<script src="../app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+	<script src="../app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
+	<!-- END: Page Vendor JS-->
+	
+	<!-- BEGIN: Page JS-->
+	<script src="../app-assets/js/scripts/datatables/datatable.js"></script>
+	<!-- END: Page JS-->
+	
+	
 </body>
 <!-- END: Body-->
 

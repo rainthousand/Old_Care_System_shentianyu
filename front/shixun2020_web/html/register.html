@@ -82,59 +82,11 @@
                                                         <input type="password" id="inputConfPassword" class="form-control" placeholder="Confirm Password" required>
                                                         <label for="inputConfPassword">Confirm Password</label>
                                                     </div>
-													<section class="vuesax-radio-color">
-													    <div class="row">
-													        <div class="col-12">
-													            <div class="card">
-													            
-													                <div class="card-content">
-													                    <div class="card-body">
-													                       
-													                        <ul class="list-unstyled mb-0">
-													                            <li class="d-inline-block mr-2">
-													                                <fieldset>
-													                                    <div class="vs-radio-con">
-													                                        <input type="radio" name="radiocolor" checked value="管理员">
-													                                        <span class="vs-radio">
-													                                            <span class="vs-radio--border"></span>
-													                                            <span class="vs-radio--circle"></span>
-													                                        </span>
-													                                        <span class="">管理员</span>
-													                                    </div>
-													                                </fieldset>
-													                            </li>
-													                            <li class="d-inline-block mr-2">
-													                                <fieldset>
-													                                    <div class="vs-radio-con vs-radio-success">
-													                                        <input type="radio" name="radiocolor" value="工作人员">
-													                                        <span class="vs-radio">
-													                                            <span class="vs-radio--border"></span>
-													                                            <span class="vs-radio--circle"></span>
-													                                        </span>
-													                                        <span class="">工作人员</span>
-													                                    </div>
-													                                </fieldset>
-													                            </li>
-													                            <li class="d-inline-block mr-2">
-													                                <fieldset>
-													                                    <div class="vs-radio-con vs-radio-danger">
-													                                        <input type="radio" name="radiocolor" value="义工">
-													                                        <span class="vs-radio">
-													                                            <span class="vs-radio--border"></span>
-													                                            <span class="vs-radio--circle"></span>
-													                                        </span>
-													                                        <span class="">义工</span>
-													                                    </div>
-													                                </fieldset>
-													                            </li>
-													                           
-													                        </ul>
-													                    </div>
-													                </div>
-													            </div>
-													        </div>
-													    </div>
-													</section>
+													<div class="form-label-group">
+													    <input type="text" id="name" class="form-control" placeholder="Name" required>
+													    <label for="name">Name</label>
+													</div>
+													
                                                     <div class="form-group row">
                                                         <div class="col-12">
                                                             <fieldset class="checkbox">
@@ -183,31 +135,32 @@
 	   var userEmail = document.getElementById('inputEmail').value;
 	   var userPassword = document.getElementById('inputPassword').value;
 	   var userConfPassword = document.getElementById('inputConfPassword').value;
-	
-	   alert('username:'+username+'Email'+userEmail +' password:'+userPassword+'conpassword'+userConfPassword);
-	   var chkObjs=null;
-	   var obj=document.getElementsByName("radiocolor");
-	   for (var i=0;i<obj.length;i++){ //遍历Radio
-	    if(obj[i].checked){
-	     chkObjs=obj[i].value;
-	    }
-	   }
-	   alert('radio:'+ chkObjs);
+	   var name = document.getElementById('name').value;
+	   alert('username:'+username+'Email:'+userEmail +' password:'+userPassword+' conpassword:'+userConfPassword+' name:'+name);
+	   // var chkObjs=null;
+	   // var obj=document.getElementsByName("radiocolor");
+	   // for (var i=0;i<obj.length;i++){ //遍历Radio
+	   //  if(obj[i].checked){
+	   //   chkObjs=obj[i] .value;
+	   //  }
+	   // }
+	   // alert('radio:'+ chkObjs);
 	   
-	   window.location.href='login.html';
+	   // window.location.href='login.html';
 	   
 	   mui.ajax('url',{
 	    data:{
 	     username:username,
 	     password:userPassword,
-	     email:userEmail
-	     identity:chkObjs
+	     email:userEmail,
+		 name:name
 	    },
 	    dataType:'json',//服务器返回json格式数据
 	    type:'post',//HTTP请求类型
 	    timeout:10000,//超时时间设置为10秒；
 	    success:function(data){
-	     window.location.href='login.html';
+			alert('注册成功');
+			window.location.href='login.html';
 	    },
 	    error:function(xhr,type,errorThrown){
 	     
