@@ -220,6 +220,7 @@
                                                 <thead>
                                                     <tr>
                                                         <tr>
+															<th>编号</th>
                                                         	<th>姓名</th>
                                                         	<th>照片</th>
                                                         	<th>性别</th>
@@ -302,65 +303,138 @@
 		
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
-			var test=document.getElementById('test');
-			var data=[{"name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
-			var tablebody=document.getElementById('tablebody');
-			tablebody.innerHTML='';
-			for(var i in data){//遍历packJson 数组时，i为索引
+			
+			var oldpeople_josn_text={"type":"oldpeople"};
+			// var data=[{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"id":"2","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
+			// var tablebody=document.getElementById('tablebody');
+			// tablebody.innerHTML='';
+			// for(var i in data){//遍历packJson 数组时，i为索引
 				
-				var tabletr = document.createElement("tr");
-				var tabletd1 = document.createElement("td");
-				var tabletd2 = document.createElement("td");
-				var tabletd3 = document.createElement("td");
-				var tabletd4 = document.createElement("td");
-				var tabletd5 = document.createElement("td");
-				var tabletd6 = document.createElement("td");
-				var tabletd7 = document.createElement("td");
-				var tabletd8 = document.createElement("td");
-				var tabletd9 = document.createElement("td");
+			// 	var tabletr = document.createElement("tr");
+			// 	var tabletd0 = document.createElement("td");
+			// 	var tabletd1 = document.createElement("td");
+			// 	var tabletd2 = document.createElement("td");
+			// 	var tabletd3 = document.createElement("td");
+			// 	var tabletd4 = document.createElement("td");
+			// 	var tabletd5 = document.createElement("td");
+			// 	var tabletd6 = document.createElement("td");
+			// 	var tabletd7 = document.createElement("td");
+			// 	var tabletd8 = document.createElement("td");
+			// 	var tabletd9 = document.createElement("td");
 				
-				tabletd1.innerHTML=data[i].name;
-				tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
-				tabletd2.setAttribute('class','p-1');
-				tabletd3.innerHTML=data[i].sex;
-				tabletd4.innerHTML=data[i].phone;
-				tabletd5.innerHTML=data[i].cardid;
-				tabletd6.innerHTML=data[i].intime;
-				tabletd7.innerHTML=data[i].roomnum;
-				switch(data[i].state){
-					case '很好':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
-						break;
-					case '好':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
-						break;
-					case '一般':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
-						break;
-					case '差':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
-						break;
-					case '很差':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
-						break;
+			// 	tabletd0.innerHTML=data[i].id;
+			// 	tabletd1.innerHTML=data[i].name;
+			// 	tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
+			// 	tabletd2.setAttribute('class','p-1');
+			// 	tabletd3.innerHTML=data[i].sex;
+			// 	tabletd4.innerHTML=data[i].phone;
+			// 	tabletd5.innerHTML=data[i].cardid;
+			// 	tabletd6.innerHTML=data[i].intime;
+			// 	tabletd7.innerHTML=data[i].roomnum;
+			// 	switch(data[i].state){
+			// 		case '很好':
+			// 			tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
+			// 			break;
+			// 		case '好':
+			// 			tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
+			// 			break;
+			// 		case '一般':
+			// 			tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
+			// 			break;
+			// 		case '差':
+			// 			tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
+			// 			break;
+			// 		case '很差':
+			// 			tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
+			// 			break;
 						
+			// 	}
+			// 	tabletd9.innerHTML='<button id="seemorebutton" type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="window.location.href="oldpeople-detail.html"">查看</button>';
+				
+			// 	tabletr.appendChild(tabletd0);
+			// 	tabletr.appendChild(tabletd1);
+			// 	tabletr.appendChild(tabletd2);
+			// 	tabletr.appendChild(tabletd3);
+			// 	tabletr.appendChild(tabletd4);
+			// 	tabletr.appendChild(tabletd5);
+			// 	tabletr.appendChild(tabletd6);
+			// 	tabletr.appendChild(tabletd7);
+			// 	tabletr.appendChild(tabletd8);
+			// 	tabletr.appendChild(tabletd9);
+			// 	tablebody.appendChild(tabletr);
+				
+			// }
+			
+			$.ajax({
+			
+				url : "temphome/oldpeople",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(oldpeople_josn_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'json',
+				success:function(data){
+					// var data=[{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"id":"2","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
+					var tablebody=document.getElementById('tablebody');
+					tablebody.innerHTML='';
+					for(var i in data){//遍历packJson 数组时，i为索引
+						
+						var tabletr = document.createElement("tr");
+						var tabletd0 = document.createElement("td");
+						var tabletd1 = document.createElement("td");
+						var tabletd2 = document.createElement("td");
+						var tabletd3 = document.createElement("td");
+						var tabletd4 = document.createElement("td");
+						var tabletd5 = document.createElement("td");
+						var tabletd6 = document.createElement("td");
+						var tabletd7 = document.createElement("td");
+						var tabletd8 = document.createElement("td");
+						var tabletd9 = document.createElement("td");
+						
+						tabletd0.innerHTML=data[i].id;
+						tabletd1.innerHTML=data[i].name;
+						tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
+						tabletd2.setAttribute('class','p-1');
+						tabletd3.innerHTML=data[i].sex;
+						tabletd4.innerHTML=data[i].phone;
+						tabletd5.innerHTML=data[i].cardid;
+						tabletd6.innerHTML=data[i].intime;
+						tabletd7.innerHTML=data[i].roomnum;
+						switch(data[i].state){
+							case '很好':
+								tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
+								break;
+							case '好':
+								tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
+								break;
+							case '一般':
+								tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
+								break;
+							case '差':
+								tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
+								break;
+							case '很差':
+								tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
+								break;
+								
+						}
+						tabletd9.innerHTML='<button id="seemorebutton" type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="window.location.href="oldpeople-detail.html"">查看</button>';
+						
+						tabletr.appendChild(tabletd0);
+						tabletr.appendChild(tabletd1);
+						tabletr.appendChild(tabletd2);
+						tabletr.appendChild(tabletd3);
+						tabletr.appendChild(tabletd4);
+						tabletr.appendChild(tabletd5);
+						tabletr.appendChild(tabletd6);
+						tabletr.appendChild(tabletd7);
+						tabletr.appendChild(tabletd8);
+						tabletr.appendChild(tabletd9);
+						tablebody.appendChild(tabletr);
+						
+					}
 				}
-				tabletd9.innerHTML='<button id="seemorebutton" type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="window.location.href="oldpeople-detail.html"">查看</button>';
-				
-				tabletr.appendChild(tabletd1);
-				tabletr.appendChild(tabletd2);
-				tabletr.appendChild(tabletd3);
-				tabletr.appendChild(tabletd4);
-				tabletr.appendChild(tabletd5);
-				tabletr.appendChild(tabletd6);
-				tabletr.appendChild(tabletd7);
-				tabletr.appendChild(tabletd8);
-				tabletr.appendChild(tabletd9);
-				tablebody.appendChild(tabletr);
-				
-			}
-			
-			
+			});
 			
 			
 			// mui.ajax('',{
