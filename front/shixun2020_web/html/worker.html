@@ -209,8 +209,8 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="mb-0">老人信息</h4>
-                                	<button type="button" class="btn btn-success mr-1 mb-1" onclick="window.location.href='newoldpeople.html'">新增老人</button>
+                                    <h4 class="mb-0">工作人员信息</h4>
+                                	<button type="button" class="btn btn-success mr-1 mb-1" onclick="window.location.href='newworker.html'">新增工作人员</button>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body card-dashboard">
@@ -220,14 +220,14 @@
                                                 <thead>
                                                     <tr>
                                                         <tr>
+															<th>编号</th>
                                                         	<th>姓名</th>
-                                                        	<th>照片</th>
                                                         	<th>性别</th>
                                                         	<th>电话</th>
                                                         	<th>身份证号</th>
-                                                        	<th>入院日期</th>
-                                                        	<th>房间号</th>
-                                                        	<th>健康状态</th>
+                                                        	<th>入职日期</th>
+                                                        	<th>离职日期</th>
+                                                        	<th>描述</th>
                                                         	<th>查看</th>
                                                         </tr>
                                                     </tr>
@@ -258,7 +258,7 @@
 		                    </div>
 		                    <div class="card-content">
 		                        <div class="card-body">
-		                            <div id="bar-chart-worker" class="height-400"></div>
+		                            <div id="bar-chart-volunteer" class="height-400"></div>
 		                        </div>
 		                    </div>
 		                </div>
@@ -275,7 +275,7 @@
 		                    </div>
 		                    <div class="card-content">
 		                        <div class="card-body">
-		                            <div id="pie-chart-worker" class="height-400"></div>
+		                            <div id="pie-chart-volunteer" class="height-400"></div>
 		                        </div>
 		                    </div>
 		                </div>
@@ -302,134 +302,57 @@
 		
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
-			var test=document.getElementById('test');
-			var data=[{"name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
-			var tablebody=document.getElementById('tablebody');
-			tablebody.innerHTML='';
-			for(var i in data){//遍历packJson 数组时，i为索引
-				
-				var tabletr = document.createElement("tr");
-				var tabletd1 = document.createElement("td");
-				var tabletd2 = document.createElement("td");
-				var tabletd3 = document.createElement("td");
-				var tabletd4 = document.createElement("td");
-				var tabletd5 = document.createElement("td");
-				var tabletd6 = document.createElement("td");
-				var tabletd7 = document.createElement("td");
-				var tabletd8 = document.createElement("td");
-				var tabletd9 = document.createElement("td");
-				
-				tabletd1.innerHTML=data[i].name;
-				tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
-				tabletd2.setAttribute('class','p-1');
-				tabletd3.innerHTML=data[i].sex;
-				tabletd4.innerHTML=data[i].phone;
-				tabletd5.innerHTML=data[i].cardid;
-				tabletd6.innerHTML=data[i].intime;
-				tabletd7.innerHTML=data[i].roomnum;
-				switch(data[i].state){
-					case '很好':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
-						break;
-					case '好':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
-						break;
-					case '一般':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
-						break;
-					case '差':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
-						break;
-					case '很差':
-						tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
-						break;
+			
+			$.ajax({
+			
+				url : "temphome/woker",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(woker_josn_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'json',
+				success:function(data){
+					// var data=[{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","outtime":"2020-06-01","description":"无描述"},{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","outtime":"2020-06-01","description":"无描述"}];
+					var tablebody=document.getElementById('tablebody');
+					tablebody.innerHTML='';
+					for(var i in data){//遍历packJson 数组时，i为索引
 						
+						var tabletr = document.createElement("tr");
+						var tabletd1 = document.createElement("td");
+						var tabletd2 = document.createElement("td");
+						var tabletd3 = document.createElement("td");
+						var tabletd4 = document.createElement("td");
+						var tabletd5 = document.createElement("td");
+						var tabletd6 = document.createElement("td");
+						var tabletd7 = document.createElement("td");
+						var tabletd8 = document.createElement("td");
+						var tabletd9 = document.createElement("td");
+						
+						tabletd1.innerHTML=data[i].id;
+						tabletd2.innerHTML=data[i].name
+						tabletd3.innerHTML=data[i].sex;
+						tabletd4.innerHTML=data[i].phone;
+						tabletd5.innerHTML=data[i].cardid;
+						tabletd6.innerHTML=data[i].intime;
+						tabletd7.innerHTML=data[i].outtime;
+						tabletd8.innerHTML=data[i].description;
+						tabletd9.innerHTML='<button id="seemorebutton" type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="window.location.href="oldpeople-detail.html"">查看</button>';
+						
+						tabletr.appendChild(tabletd1);
+						tabletr.appendChild(tabletd2);
+						tabletr.appendChild(tabletd3);
+						tabletr.appendChild(tabletd4);
+						tabletr.appendChild(tabletd5);
+						tabletr.appendChild(tabletd6);
+						tabletr.appendChild(tabletd7);
+						tabletr.appendChild(tabletd8);
+						tabletr.appendChild(tabletd9);
+						tablebody.appendChild(tabletr);
+						
+					}
 				}
-				tabletd9.innerHTML='<button id="seemorebutton" type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="window.location.href="oldpeople-detail.html"">查看</button>';
-				
-				tabletr.appendChild(tabletd1);
-				tabletr.appendChild(tabletd2);
-				tabletr.appendChild(tabletd3);
-				tabletr.appendChild(tabletd4);
-				tabletr.appendChild(tabletd5);
-				tabletr.appendChild(tabletd6);
-				tabletr.appendChild(tabletd7);
-				tabletr.appendChild(tabletd8);
-				tabletr.appendChild(tabletd9);
-				tablebody.appendChild(tabletr);
-				
-			}
+			});
 			
-			
-			
-			
-			// mui.ajax('',{
-			// 	data:{
-					
-					
-			// 	},
-			// 	dataType:'json',//服务器返回json格式数据
-			// 	type:'post',//HTTP请求类型
-			// 	timeout:10000,//超时时间设置为10秒；
-			// 	success:function(data){
-			//		var tablebody=document.getElementById('tablebody');
-			// 		tablebody.innerHTML='';
-			// 		for(var i in data){//遍历packJson 数组时，i为索引
-			// 			
-			// 			var tabletr = document.createElement("tr");
-			// 			var tabletd1 = document.createElement("td");
-			// 			var tabletd2 = document.createElement("td");
-			// 			var tabletd3 = document.createElement("td");
-			// 			var tabletd4 = document.createElement("td");
-			// 			var tabletd5 = document.createElement("td");
-			// 			var tabletd6 = document.createElement("td");
-			// 			var tabletd7 = document.createElement("td");
-			// 			var tabletd8 = document.createElement("td");
-			// 			var tabletd9 = document.createElement("td");
-						
-			// 			tabletd1.innerHTML=data[i].name;
-			// 			tabletd2.innerHTML='<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="30" width="30"></li></ul>';
-			// 			tabletd2.setAttribute('class','p-1');
-			// 			tabletd3.innerHTML=data[i].sex;
-			// 			tabletd4.innerHTML=data[i].phone;
-			// 			tabletd5.innerHTML=data[i].cardid;
-			// 			tabletd6.innerHTML=data[i].intime;
-			// 			tabletd7.innerHTML=data[i].roomnum;
-			// 			switch(data[i].state){
-			// 				case '很好':
-			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'很好';
-			// 					break;
-			// 				case '好':
-			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-success mr-50"></i>'+'好';
-			// 					break;
-			// 				case '一般':
-			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-warning mr-50"></i>'+'一般';
-			// 					break;
-			// 				case '差':
-			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'差';
-			// 					break;
-			// 				case '很差':
-			// 					tabletd8.innerHTML='<i class="fa fa-circle font-small-3 text-danger mr-50"></i>'+'很差';
-			// 					break;
-								
-			// 			}
-			// 			tabletd9.innerHTML='<button type="button" class="btn btn-flat-primary mr-1 mb-1" onclick="seemore(i,data)">查看</button>';
-			// 			tabletr.appendChild(tabletd1);
-			// 			tabletr.appendChild(tabletd2);
-			// 			tabletr.appendChild(tabletd3);
-			// 			tabletr.appendChild(tabletd4);
-			// 			tabletr.appendChild(tabletd5);
-			// 			tabletr.appendChild(tabletd6);
-			// 			tabletr.appendChild(tabletd7);
-			// 			tabletr.appendChild(tabletd8);
-			// 			tabletr.appendChild(tabletd9);
-			// 			tablebody.appendChild(tabletr);
-			// 		}
-			// 	},
-			// 	error:function(xhr,type,errorThrown){
-					
-			// 	}
-			// });
 			
 			var $dark_green = '#4ea397';
 			var $green = '#22c3aa';
@@ -441,7 +364,7 @@
 			// Bar chart
 			// ------------------------------
 			
-			var barChart = echarts.init(document.getElementById('bar-chart-worker'));
+			var barChart = echarts.init(document.getElementById('bar-chart-volunteer'));
 			
 			
 			// var i;
@@ -487,7 +410,7 @@
 			// Pie chart
 			// ------------------------------
 			
-			var pieChart = echarts.init(document.getElementById('pie-chart-worker'));
+			var pieChart = echarts.init(document.getElementById('pie-chart-volunteer'));
 			
 			var pieChartoption = {
 			    tooltip : {
