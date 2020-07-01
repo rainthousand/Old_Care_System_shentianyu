@@ -137,6 +137,7 @@
 	   var userConfPassword = document.getElementById('inputConfPassword').value;
 	   var name = document.getElementById('name').value;
 	   alert('username:'+username+'Email:'+userEmail +' password:'+userPassword+' conpassword:'+userConfPassword+' name:'+name);
+	   var register_josn_text = {"username":username,"password":password,"email":userEmail,"name":name};
 	   // var chkObjs=null;
 	   // var obj=document.getElementsByName("radiocolor");
 	   // for (var i=0;i<obj.length;i++){ //遍历Radio
@@ -147,25 +148,20 @@
 	   // alert('radio:'+ chkObjs);
 	   
 	   // window.location.href='login.html';
+	   $.ajax({
 	   
-	   mui.ajax('url',{
-	    data:{
-	     username:username,
-	     password:userPassword,
-	     email:userEmail,
-		 name:name
-	    },
-	    dataType:'json',//服务器返回json格式数据
-	    type:'post',//HTTP请求类型
-	    timeout:10000,//超时时间设置为10秒；
-	    success:function(data){
-			alert('注册成功');
-			window.location.href='login.html';
-	    },
-	    error:function(xhr,type,errorThrown){
-	     
-	    }
+	   	url : "temphome/register",
+	   	type : "POST",
+	   	async : true,
+	   	data:JSON.stringify(login_josn_text),
+	   	contentType:"application/json; charset=UTF-8",
+	   	dataType : 'text',
+	   	success:function(data){
+	   		alert('注册成功');
+	   		window.location.href='login.html';
+	   	}
 	   });
+	   
 	  }
 	 </script>
     <!-- BEGIN: Vendor JS-->
