@@ -391,7 +391,25 @@
 		</div>
     </div>
     <!-- END: Content-->
-
+	<script>
+		window.onload=function(){
+			$.ajax({
+				
+				url : "temphome/add_woker",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(woker_josn_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'text',
+				success:function(data){
+					alert('添加成功!');
+					window.location.href='woker.html'
+				}
+			});
+		}
+		
+		
+	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
