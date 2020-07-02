@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>监控系统</title>
+    <style>
+        body {
+            background-color: #484856;
+        }
+
+    </style>
+</head>
+<body>
+<h1 align="center" style="color: whitesmoke;">视频流媒体直播</h1>
+<div class="top">
+    <div class="recorder" id="recorder" align="center">
+        <a id="download"></a>
+        <script type="text/javascript" src="{{ url_for('static', filename='recorder.js') }}"></script>
+    </div>
+</div>
+<!--<img id="video" src="{{ url_for('static', filename='images/bg1.jpg') }}" alt="videostream">-->
+<img id="video" src="{{ url_for('video_viewer') }}" alt="videostream">
+</body>
+</html>

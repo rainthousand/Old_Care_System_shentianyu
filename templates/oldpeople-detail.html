@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <link rel="apple-touch-icon" href="../static/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../static/app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
+
+    <!-- BEGIN: Vendor CSS-->
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/charts/apexcharts.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/tether-theme-arrows.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/tether.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/shepherd-theme-default.css">
+    <!-- END: Vendor CSS-->
+
+    <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootstrapmb.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/semi-dark-layout.css">
+
+    <!-- BEGIN: Page CSS-->
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/dashboard-analytics.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/card-analytics.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
+    <!-- END: Page CSS-->
+	
+	<!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/forms/wizard.css">
+	<!-- END: Page CSS-->
+
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
+    <!-- END: Custom CSS-->
+	
+	<!-- BEGIN: Vendor CSS-->
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
+	<!-- END: Vendor CSS-->
+	
+	<!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+	<!-- END: Page CSS-->
+
+
+
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static   menu-collapsed" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto"><a class="navbar-brand">
+                        <div class="brand-logo"></div>
+                        <h2 class="brand-text mb-0">智慧养老系统</h2>
+                    </a></li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="feather icon-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon feather icon-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="icon-disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class=" nav-item"><a href="index.html"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
+                   
+                </li>
+                <li class=" navigation-header"><span>Apps</span>
+                </li>
+                <li class=" nav-item"><a href="old-people.html"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
+                </li>
+                <li class=" nav-item"><a href="volunteer.html"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
+                </li>
+                <li class=" nav-item"><a href="worker.html"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
+                </li>
+                <li class=" nav-item"><a href="manager.html"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
+                </li>
+            	<li class=" nav-item"><a href="video.html"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
+            	</li>
+            	<li class=" nav-item"><a href="message.html"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
+            	</li>
+                
+            </ul>
+        </div>
+    </div>
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+
+        <!-- BEGIN: Header-->
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu floating-nav navbar-light navbar-shadow">
+            <div class="navbar-wrapper">
+                <div class="navbar-container content">
+                    <div class="navbar-collapse" id="navbar-mobile">
+                        <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                            <ul class="nav navbar-nav">
+                                <li class="nav-item mobile-menu d-xl-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ficon feather icon-menu"></i></a></li>
+                            </ul>
+                            <ul class="nav navbar-nav bookmark-icons">
+                                <!-- li.nav-item.mobile-menu.d-xl-none.mr-auto-->
+                                <!--   a.nav-link.nav-menu-main.menu-toggle.hidden-xs(href='#')-->
+                                <!--     i.ficon.feather.icon-menu-->
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-todo.html" data-toggle="tooltip" data-placement="top" title="Todo"><i class="ficon feather icon-check-square"></i></a></li>
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-chat.html" data-toggle="tooltip" data-placement="top" title="Chat"><i class="ficon feather icon-message-square"></i></a></li>
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-email.html" data-toggle="tooltip" data-placement="top" title="Email"><i class="ficon feather icon-mail"></i></a></li>
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-calender.html" data-toggle="tooltip" data-placement="top" title="Calendar"><i class="ficon feather icon-calendar"></i></a></li>
+                            </ul>
+                            <ul class="nav navbar-nav">
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link bookmark-star"><i class="ficon feather icon-star warning"></i></a>
+                                    <div class="bookmark-input search-input">
+                                        <div class="bookmark-input-icon"><i class="feather icon-search primary"></i></div>
+                                        <input class="form-control input" type="text" placeholder="Explore Vuesax..." tabindex="0" data-search="template-list" />
+                                        <ul class="search-list"></ul>
+                                    </div>
+                                    <!-- select.bookmark-select-->
+                                    <!--   option Chat-->
+                                    <!--   option email-->
+                                    <!--   option todo-->
+                                    <!--   option Calendar-->
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav navbar-nav float-right">
+                            <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="flag-icon flag-icon-us"></i><span class="selected-language">English</span></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown-flag"><a class="dropdown-item" href="#" data-language="en"><i class="flag-icon flag-icon-us"></i> English</a><a class="dropdown-item" href="#" data-language="fr"><i class="flag-icon flag-icon-fr"></i> French</a><a class="dropdown-item" href="#" data-language="de"><i class="flag-icon flag-icon-de"></i> German</a><a class="dropdown-item" href="#" data-language="pt"><i class="flag-icon flag-icon-pt"></i> Portuguese</a></div>
+                            </li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
+                            <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon feather icon-search"></i></a>
+                                <div class="search-input">
+                                    <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
+                                    <input class="input" type="text" placeholder="Explore Vuesax..." tabindex="-1" data-search="template-list" />
+                                    <div class="search-input-close"><i class="feather icon-x"></i></div>
+                                    <ul class="search-list"></ul>
+                                </div>
+                            </li>
+                            <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon feather icon-bell"></i><span class="badge badge-pill badge-primary badge-up">5</span></a>
+                                <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                    <li class="dropdown-menu-header">
+                                        <div class="dropdown-header m-0 p-2">
+                                            <h3 class="white">5 New</h3><span class="notification-title">App Notifications</span>
+                                        </div>
+                                    </li>
+                                    <li class="scrollable-container media-list"><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-left"><i class="feather icon-plus-square font-medium-5 primary"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="primary media-heading">You have new order!</h6><small class="notification-text"> Are your going to meet me tonight?</small>
+                                                </div><small>
+                                                    <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">9 hours ago</time></small>
+                                            </div>
+                                        </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-left"><i class="feather icon-download-cloud font-medium-5 success"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="success media-heading red darken-1">99% Server load</h6><small class="notification-text">You got new order of goods.</small>
+                                                </div><small>
+                                                    <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">5 hour ago</time></small>
+                                            </div>
+                                        </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-left"><i class="feather icon-alert-triangle font-medium-5 danger"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="danger media-heading yellow darken-3">Warning notifixation</h6><small class="notification-text">Server have 99% CPU usage.</small>
+                                                </div><small>
+                                                    <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Today</time></small>
+                                            </div>
+                                        </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-left"><i class="feather icon-check-circle font-medium-5 info"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="info media-heading">Complete the task</h6><small class="notification-text">Cake sesame snaps cupcake</small>
+                                                </div><small>
+                                                    <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last week</time></small>
+                                            </div>
+                                        </a><a class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-start">
+                                                <div class="media-left"><i class="feather icon-file font-medium-5 warning"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="warning media-heading">Generate monthly report</h6><small class="notification-text">Chocolate cake oat cake tiramisu marzipan</small>
+                                                </div><small>
+                                                    <time class="media-meta" datetime="2015-06-11T18:29:20+08:00">Last month</time></small>
+                                            </div>
+                                        </a></li>
+                                    <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center" href="javascript:void(0)">Read all notifications</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                    <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">John Doe</span><span class="user-status">Available</span></div><span><img class="round" src="../static/app-assets/images/portrait/small/avatar-s-11.png" alt="avatar" height="40" width="40" /></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
+                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- END: Header-->
+
+        <div class="content-wrapper">
+            <section id="basic-input">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                
+								<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../static/app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="60" width="60">
+								</li></ul>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="row">
+										
+										<div class="col-xl-4 col-md-6 col-12">
+										    <fieldset class="form-group">
+										        <label for="id">编号</label>
+										        <input type="text" class="form-control" id="id" readonly="readonly" value="null">
+										    </fieldset>
+										</div>
+									
+										<div class="col-xl-4 col-md-6 col-12">
+										    <fieldset class="form-group">
+										        <label for="name">姓名</label>
+										        <input type="text" class="form-control" id="name" readonly="readonly" value="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12">
+										    <fieldset class="form-group">
+										        <label for="sex">性别</label>
+										        <input type="text" class="form-control" id="sex" readonly="readonly" value="null">
+										    </fieldset>
+										</div>
+										
+										
+                                        <div class="col-xl-4 col-md-6 col-12 mb-1">
+                                            <fieldset class="form-group">
+                                                <label for="phone">电话</label>
+                                                <input type="text" class="form-control" id="phone" placeholder="null">
+                                            </fieldset>
+                                        </div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="idcard">身份证号</label>
+										        <input type="text" class="form-control" id="idcard" placeholder="null">
+										    </fieldset>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="birthday">年龄</label>
+										        <input type="text" class="form-control" id="birthday" placeholder="null">
+										    </fieldset>
+										</div>
+			
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="intime">入院日期</label>
+										        <input type="text" class="form-control pickadate" id="intime" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="outtime">出院日期</label>
+										        <input type="text" class="form-control pickadate" id="outtime" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="roomnum">房间号</label>
+										        <input type="text" class="form-control" id="roomnum" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="state">健康状态</label>
+										        <input type="text" class="form-control" id="state" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										
+										<div class="col-sm-12">
+											<div class="card">
+												
+												<div class="card-content">
+													<div class="card-body">
+														
+														<div class="divider divider-primary">
+															<div class="divider-text">第一监护人</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrname1">监护人姓名</label>
+										        <input type="text" class="form-control" id="jhrname1" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrrelation1">监护人关系</label>
+										        <input type="text" class="form-control" id="jhrrelation1" placeholder="null">
+										    </fieldset>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrphone1">监护人电话</label>
+										        <input type="text" class="form-control" id="jhrphone1" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrwechat1">监护人微信</label>
+										        <input type="text" class="form-control" id="jhrwechat1" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										
+										
+										<div class="col-sm-12">
+											<div class="card">
+												
+												<div class="card-content">
+													<div class="card-body">
+												
+														<div class="divider divider-success">
+															<div class="divider-text">第二监护人</div>
+														</div>
+													
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrname2">监护人姓名</label>
+										        <input type="text" class="form-control" id="jhrname2" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrrelation2">监护人关系</label>
+										        <input type="text" class="form-control" id="jhrrelation2" placeholder="null">
+										    </fieldset>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrphone2">监护人电话</label>
+										        <input type="text" class="form-control" id="jhrphone2" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="jhrwechat2">监护人微信</label>
+										        <input type="text" class="form-control" id="jhrwechat2" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-sm-12">
+											<div class="card">
+												
+												<div class="card-content">
+													<div class="card-body">
+												
+														<div class="divider divider-warning">
+															<div class="divider-text">描述</div>
+														</div>
+													
+													</div>
+													<div class="col-sm-6">
+													    <div class="form-group">
+													        <label for="shortDescription">描述</label>
+													        <textarea name="shortDescription" id="shortDescription" rows="10" class="form-control">null</textarea>
+													    </div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+                                        <!-- <div class="col-xl-4 col-md-6 col-12 mb-1">
+                                            <fieldset class="form-group">
+                                                <label for="helpInputTop">Input text with help</label>
+                                                <small class="text-muted">eg.<i>someone@example.com</i></small>
+                                                <input type="text" class="form-control" id="helpInputTop">
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6 col-12 mb-1">
+                                            <fieldset class="form-group">
+                                                <label for="disabledInput">Disabled Input</label>
+                                                <input type="text" class="form-control" id="disabledInput" disabled>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-xl-4 col-md-6 col-12">
+                                            <fieldset class="form-group">
+                                                <label for="helperText">With Helper Text</label>
+                                                <input type="text" id="helperText" class="form-control" placeholder="Name">
+                                                <p><small class="text-muted">Find helper text here for given textbox.</small></p>
+                                            </fieldset>
+                                        </div>
+                                        
+                                        <div class="col-xl-4 col-md-6 col-12">
+                                            <fieldset class="form-group">
+                                                <label for="disabledInput">Static Text</label>
+                                                <p class="form-control-static" id="staticInput">email@pixinvent.com</p>
+                                            </fieldset>
+                                        </div> -->
+										
+                                    </div>
+									<br />
+									<br />
+									<button type="button" class="btn btn-outline-primary mr-1 mb-1" onclick="changes();">提交修改</button>
+									<button type="button" class="btn btn-outline-warning mr-1 mb-1" onclick="refashs();">恢复原始</button>
+									<button type="button" class="btn btn-outline-danger mr-1 mb-1" onclick="deletes();">删除</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+		</div>
+    </div>
+    <!-- END: Content-->
+	<script>
+		window.onload=function(){
+			var submit_json_text={"type":"oldpeople"};
+			var index = $.cookie("oldpeople_detail_num");
+			console.log(index); 
+			alert(index);
+			$.ajax({
+				
+				url : "http://127.0.0.1:5000/old-people",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(submit_json_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'json',
+				success:function(data){
+				
+					alert("data[index].ID:"+data[index].ID);
+					var mid=document.getElementById('id');
+					var mname=document.getElementById('name');
+					var msex=document.getElementById('sex');
+					var mphone=document.getElementById('phone');
+					var midcard=document.getElementById('idcard');
+					var mage=document.getElementById('birthday');
+					var mintime=document.getElementById('intime');
+					var mouttime=document.getElementById('outtime');
+					var mroomnum=document.getElementById('roomnum');
+					var mstate=document.getElementById('state');
+					var mdescription=document.getElementById('shortDescription');
+					
+					var jhrname1=document.getElementById('jhrname1');
+					var jhrrelation1=document.getElementById('jhrrelation1');
+					var jhrphone1=document.getElementById('jhrphone1');
+					var jhrwechat1=document.getElementById('jhrwechat1');
+					var jhrname2=document.getElementById('jhrname2');
+					var jhrrelation2=document.getElementById('jhrrelation2');
+					var jhrphone2=document.getElementById('jhrphone2');
+					var jhrwechat2=document.getElementById('jhrwechat2');
+					var num=0;
+					for(var i in data){
+						// if(num==index){
+							mid.setAttribute('value',data[i].ID);
+							mname.setAttribute('value',data[i].username);
+							msex.setAttribute('value',data[i].gender);
+							mphone.setAttribute('value',data[i].phone);
+							midcard.setAttribute('value',data[i].id_card);
+							mage.setAttribute('value',data[i].age);
+							mintime.setAttribute('value',data[i].checkin_date);
+							mouttime.setAttribute('value',data[i].checkout_date);
+							mroomnum.setAttribute('value',data[i].room_number);
+							
+							jhrname1.setAttribute('value',data[i].firstguardian_name);
+							jhrrelation1.setAttribute('value',data[i].firstguardian_relationship);
+							jhrphone1.setAttribute('value',data[i].firstguardian_phone);
+							jhrwechat1.setAttribute('value',data[i].firstguardian_wechat);
+							
+							jhrname2.setAttribute('value',data[i].secondguardian_name);
+							jhrrelation2.setAttribute('value',data[i].secondguardian_relationship);
+							jhrphone2.setAttribute('value',data[i].secondguardian_phone);
+							jhrwechat2.setAttribute('value',data[i].secondguardian_wechat);
+							
+							mstate.setAttribute('value',data[i].health_state);
+							mdescription.setAttribute('value',data[i].DESCRIPTION);
+							
+						// }
+						// num=num+1;
+					}
+				}
+			});
+
+		}
+		function changes(){
+			var index = $.cookie("oldpeople_detail_num");
+			console.log(index); 
+			alert(index);
+			
+			var mid=document.getElementById('id');
+			var mname=document.getElementById('name');
+			var msex=document.getElementById('sex');
+			var mphone=document.getElementById('phone');
+			var midcard=document.getElementById('idcard');
+			var mage=document.getElementById('birthday');
+			var mintime=document.getElementById('intime');
+			var mouttime=document.getElementById('outtime');
+			var mroomnum=document.getElementById('roomnum');
+			var mstate=document.getElementById('state');
+			var mdescription=document.getElementById('shortDescription');
+			
+			var jhrname1=document.getElementById('jhrname1');
+			var jhrrelation1=document.getElementById('jhrrelation1');
+			var jhrphone1=document.getElementById('jhrphone1');
+			var jhrwechat1=document.getElementById('jhrwechat1');
+			var jhrname2=document.getElementById('jhrname2');
+			var jhrrelation2=document.getElementById('jhrrelation2');
+			var jhrphone2=document.getElementById('jhrphone2');
+			var jhrwechat2=document.getElementById('jhrwechat2');
+			
+			var submit_json_text={"ID":mid.innerHTML,"username":mname.innerHTML,"gender":msex.innerHTML,"phone":mphone.innerHTML,"id_card":midcard.innerHTML,"birthday":data[index].birthday,"checkin_date":mintime.innerHTML,"checkout_date":mouttime.innerHTML,"imgset_dir":"未知","profile_photo":"未知","room_number":mroomnum.innerHTML,"firstguardian_name":jhrname1.innerHTML,"firstguardian_relationship":jhrrelation1.innerHTML,"firstguardian_phone":jhrphone1.innerHTML,"firstguardian_wechat":jhrwechat1.innerHTML,"secondguardian_name":jhrname2.innerHTML,"secondguardian_relationship":jhrrelation2.innerHTML,"secondguardian_phone":jhrphone2.innerHTML,"secondguardian_wechat":jhrwechat2.innerHTML,"health_state":mstate.innerHTML,"DESCRIPTION":mdescription.innerHTML,"ISACTIVE":"有效","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"无"};
+			
+			
+			$.ajax({
+				
+				url : "http://127.0.0.1:5000/updateold",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(submit_json_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'text',
+				success:function(data){
+					alert('修改成功!');
+					window.location.href='/old-people'
+				}
+			});
+		}
+		function refashs(){
+			window.location.reload();
+		}
+		function deletes(){
+			var index = $.cookie("oldpeople_detail_num");
+			console.log(index); 
+			alert(index);
+			
+			var delete_text='null';
+			$.ajax({
+				
+				url : "http://127.0.0.1:5000/old-people",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(submit_json_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'text',
+				success:function(data){
+					delete_text={"username":data[index].username};
+				}
+			});
+			
+			while(delete_text=='null'){
+				var i=1;
+			}
+			
+			$.ajax({
+			
+				url : "http://127.0.0.1:5000/deleteold",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(delete_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'text',
+				success:function(data){
+					alert('删除成功！')
+					window.location.href='/old-people';
+				}
+			});
+			
+		}
+	</script>
+    <!-- BEGIN: Vendor JS-->
+    <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN Vendor JS-->
+
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../static/app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="../static/app-assets/vendors/js/extensions/tether.min.js"></script>
+    <script src="../static/app-assets/vendors/js/extensions/shepherd.min.js"></script>
+    <!-- END: Page Vendor JS-->
+
+    <!-- BEGIN: Theme JS-->
+    <script src="../static/app-assets/js/core/app-menu.js"></script>
+    <script src="../static/app-assets/js/core/app.js"></script>
+    <script src="../static/app-assets/js/scripts/components.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="../static/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
+    <!-- END: Page JS-->
+	
+	<!-- BEGIN: Page Vendor JS-->
+	<script src="../static/app-assets/vendors/js/charts/echarts/echarts.min.js"></script>
+	<!-- END: Page Vendor JS-->
+	
+	<!-- BEGIN: Page JS-->
+	<script src="../static/app-assets/js/scripts/charts/chart-echart.js"></script>
+	<!-- END: Page JS-->
+	
+	<!-- BEGIN: Page Vendor JS-->
+	<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+	<script src="../static/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+	<!-- END: Page Vendor JS-->
+	
+	<!-- BEGIN: Page JS-->
+	<script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script>
+	<!-- END: Page JS-->
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <!-- END: Page Vendor JS-->
+	
+    <!-- BEGIN: Page JS-->
+    <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
+    <!-- END: Page JS-->
+</body>
+<!-- END: Body-->
+
+</html>

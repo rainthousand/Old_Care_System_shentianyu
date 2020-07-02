@@ -9,6 +9,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="jquery.cookie" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
