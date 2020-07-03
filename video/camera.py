@@ -1,3 +1,5 @@
+import time
+
 import cv2
 import threading
 
@@ -47,6 +49,8 @@ class VideoCamera(object):
         ret, frame = self.cap.read()
 
         if ret:
+            ts = time.strftime('%A %d %B %Y %I %M %S %p')
+            cv2.putText(frame, ts, (10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
             ret, jpeg = cv2.imencode('.jpg', frame)
 
             # 视频录制

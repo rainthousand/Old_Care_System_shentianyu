@@ -35,7 +35,7 @@
     <!-- END: Page CSS-->
 	
 	<!-- BEGIN: Page CSS-->
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/forms/wizard.css">
 	<!-- END: Page CSS-->
 
@@ -47,9 +47,6 @@
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
 	<!-- END: Vendor CSS-->
 	
-	<!-- BEGIN: Page CSS-->
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
-	<!-- END: Page CSS-->
 
 
 
@@ -214,231 +211,139 @@
         <!-- END: Header-->
 
         <div class="content-wrapper">
-            <section id="basic-input">
+            <section id="number-tabs">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                
-								<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../static/app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="60" width="60">
-								</li></ul>
+                                <h4 class="card-title">新增义工信息</h4>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    <div class="row">
-										
-										<div class="col-xl-4 col-md-6 col-12">
-										    <fieldset class="form-group">
-										        <label for="id">编号</label>
-										        <input type="text" class="form-control" id="id" readonly="readonly" value="null">
-										    </fieldset>
-										</div>
-									
-										<div class="col-xl-4 col-md-6 col-12">
-										    <fieldset class="form-group">
-										        <label for="name">姓名</label>
-										        <input type="text" class="form-control" id="name" readonly="readonly" value="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12">
-										    <fieldset class="form-group">
-										        <label for="sex">性别</label>
-										        <input type="text" class="form-control" id="sex" readonly="readonly" value="null">
-										    </fieldset>
-										</div>
-										
-										
-                                        <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                            <fieldset class="form-group">
-                                                <label for="phone">电话</label>
-                                                <input type="text" class="form-control" id="phone" placeholder="null">
-                                            </fieldset>
-                                        </div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="idcard">身份证号</label>
-										        <input type="text" class="form-control" id="idcard" placeholder="null">
-										    </fieldset>
-										</div>
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="birthday">年龄</label>
-										        <input type="text" class="form-control" id="birthday" placeholder="null">
-										    </fieldset>
-										</div>
-			
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="intime">入院日期</label>
-										        <input type="text" class="form-control" id="intime" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="outtime">出院日期</label>
-										        <input type="text" class="form-control" id="outtime" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="roomnum">房间号</label>
-										        <input type="text" class="form-control" id="roomnum" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="state">健康状态</label>
-										        <input type="text" class="form-control" id="state" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										
-										<div class="col-sm-12">
-											<div class="card">
-												
-												<div class="card-content">
-													<div class="card-body">
-														
-														<div class="divider divider-primary">
-															<div class="divider-text">第一监护人</div>
-														</div>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrname1">监护人姓名</label>
-										        <input type="text" class="form-control" id="jhrname1" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrrelation1">监护人关系</label>
-										        <input type="text" class="form-control" id="jhrrelation1" placeholder="null">
-										    </fieldset>
-										</div>
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrphone1">监护人电话</label>
-										        <input type="text" class="form-control" id="jhrphone1" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrwechat1">监护人微信</label>
-										        <input type="text" class="form-control" id="jhrwechat1" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										
-										
-										<div class="col-sm-12">
-											<div class="card">
-												
-												<div class="card-content">
-													<div class="card-body">
-												
-														<div class="divider divider-success">
-															<div class="divider-text">第二监护人</div>
-														</div>
-													
-													</div>
-												</div>
-											</div>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrname2">监护人姓名</label>
-										        <input type="text" class="form-control" id="jhrname2" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrrelation2">监护人关系</label>
-										        <input type="text" class="form-control" id="jhrrelation2" placeholder="null">
-										    </fieldset>
-										</div>
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrphone2">监护人电话</label>
-										        <input type="text" class="form-control" id="jhrphone2" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-xl-4 col-md-6 col-12 mb-1">
-										    <fieldset class="form-group">
-										        <label for="jhrwechat2">监护人微信</label>
-										        <input type="text" class="form-control" id="jhrwechat2" placeholder="null">
-										    </fieldset>
-										</div>
-										
-										<div class="col-sm-12">
-											<div class="card">
-												
-												<div class="card-content">
-													<div class="card-body">
-												
-														<div class="divider divider-warning">
-															<div class="divider-text">描述</div>
-														</div>
-													
-													</div>
-													<div class="col-sm-6">
-													    <div class="form-group">
-													        <label for="shortDescription">描述</label>
-													        <textarea name="shortDescription" id="shortDescription" rows="10" class="form-control">null</textarea>
-													    </div>
-													</div>
-												</div>
-											</div>
-										</div>
-										
-                                        <!-- <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                            <fieldset class="form-group">
-                                                <label for="helpInputTop">Input text with help</label>
-                                                <small class="text-muted">eg.<i>someone@example.com</i></small>
-                                                <input type="text" class="form-control" id="helpInputTop">
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                            <fieldset class="form-group">
-                                                <label for="disabledInput">Disabled Input</label>
-                                                <input type="text" class="form-control" id="disabledInput" disabled>
-                                            </fieldset>
-                                        </div>
-                                        <div class="col-xl-4 col-md-6 col-12">
-                                            <fieldset class="form-group">
-                                                <label for="helperText">With Helper Text</label>
-                                                <input type="text" id="helperText" class="form-control" placeholder="Name">
-                                                <p><small class="text-muted">Find helper text here for given textbox.</small></p>
-                                            </fieldset>
-                                        </div>
-                                        
-                                        <div class="col-xl-4 col-md-6 col-12">
-                                            <fieldset class="form-group">
-                                                <label for="disabledInput">Static Text</label>
-                                                <p class="form-control-static" id="staticInput">email@pixinvent.com</p>
-                                            </fieldset>
-                                        </div> -->
-										
-                                    </div>
-									<br />
-									<br />
-									<button type="button" class="btn btn-outline-primary mr-1 mb-1" onclick="changes();">提交修改</button>
-									<button type="button" class="btn btn-outline-warning mr-1 mb-1" onclick="refashs();">恢复原始</button>
-									<button type="button" class="btn btn-outline-danger mr-1 mb-1" onclick="deletes();">删除</button>
+                                    
+                                    <form action="#" class="number-tab-steps wizard-circle">
+            
+                                        <!-- Step 1 -->
+                                        <h6>Step 1</h6>
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="name">姓名</label>
+                                                        <input type="text" class="form-control" id="name">
+                                                    </div>
+                                                </div>
+            									<div class="col-sm-6">
+            										<div class="form-group">
+            										    <label for="sex">性别</label>
+            										    <select class="custom-select form-control" id="sex" name="sex">
+            										        <option value="女">女</option>
+            										        <option value="男">男</option>
+            										    </select>
+            										</div>
+            										
+            									</div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="phone">电话</label>
+                                                        <input type="tel" class="form-control" id="phone">
+                                                    </div>
+                                                </div>
+                                            </div>
+            
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="idcard">身份证号</label>
+                                                        <input type="text" class="form-control" id="idcard">
+                                                    </div>
+                                                </div>
+            									
+                                               
+                                            </div>
+            								<div class="row">
+            								    <div class="col-sm-6">
+            								    	<div class="form-group">
+            								    		<label for="brithtime">出生日期</label>
+            								    		<input type="text" class="form-control pickadate" id="brithtime">
+            								    	
+            								    	</div>
+            								    </div>
+            							
+            								</div>
+            								
+                                        </fieldset>
+            
+                                        <!-- Step 2 -->
+                                        <h6>Step 2</h6>
+                                        <fieldset>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+            										
+                                                    <div class="form-group">
+                                                    	<label for="intime">入职日期</label>
+                                                    	<input type="text" class="form-control pickadate" id="intime">
+                                                    
+                                                    </div>
+            										<div class="form-group">
+            											<label for="outtime">离职日期</label>
+            											<input type="text" class="form-control pickadate" id="outtime">
+            										
+            										</div>
+            										<section class="vuesax-radio-color">
+            											<div class="row">
+            												<div class="col-12">
+            													<div class="card">
+            													
+            														<div class="card-content">
+            															<div class="card-body">
+            															   
+            																<ul class="list-unstyled mb-0">
+            																	<li class="d-inline-block mr-2">
+            																		<fieldset>
+            																			<div class="vs-radio-con">
+            																				<input type="radio" name="radiois" checked value="有效">
+            																				<span class="vs-radio">
+            																					<span class="vs-radio--border"></span>
+            																					<span class="vs-radio--circle"></span>
+            																				</span>
+            																				<span class="">有效</span>
+            																			</div>
+            																		</fieldset>
+            																	</li>
+            																	<li class="d-inline-block mr-2">
+            																		<fieldset>
+            																			<div class="vs-radio-con vs-radio-success">
+            																				<input type="radio" name="radiois" value="无效">
+            																				<span class="vs-radio">
+            																					<span class="vs-radio--border"></span>
+            																					<span class="vs-radio--circle"></span>
+            																				</span>
+            																				<span class="">无效</span>
+            																			</div>
+            																		</fieldset>
+            																	</li>
+            															
+            																   
+            																</ul>
+            															</div>
+            														</div>
+            													</div>
+            												</div>
+            											</div>
+            										</section>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="shortDescription">描述</label>
+                                                        <textarea name="shortDescription" id="shortDescription" rows="10" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+            
+                                      
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -448,171 +353,86 @@
 		</div>
     </div>
     <!-- END: Content-->
+		<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+			<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
 	<script>
+		var param;
 		window.onload=function(){
-			var param = $.cookie("username");
+			
+			param = $.cookie("username");
 			console.log(param); 
-			var submit_json_text={"type":"oldpeople"};
-			var index = $.cookie("oldpeople_detail_num");
-			console.log(index); 
-			{#alert(index);#}
+					
+			var headusername=document.getElementById('head-username');
+			headusername.value=param;
+			
+		}
+		
+		$(".number-tab-steps").steps({
+		    headerTag: "h6",
+		    bodyTag: "fieldset",
+		    transitionEffect: "fade",
+		    titleTemplate: '<span class="step">#index#</span> #title#',
+		    labels: {
+		        finish: 'Submit'
+		    },
+		    onFinished: function (event, currentIndex) {
+		        alert("ok.");
+				mysubmit();
+				
+		    }
+		});
+		function  mysubmit(){
+			var nowtime = "当前时间";
+			
+			
+			var name_volunteer=document.getElementById("name");
+			var sex_volunteer=document.getElementById("sex");
+			var phone_volunteer=document.getElementById("phone");
+			var idcard_volunteer=document.getElementById("idcard");
+			var brith_volunteer=document.getElementById("brithtime");
+			var intime_volunteer=document.getElementById("intime");
+			var outtime_volunteer=document.getElementById("outtime");
+			var description_volunteer=document.getElementById("shortDescription");
+			
+			var submit_json_text={"id":"0",
+				"username":name_volunteer.value,
+				"gender":sex_volunteer.value,
+				"phone":phone_volunteer.value,
+				"id_card":idcard_volunteer.value,
+				"birthday":brith_volunteer.value,
+				"hire_date":intime_volunteer.value,
+				"resign_date":outtime_volunteer.value,
+				"imgset_dir":"未知",
+				"profile_photo":"未知",
+				"DESCRIPTION":description_volunteer.value,
+				"ISACTIVE":"有效",
+				"CREATED":nowtime,
+				"CREATEBY":param,
+				"UPDATED":nowtime,
+				"UPDATEBY":param,
+				"REMOVE":"n"
+				
+			};
+			
 			$.ajax({
 				
-				url : "http://127.0.0.1:5000/old-people",
+				url : "http://127.0.0.1:5000/newemployee",
 				type : "POST",
 				async : true,
 				data:JSON.stringify(submit_json_text),
 				contentType:"application/json; charset=UTF-8",
-				dataType : 'json',
+				dataType : 'text',
 				success:function(data){
-				
-					{#alert("data[index].ID:"+data[index].ID);#}
-					var mid=document.getElementById('id');
-					var mname=document.getElementById('name');
-					var msex=document.getElementById('sex');
-					var mphone=document.getElementById('phone');
-					var midcard=document.getElementById('idcard');
-					var mage=document.getElementById('birthday');
-					var mintime=document.getElementById('intime');
-					var mouttime=document.getElementById('outtime');
-					var mroomnum=document.getElementById('roomnum');
-					var mstate=document.getElementById('state');
-					var mdescription=document.getElementById('shortDescription');
-					
-					var jhrname1=document.getElementById('jhrname1');
-					var jhrrelation1=document.getElementById('jhrrelation1');
-					var jhrphone1=document.getElementById('jhrphone1');
-					var jhrwechat1=document.getElementById('jhrwechat1');
-					var jhrname2=document.getElementById('jhrname2');
-					var jhrrelation2=document.getElementById('jhrrelation2');
-					var jhrphone2=document.getElementById('jhrphone2');
-					var jhrwechat2=document.getElementById('jhrwechat2');
-					
-					
-					mid.setAttribute('value',data[index].ID);
-					mname.setAttribute('value',data[index].username);
-					msex.setAttribute('value',data[index].gender);
-					mphone.setAttribute('value',data[index].phone);
-					midcard.setAttribute('value',data[index].id_card);
-					mage.setAttribute('value',data[index].age);
-					mintime.setAttribute('value',data[index].checkin_date);
-					mouttime.setAttribute('value',data[index].checkout_date);
-					mroomnum.setAttribute('value',data[index].room_number);
-					
-					jhrname1.setAttribute('value',data[index].firstguardian_name);
-					jhrrelation1.setAttribute('value',data[index].firstguardian_relationship);
-					jhrphone1.setAttribute('value',data[index].firstguardian_phone);
-					jhrwechat1.setAttribute('value',data[index].firstguardian_wechat);
-					
-					jhrname2.setAttribute('value',data[index].secondguardian_name);
-					jhrrelation2.setAttribute('value',data[index].secondguardian_relationship);
-					jhrphone2.setAttribute('value',data[index].secondguardian_phone);
-					jhrwechat2.setAttribute('value',data[index].secondguardian_wechat);
-					
-					mstate.setAttribute('value',data[index].health_state);
-					mdescription.setAttribute('value',data[index].DESCRIPTION);
-					
-				}
-			});
+					alert('添加成功!');
+					window.location.href='/employee'
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert('添加失败!'+textStatus);
 
-		}
-		function changes(){
-			var param = $.cookie("username");
-			console.log(param); 
-			var index = $.cookie("oldpeople_detail_num");
-			console.log(index); 
-			{#alert(index);#}
-			var oldpeople_josn_text={"type":"oldpeople"};
-			$.ajax({
-				
-				url : "http://127.0.0.1:5000/old-people",
-				type : "POST",
-				async : true,
-				data:JSON.stringify(oldpeople_josn_text),
-				contentType:"application/json; charset=UTF-8",
-				dataType : 'json',
-				success:function(data){
-					{#alert('oldpeople');#}
-					var nowtime = '当前时间';
-					var mid=document.getElementById('id');
-					var mname=document.getElementById('name');
-					var msex=document.getElementById('sex');
-					var mphone=document.getElementById('phone');
-					var midcard=document.getElementById('idcard');
-					var mage=document.getElementById('birthday');
-					var mintime=document.getElementById('intime');
-					var mouttime=document.getElementById('outtime');
-					var mroomnum=document.getElementById('roomnum');
-					var mstate=document.getElementById('state');
-					var mdescription=document.getElementById('shortDescription');
-					
-					var jhrname1=document.getElementById('jhrname1');
-					var jhrrelation1=document.getElementById('jhrrelation1');
-					var jhrphone1=document.getElementById('jhrphone1');
-					var jhrwechat1=document.getElementById('jhrwechat1');
-					var jhrname2=document.getElementById('jhrname2');
-					var jhrrelation2=document.getElementById('jhrrelation2');
-					var jhrphone2=document.getElementById('jhrphone2');
-					var jhrwechat2=document.getElementById('jhrwechat2');
-					
-					var submit_json_text={"ID":mid.value,"username":mname.value,"gender":msex.value,"phone":mphone.value,"id_card":midcard.value,"birthday":data[index].birthday,"checkin_date":mintime.value,"checkout_date":mouttime.value,"imgset_dir":"未知","profile_photo":"未知","room_number":mroomnum.value,"firstguardian_name":jhrname1.value,"firstguardian_relationship":jhrrelation1.value,"firstguardian_phone":jhrphone1.value,"firstguardian_wechat":jhrwechat1.value,"secondguardian_name":jhrname2.value,"secondguardian_relationship":jhrrelation2.value,"secondguardian_phone":jhrphone2.value,"secondguardian_wechat":jhrwechat2.value,"health_state":mstate.value,"DESCRIPTION":mdescription.value,"ISACTIVE":"有效","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"无"};
-					
-					
-					$.ajax({
-						
-						url : "http://127.0.0.1:5000/updateold",
-						type : "POST",
-						async : true,
-						data:JSON.stringify(submit_json_text),
-						contentType:"application/json; charset=UTF-8",
-						dataType : 'text',
-						success:function(data){
-							alert('修改成功!');
-							window.location.href='/old-people'
-						}
-					});
 				}
 			});
-			
 		}
-		function refashs(){
-			window.location.reload();
-		}
-		function deletes(){
-			var index = $.cookie("oldpeople_detail_num");
-			console.log(index); 
-			{#alert(index);#}
-			var oldpeople_josn_text={"type":"oldpeople"};
-			$.ajax({
-				
-				url : "http://127.0.0.1:5000/old-people",
-				type : "POST",
-				async : true,
-				data:JSON.stringify(oldpeople_josn_text),
-				contentType:"application/json; charset=UTF-8",
-				dataType : 'json',
-				success:function(data){
-					{#alert('oldpeople');#}
-					var delete_text={"username":data[index].username};
-					$.ajax({
-					
-						url : "http://127.0.0.1:5000/deleteold",
-						type : "POST",
-						async : true,
-						data:JSON.stringify(delete_text),
-						contentType:"application/json; charset=UTF-8",
-						dataType : 'text',
-						success:function(data){
-							alert('删除成功！')
-							window.location.href='/old-people';
-						}
-					});
-				}
-			});
 		
-			
-			
-		}
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
@@ -643,22 +463,22 @@
 	<!-- END: Page JS-->
 	
 	<!-- BEGIN: Page Vendor JS-->
-	<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+
 	<script src="../static/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
 	<!-- END: Page Vendor JS-->
 	
 	<!-- BEGIN: Page JS-->
-	<script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script>
+	<!-- <script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script> -->
 	<!-- END: Page JS-->
-	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	
     <!-- BEGIN: Page Vendor JS-->
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <!-- END: Page Vendor JS-->
-	
+
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
     <!-- END: Page JS-->

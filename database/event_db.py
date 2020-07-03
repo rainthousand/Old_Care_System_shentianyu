@@ -1,7 +1,6 @@
 import datetime
 import json
 import pymysql
-from database import connect
 from collections import OrderedDict
 
 db = pymysql.connect(host="47.94.95.94", user="root", passwd="abcd1234", db="project", port=3306, charset='utf8')
@@ -29,8 +28,14 @@ def getEvents():
 #update
 def updateEvent(id,des):
     sql = "update event_info set event_desc='" + des + "' where id="+str(id)
-
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 #add
 def addEvent(event_type, event_date, event_location, event_desc, oldperson_id):
@@ -38,12 +43,26 @@ def addEvent(event_type, event_date, event_location, event_desc, oldperson_id):
           "values(%s,%s,%s,%s,%s)" % \
           (event_type , "'" + event_date + "'","'" + event_location + "'", "'" + event_desc + "'",oldperson_id)
     print(sql)
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 #delete
 def deleteEvent(id):
     sql = "delete from event_info where id=" + str(id)
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")

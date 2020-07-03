@@ -1,3 +1,5 @@
+import time
+
 from video.camera import VideoCamera
 
 video_camera = None

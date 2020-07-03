@@ -1,7 +1,6 @@
 import datetime
 import json
 import pymysql
-from database import connect
 from collections import OrderedDict
 
 db = pymysql.connect(host="47.94.95.94", user="root", passwd="abcd1234", db="project", port=3306, charset='utf8')
@@ -41,8 +40,40 @@ def getEmployees():
 #update
 def updateEmployee(id,name):
     sql = "update employee_info set username='" + name + "' where id="+str(id)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
-    connect.executeSql(sql)
+def updateEmp(id,ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,
+                profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE):
+    deleteEmployeeByID(id)
+    addEmployee_With_ID(id,ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,
+                profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE)
+
+def addEmployee_With_ID(id,ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,
+                profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE):
+    sql = "insert into employee_info" \
+          "(id,ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE)" \
+          " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" % \
+          (id,0,0,"'" + username + "'", "'" + gender + "'","'" + phone + "'", "'" + id_card + "'",
+           "'" + birthday + "'", "'" + hire_date + "'", "'" + resign_date + "'","'" + imgset_dir + "'"
+           ,"'" + profile_photo + "'","'" + DESCRIPTION + "'","'" + ISACTIVE + "'","'" + CREATED + "'"
+           ,CREATEBY,"'" + UPDATED + "'",UPDATEBY,"'" + REMOVE + "'")
+    print(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
+
 
 #add
 def addEmployee(ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,
@@ -55,13 +86,37 @@ def addEmployee(ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hir
            ,"'" + profile_photo + "'","'" + DESCRIPTION + "'","'" + ISACTIVE + "'","'" + CREATED + "'"
            ,CREATEBY,"'" + UPDATED + "'",UPDATEBY,"'" + REMOVE + "'")
     print(sql)
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 #delete
-def deleteEmployee(id):
+def deleteEmployeeByID(id):
     sql = "delete from employee_info where id=" + str(id)
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
+def deleteEmployeeByName(name):
+    sql = "delete from employee_info where username='" + name+"'"
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")

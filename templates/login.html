@@ -115,7 +115,6 @@
 		function login(){
 			var username=document.getElementById('user-name').value;
 			var password=document.getElementById('user-password').value;
-			alert('username:'+username+' password:'+password);
 
 			// var chkObjs=null;
 			// var obj=document.getElementsByName("radiocolor");
@@ -137,8 +136,13 @@
 				contentType:"application/json; charset=UTF-8",
 				dataType : "text",
 				success:function(data){
-				 $.cookie("username",username);
-				 window.location.href='/index';
+				    if(data == "success")
+                    {
+                        $.cookie("username",username);
+                        window.location.href='/index';
+                    }
+				 else
+				     alert("wrong password or username")
 				}
 			});
 		}

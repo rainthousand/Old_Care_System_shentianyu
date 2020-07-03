@@ -1,7 +1,6 @@
 import datetime
 import json
 import pymysql
-from database import connect
 from collections import OrderedDict
 
 db = pymysql.connect(host="47.94.95.94", user="root", passwd="abcd1234", db="project", port=3306, charset='utf8')
@@ -45,6 +44,14 @@ def getUsers():
     jsondatas = json.dumps(jsondata, ensure_ascii=False)
     return jsondatas
 
+def getUserID(name):
+    sql = "select ID from sys_user where UserName='" + name + "'"
+    conn.execute(sql)
+    result = conn.fetchall()
+    if result:
+        (id,) = result[0]
+        return id
+    return 0
 
 def userlogin(name,password):
     sql = "select Password from sys_user where UserName='" + name + "'"
@@ -70,9 +77,48 @@ def getpassword(email):
 # update
 def updateUser(id, name):
     sql = "update sys_user set UserName='" + name + "' where id=" + str(id)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
-    connect.executeSql(sql)
 
+def updateU(ID,ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
+            DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
+            theme, defaultpage, logoimage, qqopenid, appversion, jsonauth):
+    deleteUserById(ID)
+    addUser_with_ID(ID,ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
+            DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
+            theme, defaultpage, logoimage, qqopenid, appversion, jsonauth)
+
+
+# add 含ID
+def addUser_with_ID(ID,ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
+            DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
+            theme, defaultpage, logoimage, qqopenid, appversion, jsonauth):
+    sql = "insert into sys_user(ID,ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME,SEX, " \
+          "EMAIL,PHONE,MOBILE,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE,DATAFILTER," \
+          "theme,defaultpage,logoimage,qqopenid,appversion,jsonauth) " \
+          "values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" % \
+          (ID,0, 0, "'" + UserName + "'", "'" + Password + "'", "'" + REAL_NAME + "'", "'" + SEX + "'",
+           "'" + EMAIL + "'", "'" + PHONE + "'", "'" + MOBILE + "'", "'" + DESCRIPTION + "'", "'" + ISACTIVE + "'",
+           "'" + CREATED + "'"
+           , CREATEBY, "'" + UPDATED + "'", UPDATEBY, "'" + REMOVE + "'", "'" + DATAFILTER + "'", "'" + theme + "'",
+           "'" + defaultpage + "'"
+           , "'" + logoimage + "'", "'" + qqopenid + "'", "'" + appversion + "'", "'" + jsonauth + "'")
+    print(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 # add
 def addUser(ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
@@ -89,14 +135,39 @@ def addUser(ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE,
            "'" + defaultpage + "'"
            , "'" + logoimage + "'", "'" + qqopenid + "'", "'" + appversion + "'", "'" + jsonauth + "'")
     print(sql)
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 
 # delete
-def deleteUser(id):
+def deleteUserById(id):
     sql = "delete from sys_user where id=" + str(id)
-    connect.executeSql(sql)
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
+# delete
+def deleteUserByName(name):
+    sql = "delete from sys_user where UserName='" + name+"'"
+    try:
+        # 执行SQL语句
+        conn.execute(sql)
+        # 提交到数据库执行
+        db.commit()
+    except:
+        # 发生错误时回滚
+        db.rollback()
 
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -105,3 +176,4 @@ now = now.strftime("%Y-%m-%d %H:%M:%S")
 # deleteVolunteer(63)
 # updateVolunteer(1,"HHH")
 #print(userlogin("sys","123456"))
+#print(getUserID('sys'))

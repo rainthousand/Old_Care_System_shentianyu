@@ -61,23 +61,23 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a href="index.html"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
+                <li class=" nav-item"><a href="/index"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
                    
                 </li>
-                <li class=" navigation-header"><span>Apps</span>
+                <li class=" navigation-header"><span></span>
                 </li>
-                <li class=" nav-item"><a href="old-people.html"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
+                <li class=" nav-item"><a href="/old-people"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a href="volunteer.html"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
+                <li class=" nav-item"><a href="/volunteer"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a href="worker.html"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
+                <li class=" nav-item"><a href="/employee"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a href="manager.html"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
+                <li class=" nav-item"><a href="/manager"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
                 </li>
-            	<li class=" nav-item"><a href="video.html"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
-            	</li>
-            	<li class=" nav-item"><a href="message.html"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
-            	</li>
+        		<li class=" nav-item"><a href="/video"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
+        		</li>
+        		<li class=" nav-item"><a href="/message"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
+        		</li>
                 
             </ul>
         </div>
@@ -372,7 +372,7 @@
 
 
 					}
-					alert(num);
+					{#alert(num);#}
 					
 					// var data=[{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"id":"2","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
 					var tablebody=document.getElementById('tablebody');
@@ -398,7 +398,7 @@
 						tabletd3.innerHTML=data[i].gender;
 						tabletd4.innerHTML=data[i].phone;
 						tabletd5.innerHTML=data[i].id_card;
-						tabletd6.innerHTML=data[i].checkin_date;
+						tabletd6.innerHTML=data[i].checkin_date.split(' ')[0];
 						tabletd7.innerHTML=data[i].room_number;
 						switch(data[i].health_state){
 							case '很好':

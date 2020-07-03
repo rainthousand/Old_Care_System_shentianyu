@@ -35,7 +35,7 @@
     <!-- END: Page CSS-->
 	
 	<!-- BEGIN: Page CSS-->
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/forms/wizard.css">
 	<!-- END: Page CSS-->
 
@@ -47,9 +47,6 @@
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
 	<!-- END: Vendor CSS-->
 	
-	<!-- BEGIN: Page CSS-->
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
-	<!-- END: Page CSS-->
 
 
 
@@ -74,23 +71,23 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a href="index.html"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
+                <li class=" nav-item"><a href="/index"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
                    
                 </li>
-                <li class=" navigation-header"><span>Apps</span>
+                <li class=" navigation-header"><span></span>
                 </li>
-                <li class=" nav-item"><a href="old-people.html"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
+                <li class=" nav-item"><a href="/old-people"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a href="volunteer.html"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
+                <li class=" nav-item"><a href="/volunteer"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a href="worker.html"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
+                <li class=" nav-item"><a href="/employee"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a href="manager.html"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
+                <li class=" nav-item"><a href="/manager"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
                 </li>
-            	<li class=" nav-item"><a href="video.html"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
-            	</li>
-            	<li class=" nav-item"><a href="message.html"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
-            	</li>
+        		<li class=" nav-item"><a href="/video"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
+        		</li>
+        		<li class=" nav-item"><a href="/message"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
+        		</li>
                 
             </ul>
         </div>
@@ -380,6 +377,8 @@
 		</div>
     </div>
     <!-- END: Content-->
+		<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+			<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
 	<script>
 		var param;
 		window.onload=function(){
@@ -388,9 +387,10 @@
 			console.log(param); 
 					
 			var headusername=document.getElementById('head-username');
-			headusername.innerHTML=param;
+			headusername.value=param;
+			
 		}
-
+		
 		$(".number-tab-steps").steps({
 		    headerTag: "h6",
 		    bodyTag: "fieldset",
@@ -400,50 +400,57 @@
 		        finish: 'Submit'
 		    },
 		    onFinished: function (event, currentIndex) {
-		        alert("ok.");
-				var nowtime = '当前时间';
-
-				var name_oldpeople=document.getElementById("Name");
-				
-				var sex_oldpeople=document.getElementById("sex");
-				
-				
-				var phone_oldpeople=document.getElementById("phone");
-				var idcard_oldpeople=document.getElementById("IDCard");
-				var brith_oldpeople=document.getElementById("brithtime");
-				var roomnum_oldpeople=document.getElementById("roomnum");
-				var intime_oldpeople=document.getElementById("intime");
-				var outtime_oldpeople=document.getElementById("outtime");
-				var state_oldpeople=document.getElementById("state");
-				var description_oldpeople=document.getElementById("shortDescription");
-				var jhrname1_oldpeople=document.getElementById("jianhuren1name");
-				var jhrrelation1_oldpeople=document.getElementById("jianhuren1relation");
-				var jhrphone1_oldpeople=document.getElementById("jianhuren1phone");
-				var jhrwechat1_oldpeople=document.getElementById("jianhuren1wechat");
-				var jhrname2_oldpeople=document.getElementById("jianhuren2name");
-				var jhrrelation2_oldpeople=document.getElementById("jianhuren2relation");
-				var jhrphone2_oldpeople=document.getElementById("jianhuren2phone");
-				var jhrwechat2_oldpeople=document.getElementById("jianhuren2wechat");
-				
-				var submit_json_text={"ID":"0","username":name_oldpeople,"gender":sex_oldpeople,"phone":phone_oldpeople,"id_card":idcard_oldpeople,"birthday":brith_oldpeople,"checkin_date":intime_oldpeople,"checkout_date":outtime_oldpeople,"imgset_dir":"未知","profile_photo":"未知","room_number":roomnum_oldpeople,"firstguardian_name":jhrname1_oldpeople,"firstguardian_relationship":jhrrelation1_oldpeople,"firstguardian_phone":jhrphone1_oldpeople,"firstguardian_wechat":jhrwechat1_oldpeople,"secondguardian_name":jhrname2_oldpeople,"secondguardian_relationship":jhrrelation2_oldpeople,"secondguardian_phone":jhrphone2_oldpeople,"secondguardian_wechat":jhrwechat2_oldpeople,"health_state":state_oldpeople,"DESCRIPTION":description_oldpeople,"ISACTIVE":"有效","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"无"};
-				
-				alert("here")
-				$.ajax({
-					
-					url : "http://127.0.0.1:5000/newoldpeople",
-					type : "POST",
-					async : true,
-					data:JSON.stringify(submit_json_text),
-					contentType:"application/json; charset=UTF-8",
-					dataType : 'text',
-					success:function(data){
-						alert('添加成功!');
-						window.location.href='/old-people'
-					}
-				});
+		        {#alert("ok.");#}
+				mysubmit();
 				
 		    }
 		});
+		function  mysubmit(){
+			{#alert('submit');#}
+			var nowtime = '当前时间';
+			
+			var name_oldpeople=document.getElementById("Name");
+			
+			var sex_oldpeople=document.getElementById("sex");
+			
+			
+			var phone_oldpeople=document.getElementById("phone");
+			var idcard_oldpeople=document.getElementById("IDCard");
+			var brith_oldpeople=document.getElementById("brithtime");
+			var roomnum_oldpeople=document.getElementById("roomnum");
+			var intime_oldpeople=document.getElementById("intime");
+			var outtime_oldpeople=document.getElementById("outtime");
+			var state_oldpeople=document.getElementById("state");
+			var description_oldpeople=document.getElementById("shortDescription");
+			var jhrname1_oldpeople=document.getElementById("jianhuren1name");
+			var jhrrelation1_oldpeople=document.getElementById("jianhuren1relation");
+			var jhrphone1_oldpeople=document.getElementById("jianhuren1phone");
+			var jhrwechat1_oldpeople=document.getElementById("jianhuren1wechat");
+			var jhrname2_oldpeople=document.getElementById("jianhuren2name");
+			var jhrrelation2_oldpeople=document.getElementById("jianhuren2relation");
+			var jhrphone2_oldpeople=document.getElementById("jianhuren2phone");
+			var jhrwechat2_oldpeople=document.getElementById("jianhuren2wechat");
+			
+			var submit_json_text={"ID":"0","username":name_oldpeople.value,"gender":sex_oldpeople.value,"phone":phone_oldpeople.value,"id_card":idcard_oldpeople.value,"birthday":brith_oldpeople.value,"checkin_date":intime_oldpeople.value,"checkout_date":outtime_oldpeople.value,"imgset_dir":"未知","profile_photo":"未知","room_number":roomnum_oldpeople.value,"firstguardian_name":jhrname1_oldpeople.value,"firstguardian_relationship":jhrrelation1_oldpeople.value,"firstguardian_phone":jhrphone1_oldpeople.value,"firstguardian_wechat":jhrwechat1_oldpeople.value,"secondguardian_name":jhrname2_oldpeople.value,"secondguardian_relationship":jhrrelation2_oldpeople.value,"secondguardian_phone":jhrphone2_oldpeople.value,"secondguardian_wechat":jhrwechat2_oldpeople.value,"health_state":state_oldpeople.value,"DESCRIPTION":description_oldpeople.value,"ISACTIVE":"有效","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"无"};
+
+			$.ajax({
+				
+				url : "http://127.0.0.1:5000/newoldpeople",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(submit_json_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'text',
+				success:function(data){
+					alert('添加成功!');
+					window.location.href='/old-people'
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert('添加失败!'+textStatus);
+
+				}
+			});
+		}
 		
 	</script>
     <!-- BEGIN: Vendor JS-->
@@ -475,12 +482,12 @@
 	<!-- END: Page JS-->
 	
 	<!-- BEGIN: Page Vendor JS-->
-	<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+
 	<script src="../static/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
 	<!-- END: Page Vendor JS-->
 	
 	<!-- BEGIN: Page JS-->
-{#	<script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script>#}
+	<!-- <script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script> -->
 	<!-- END: Page JS-->
 	
     <!-- BEGIN: Page Vendor JS-->
@@ -489,7 +496,7 @@
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <!-- END: Page Vendor JS-->
-	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+
     <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
