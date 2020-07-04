@@ -35,7 +35,7 @@
     <!-- END: Page CSS-->
 	
 	<!-- BEGIN: Page CSS-->
-
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/forms/wizard.css">
 	<!-- END: Page CSS-->
 
@@ -47,6 +47,9 @@
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
 	<!-- END: Vendor CSS-->
 	
+	<!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+	<!-- END: Page CSS-->
 
 
 
@@ -187,130 +190,88 @@
         <!-- END: Header-->
 
         <div class="content-wrapper">
-            <section id="number-tabs">
+            <section id="basic-input">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">新增管理员信息</h4>
+                                
+								<ul class="list-unstyled users-list m-0  d-flex align-items-center"><li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Vinnie Mostowy" class="avatar pull-up"><img class="media-object rounded-circle" src="../static/app-assets/images/portrait/small/avatar-s-5.png" alt="Avatar" height="60" width="60">
+								</li></ul>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
-                                    
-                                    <form action="#" class="number-tab-steps wizard-circle">
-            
-                                        <!-- Step 1 -->
-                                        <h6>Step 1</h6>
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="username">用户名</label>
-                                                        <input type="text" class="form-control" id="username">
-                                                    </div>
-            										<div class="form-group">
-            										    <label for="password">密码</label>
-            										    <input type="text" class="form-control" id="password">
-            										</div>
-            										<div class="form-group">
-            										    <label for="name">真实姓名</label>
-            										    <input type="text" class="form-control" id="name">
-            										</div>
-            										
-                                                </div>
-            									<div class="col-sm-6">
-            										<div class="form-group">
-            										    <label for="sex">性别</label>
-            										    <select class="custom-select form-control" id="sex" name="sex">
-            										        <option value="女">女</option>
-            										        <option value="男">男</option>
-            										    </select>
-            										</div>
-            										
-            									</div>
-                                                <div class="col-sm-6">
-            										
-                                                    
-                                                </div>
-                                            </div>
-            
-                                            
-            								
-                                        </fieldset>
-            
-                                        <!-- Step 2 -->
-                                        <h6>Step 2</h6>
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-            										
-                                                    <div class="form-group">
-                                                        <label for="email">邮箱</label>
-                                                        <input type="email" class="form-control" id="email">
-                                                    </div>
-            										<div class="form-group">
-            										    <label for="phone">电话</label>
-            										    <input type="tel" class="form-control" id="phone">
-            										</div>
-            										<div class="form-group">
-            											<label for="mobilephone">移动电话</label>
-            											<input type="tel" class="form-control" id="mobilephone">
-            										
-            										</div>
-            										<section class="vuesax-radio-color">
-            											<div class="row">
-            												<div class="col-12">
-            													<div class="card">
-            													
-            														<div class="card-content">
-            															<div class="card-body">
-            															   
-            																<ul class="list-unstyled mb-0">
-            																	<li class="d-inline-block mr-2">
-            																		<fieldset>
-            																			<div class="vs-radio-con">
-            																				<input type="radio" name="radiois" checked value="有效">
-            																				<span class="vs-radio">
-            																					<span class="vs-radio--border"></span>
-            																					<span class="vs-radio--circle"></span>
-            																				</span>
-            																				<span class="">有效</span>
-            																			</div>
-            																		</fieldset>
-            																	</li>
-            																	<li class="d-inline-block mr-2">
-            																		<fieldset>
-            																			<div class="vs-radio-con vs-radio-success">
-            																				<input type="radio" name="radiois" value="无效">
-            																				<span class="vs-radio">
-            																					<span class="vs-radio--border"></span>
-            																					<span class="vs-radio--circle"></span>
-            																				</span>
-            																				<span class="">无效</span>
-            																			</div>
-            																		</fieldset>
-            																	</li>
-            															
-            																   
-            																</ul>
-            															</div>
-            														</div>
-            													</div>
-            												</div>
-            											</div>
-            										</section>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="shortDescription">描述</label>
-                                                        <textarea name="shortDescription" id="shortDescription" rows="8" class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-            
-                                      
-                                    </form>
+                                    <div class="row">
+										
+										<div class="col-xl-4 col-md-6 col-12">
+										    <fieldset class="form-group">
+										        <label for="id">编号</label>
+										        <input type="text" class="form-control" id="id" readonly="readonly" value="null">
+										    </fieldset>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="name">姓名</label>
+										        <input type="text" class="form-control" id="name" readonly="readonly" placeholder="null">
+										    </fieldset>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="sex">性别</label>
+										        <input type="text" class="form-control" id="sex" readonly="readonly" placeholder="null">
+										    </fieldset>
+										</div>
+									
+										<div class="col-xl-4 col-md-6 col-12">
+										    <fieldset class="form-group">
+										        <label for="phone">电话</label>
+										        <input type="text" class="form-control" id="phone" value="null">
+										    </fieldset>
+										</div>
+										
+										<div class="col-xl-4 col-md-6 col-12">
+										    <fieldset class="form-group">
+										        <label for="idcard">身份证号</label>
+										        <input type="text" class="form-control" id="idcard"  value="null">
+										    </fieldset>
+										</div>
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="birthday">出生日期</label>
+										        <input type="text" class="form-control" id="birthday" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										
+                                        <div class="col-xl-4 col-md-6 col-12 mb-1">
+                                            <fieldset class="form-group">
+                                                <label for="intime">访问日期</label>
+                                                <input type="text" class="form-control" id="intime" placeholder="null">
+                                            </fieldset>
+                                        </div>
+										
+										<div class="col-xl-4 col-md-6 col-12 mb-1">
+										    <fieldset class="form-group">
+										        <label for="outtime">离开日期</label>
+										        <input type="text" class="form-control" id="outtime" placeholder="null">
+										    </fieldset>
+										</div>
+										
+										
+										<div class="col-sm-6">
+										    <div class="form-group">
+										        <label for="shortDescription">描述</label>
+										        <textarea name="shortDescription" id="shortDescription" rows="10" class="form-control">null</textarea>
+										    </div>
+										</div>
+									
+										
+                                    </div>
+									<br />
+									<br />
+									<button type="button" class="btn btn-outline-primary mr-1 mb-1" onclick="changes();">提交修改</button>
+									<button type="button" class="btn btn-outline-warning mr-1 mb-1" onclick="refashs();">恢复原始</button>
+									<button type="button" class="btn btn-outline-danger mr-1 mb-1" onclick="deletes();">删除</button>
                                 </div>
                             </div>
                         </div>
@@ -320,67 +281,160 @@
 		</div>
     </div>
     <!-- END: Content-->
-		<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-			<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
 	<script>
-		var param;
 		window.onload=function(){
-			
-			param = $.cookie("username");
+			var param = $.cookie("username");
 			console.log(param); 
 					
 			var headusername=document.getElementById('head-username');
-			headusername.value=param;
+			headusername.innerHTML=param; 
 			
-		}
-		
-		$(".number-tab-steps").steps({
-		    headerTag: "h6",
-		    bodyTag: "fieldset",
-		    transitionEffect: "fade",
-		    titleTemplate: '<span class="step">#index#</span> #title#',
-		    labels: {
-		        finish: 'Submit'
-		    },
-		    onFinished: function (event, currentIndex) {
-		        alert("ok.");
-				mysubmit();
-				
-		    }
-		});
-		function  mysubmit(){
-			var nowtime = "当前时间";
-			var username_manager=document.getElementById("username");
-			var password_manager=document.getElementById("password");
-			var name_manager=document.getElementById("name");
-			
-			var sex_manager=document.getElementById("name");
-			
-			var email_manager=document.getElementById("email");
-			var phone_manager=document.getElementById("phone");
-			var mobilephone_manager=document.getElementById("mobilephone");
-			var shortDescription_manager=document.getElementById("shortDescription");
-			var submit_json_text={"ID":"0","UserName":username_manager.value,"Password":password_manager.value,"REAL_NAME":name_manager.value,"SEX":sex_manager.value,"EMAIL":email_manager.value,"PHONE":phone_manager.value,"MOBILE":mobilephone_manager.value,"DESCRIPTION":shortDescription_manager.value,"ISACTIVE":"是","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"0","DATAFILTER":"未知","theme":"新建管理员","defaultpage":"无","logoimage":"无","qqopenid":"无","appversion":"未知","jsonauth":"最高级"};
-			
+			var submit_json_text={"type":"volunteer"};
+			var index = $.cookie("volunteer_detail_num");
+			console.log(index); 
+	
 			$.ajax({
 				
-				url : "http://127.0.0.1:5000/newmanager",
+				url : "http://127.0.0.1:5000/volunteer",
 				type : "POST",
 				async : true,
 				data:JSON.stringify(submit_json_text),
 				contentType:"application/json; charset=UTF-8",
-				dataType : 'text',
+				dataType : 'json',
 				success:function(data){
-					alert('添加成功!');
-					window.location.href='/manager'
-				},
-				error:function(XMLHttpRequest, textStatus, errorThrown){
-					alert('添加失败!'+textStatus);
+		
+					var mid=document.getElementById('id');
+					var mname=document.getElementById('name');
+					var msex=document.getElementById('sex');
+					var mphone=document.getElementById('phone');
+					var midcard=document.getElementById('idcard');
+					var mbirthday=document.getElementById('birthday');
+					var mintime=document.getElementById('intime');
+					var mouttime=document.getElementById('outtime');
+					var mdesc=document.getElementById('shortDescription');
 
+
+					mid.setAttribute('value',data[index].id);
+					mname.setAttribute('value',data[index].name);
+					msex.setAttribute('value',data[index].gender);
+					mphone.setAttribute('value',data[index].phone);
+					midcard.setAttribute('value',data[index].id_card);
+					mbirthday.setAttribute('value',data[index].birthday);
+					mintime.setAttribute('value',data[index].checkin_date);
+					mouttime.setAttribute('value',data[index].checkout_date);
+					mdesc.setAttribute('value',data[index].DESCRIPTION);
+					
+					
 				}
 			});
+
 		}
+		function changes(){
+			var param = $.cookie("username");
+			console.log(param); 
+			var submit_json_text={"type":"volunteer"};
+			var index = $.cookie("volunteer_detail_num");
+			console.log(index); 
+	
+			$.ajax({
+				
+				url : "http://127.0.0.1:5000/volunteer",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(submit_json_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'json',
+				success:function(data){
+					
+					var nowtime = '当前时间';
+					var mid=document.getElementById('id');
+					var mname=document.getElementById('name');
+					var msex=document.getElementById('sex');
+					var mphone=document.getElementById('phone');
+					var midcard=document.getElementById('idcard');
+					var mbirthday=document.getElementById('birthday');
+					var mintime=document.getElementById('intime');
+					var mouttime=document.getElementById('outtime');
+					var mdesc=document.getElementById('shortDescription');
+					
+					
+					
+					var submit_json_text={"id":mid.value,
+						"name":mname.value,
+						"gender":msex.value,
+						"phone":mphone.value,
+						"id_card":midcard.value,
+						"birthday":mbirthday.value,
+						"checkin_date":mintime.value,
+						"checkout_date":mouttime.value,
+						"imgset_dir":"未知",
+						"profile_photo":"未知",
+						"DESCRIPTION":mdesc.value,
+						"ISACTIVE":"有效",
+						"CREATED":nowtime,
+						"CREATEBY":param,
+						"UPDATED":nowtime,
+						"UPDATEBY":param,
+						"REMOVE":"n"
+						
+					};
+					
+					$.ajax({
+						
+						url : "http://127.0.0.1:5000/updatevolunteer",
+						type : "POST",
+						async : true,
+						data:JSON.stringify(submit_json_text),
+						contentType:"application/json; charset=UTF-8",
+						dataType : 'text',
+						success:function(data){
+							alert('修改成功!');
+							window.location.href='/volunteer'
+						}
+					});
+				}
+			});
+			
+		}
+		function refashs(){
+			window.location.reload();
+		}
+		function deletes(){
+			var param = $.cookie("username");
+			console.log(param); 
+			var submit_json_text={"type":"volunteer"};
+			var index = $.cookie("volunteer_detail_num");
+			console.log(index); 
+			$.ajax({
+				
+				url : "http://127.0.0.1:5000/volunteer",
+				type : "POST",
+				async : true,
+				data:JSON.stringify(submit_json_text),
+				contentType:"application/json; charset=UTF-8",
+				dataType : 'json',
+				success:function(data){
+					
+					var delete_text={"name":data[index].name};
+					$.ajax({
+					
+						url : "http://127.0.0.1:5000/deletevolunteer",
+						type : "POST",
+						async : true,
+						data:JSON.stringify(delete_text),
+						contentType:"application/json; charset=UTF-8",
+						dataType : 'text',
+						success:function(data){
+							alert('删除成功！')
+							window.location.href='/volunteer';
+						}
+					});
+				}
+			});
 		
+			
+			
+		}
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
@@ -411,22 +465,22 @@
 	<!-- END: Page JS-->
 	
 	<!-- BEGIN: Page Vendor JS-->
-
+	<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
 	<script src="../static/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
 	<!-- END: Page Vendor JS-->
 	
 	<!-- BEGIN: Page JS-->
-	<!-- <script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script> -->
+	<script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script>
 	<!-- END: Page JS-->
-	
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <!-- BEGIN: Page Vendor JS-->
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <!-- END: Page Vendor JS-->
-
-    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
     <!-- END: Page JS-->

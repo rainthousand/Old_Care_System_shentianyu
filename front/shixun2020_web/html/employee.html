@@ -32,22 +32,12 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/dashboard-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/card-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Page CSS-->
-	
-	<!-- BEGIN: Page CSS-->
-
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/forms/wizard.css">
-	<!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
-	
-	<!-- BEGIN: Vendor CSS-->
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
-	<!-- END: Vendor CSS-->
-	
-
 
 
 </head>
@@ -70,28 +60,31 @@
         </div>
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a href="/index"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
-                   
-                </li>
-                <li class=" navigation-header"><span></span>
-                </li>
-                <li class=" nav-item"><a href="/old-people"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
-                </li>
-                <li class=" nav-item"><a href="/volunteer"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
-                </li>
-                <li class=" nav-item"><a href="/employee"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
-                </li>
-                <li class=" nav-item"><a href="/manager"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
-                </li>
-        		<li class=" nav-item"><a href="/video"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
-        		</li>
-        		<li class=" nav-item"><a href="/event"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
-        		</li>
-                
-            </ul>
+            <div class="main-menu-content">
+                <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                    <li class=" nav-item"><a href="/index"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
+                       
+                    </li>
+                    <li class=" navigation-header"><span></span>
+                    </li>
+                    <li class=" nav-item"><a href="/old-people"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
+                    </li>
+                    <li class=" nav-item"><a href="/volunteer"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
+                    </li>
+                    <li class=" nav-item"><a href="/employee"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
+                    </li>
+                    <li class=" nav-item"><a href="/manager"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
+                    </li>
+            		<li class=" nav-item"><a href="/video"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
+            		</li>
+            		<li class=" nav-item"><a href="/event"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
+            		</li>
+                    
+                </ul>
+            </div>
         </div>
-    </div>
+        </div>
+    
     <!-- END: Main Menu-->
 
     <!-- BEGIN: Content-->
@@ -187,200 +180,319 @@
         <!-- END: Header-->
 
         <div class="content-wrapper">
-            <section id="number-tabs">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">新增管理员信息</h4>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body">
-                                    
-                                    <form action="#" class="number-tab-steps wizard-circle">
-            
-                                        <!-- Step 1 -->
-                                        <h6>Step 1</h6>
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="username">用户名</label>
-                                                        <input type="text" class="form-control" id="username">
-                                                    </div>
-            										<div class="form-group">
-            										    <label for="password">密码</label>
-            										    <input type="text" class="form-control" id="password">
-            										</div>
-            										<div class="form-group">
-            										    <label for="name">真实姓名</label>
-            										    <input type="text" class="form-control" id="name">
-            										</div>
-            										
-                                                </div>
-            									<div class="col-sm-6">
-            										<div class="form-group">
-            										    <label for="sex">性别</label>
-            										    <select class="custom-select form-control" id="sex" name="sex">
-            										        <option value="女">女</option>
-            										        <option value="男">男</option>
-            										    </select>
-            										</div>
-            										
-            									</div>
-                                                <div class="col-sm-6">
-            										
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section id="column-selectors">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="mb-0">工作人员信息</h4>
+                                	<button type="button" class="btn btn-success mr-1 mb-1" onclick="window.location.href='/newemployee'">新增工作人员</button>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body card-dashboard">
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-striped dataex-html5-selectors">
+                                                <thead>
+                                                    <tr>
+                                                        <tr>
+                											<th>编号</th>
+                                                        	<th>姓名</th>
+                                                        	<th>性别</th>
+                                                        	<th>电话</th>
+                                                        	<th>身份证号</th>
+                                                        	<th>入职日期</th>
+                                                        	<th>离职日期</th>
+                                                        	<th>描述</th>
+                                                        	<th>查看</th>
+                                                        </tr>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tablebody">
                                                     
-                                                </div>
-                                            </div>
-            
-                                            
-            								
-                                        </fieldset>
-            
-                                        <!-- Step 2 -->
-                                        <h6>Step 2</h6>
-                                        <fieldset>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-            										
-                                                    <div class="form-group">
-                                                        <label for="email">邮箱</label>
-                                                        <input type="email" class="form-control" id="email">
-                                                    </div>
-            										<div class="form-group">
-            										    <label for="phone">电话</label>
-            										    <input type="tel" class="form-control" id="phone">
-            										</div>
-            										<div class="form-group">
-            											<label for="mobilephone">移动电话</label>
-            											<input type="tel" class="form-control" id="mobilephone">
-            										
-            										</div>
-            										<section class="vuesax-radio-color">
-            											<div class="row">
-            												<div class="col-12">
-            													<div class="card">
-            													
-            														<div class="card-content">
-            															<div class="card-body">
-            															   
-            																<ul class="list-unstyled mb-0">
-            																	<li class="d-inline-block mr-2">
-            																		<fieldset>
-            																			<div class="vs-radio-con">
-            																				<input type="radio" name="radiois" checked value="有效">
-            																				<span class="vs-radio">
-            																					<span class="vs-radio--border"></span>
-            																					<span class="vs-radio--circle"></span>
-            																				</span>
-            																				<span class="">有效</span>
-            																			</div>
-            																		</fieldset>
-            																	</li>
-            																	<li class="d-inline-block mr-2">
-            																		<fieldset>
-            																			<div class="vs-radio-con vs-radio-success">
-            																				<input type="radio" name="radiois" value="无效">
-            																				<span class="vs-radio">
-            																					<span class="vs-radio--border"></span>
-            																					<span class="vs-radio--circle"></span>
-            																				</span>
-            																				<span class="">无效</span>
-            																			</div>
-            																		</fieldset>
-            																	</li>
-            															
-            																   
-            																</ul>
-            															</div>
-            														</div>
-            													</div>
-            												</div>
-            											</div>
-            										</section>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group">
-                                                        <label for="shortDescription">描述</label>
-                                                        <textarea name="shortDescription" id="shortDescription" rows="8" class="form-control"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-            
-                                      
-                                    </form>
+                                                </tbody>
+                                                
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+                
+            </div>
+        </div>
+		<div class="content-wrapper">
+		    <div class="content-body"> 
+		        <!-- Bar Chart -->
+		        <div class="row">
+		            <div class="col-12">
+		                <div class="card">
+		                    <div class="card-header">
+		                        <h4 class="card-title">Bar Chart</h4>
+		                    </div>
+		                    <div class="card-content">
+		                        <div class="card-body">
+		                            <div id="bar-chart-oldpeople" class="height-400"></div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		
+		
+		        <!-- Pie Chart -->
+		        <div class="row">
+		            <div class="col-12">
+		                <div class="card">
+		                    <div class="card-header">
+		                        <h4 class="card-title">Pie Chart</h4>
+		                    </div>
+		                    <div class="card-content">
+		                        <div class="card-body">
+		                            <div id="pie-chart-oldpeople" class="height-400"></div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		
+		
+		    </div>
 		</div>
     </div>
     <!-- END: Content-->
-		<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-			<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
 	<script>
-		var param;
-		window.onload=function(){
+		function seemore(i){
 			
-			param = $.cookie("username");
-			console.log(param); 
-					
-			var headusername=document.getElementById('head-username');
-			headusername.value=param;
-			
+			$.cookie("employee_detail_num",i);
+			window.location.href='/employee-detail';
 		}
+		window.onload=function(){
+			var param = $.cookie("username"); 
+			console.log(param); 
 		
-		$(".number-tab-steps").steps({
-		    headerTag: "h6",
-		    bodyTag: "fieldset",
-		    transitionEffect: "fade",
-		    titleTemplate: '<span class="step">#index#</span> #title#',
-		    labels: {
-		        finish: 'Submit'
-		    },
-		    onFinished: function (event, currentIndex) {
-		        alert("ok.");
-				mysubmit();
-				
-		    }
-		});
-		function  mysubmit(){
-			var nowtime = "当前时间";
-			var username_manager=document.getElementById("username");
-			var password_manager=document.getElementById("password");
-			var name_manager=document.getElementById("name");
+			var headusername=document.getElementById('head-username');
+			headusername.innerHTML=param;
 			
-			var sex_manager=document.getElementById("name");
-			
-			var email_manager=document.getElementById("email");
-			var phone_manager=document.getElementById("phone");
-			var mobilephone_manager=document.getElementById("mobilephone");
-			var shortDescription_manager=document.getElementById("shortDescription");
-			var submit_json_text={"ID":"0","UserName":username_manager.value,"Password":password_manager.value,"REAL_NAME":name_manager.value,"SEX":sex_manager.value,"EMAIL":email_manager.value,"PHONE":phone_manager.value,"MOBILE":mobilephone_manager.value,"DESCRIPTION":shortDescription_manager.value,"ISACTIVE":"是","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"0","DATAFILTER":"未知","theme":"新建管理员","defaultpage":"无","logoimage":"无","qqopenid":"无","appversion":"未知","jsonauth":"最高级"};
+			var woker_josn_text={"type":"woker"};
+			var num = new Array(8);
 			
 			$.ajax({
-				
-				url : "http://127.0.0.1:5000/newmanager",
+			
+				url : "http://127.0.0.1:5000/employee",
 				type : "POST",
 				async : true,
-				data:JSON.stringify(submit_json_text),
+				data:JSON.stringify(woker_josn_text),
 				contentType:"application/json; charset=UTF-8",
-				dataType : 'text',
+				dataType : 'json',
 				success:function(data){
-					alert('添加成功!');
-					window.location.href='/manager'
-				},
-				error:function(XMLHttpRequest, textStatus, errorThrown){
-					alert('添加失败!'+textStatus);
+					var str = [];
 
+					 for(var i = 0 ; i<8 ; i++){
+					  num[i] = 0;
+					 }
+					 //alert(data.length)
+					 //alert(data.people)
+					 for(var i in data){
+					  if(data[i].age>=20&&data[i].age<30&&data[i].gender=="男"){
+					   str.push(data[i].username)
+					   num[0] = num[0]+1
+					   //alert(str);
+					  }
+
+					  if(data[i].age>=20&&data[i].age<30&&data[i].gender=="女"){
+					   str.push(data[i].username)
+					  num[1] = num[1]+1
+					  //alert(str);
+					  }
+
+					  if(data[i].age>=30&&data[i].age<40&&data[i].gender=="男"){
+					   str.push(data[i].username)
+					  num[2] = num[2]+1
+					  //alert(str);
+					  }
+
+					  if(data[i].age>=30&&data[i].age<40&&data[i].gender=="女"){
+					   str.push(data[i].username)
+					  num[3] = num[3]+1
+					  //alert(str);
+					  }
+
+					  if(data[i].age>=40&&data[i].age<50&&data[i].gender=="男"){
+					   str.push(data[i].username)
+					  num[4] = num[4]+1
+					  //alert(str);
+					  }
+
+					  if(data[i].age>=40&&data[i].age<50&&data[i].gender=="女"){
+					   str.push(data[i].username)
+					  num[0] = num[5]+1
+					  //alert(str);
+					  }
+
+					  if(data[i].age>=50&&data[i].age<60&&data[i].gender=="男"){
+					   str.push(data[i].username)
+					  num[6] = num[6]+1
+					  //alert(str);
+					  }
+
+					  if(data[i].age>=50&&data[i].age<60&&data[i].gender=="女"){
+					   str.push(data[i].username)
+					  num[7] = num[7]+1
+					  document.getElementById("demo").innerHTML += num;
+
+					  }
+
+
+					}
+					// alert(num);
+					
+					// var data=[{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"id":"2","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
+					var tablebody=document.getElementById('tablebody');
+					tablebody.innerHTML='';
+					for(var i in data){//遍历packJson 数组时，i为索引
+						
+						var tabletr = document.createElement("tr");
+						var tabletd1 = document.createElement("td");
+						var tabletd2 = document.createElement("td");
+						var tabletd3 = document.createElement("td");
+						var tabletd4 = document.createElement("td");
+						var tabletd5 = document.createElement("td");
+						var tabletd6 = document.createElement("td");
+						var tabletd7 = document.createElement("td");
+						var tabletd8 = document.createElement("td");
+						var tabletd9 = document.createElement("td");
+						
+						tabletd1.innerHTML=data[i].id;
+						tabletd2.innerHTML=data[i].username
+						tabletd3.innerHTML=data[i].gender;
+						tabletd4.innerHTML=data[i].phone;
+						tabletd5.innerHTML=data[i].id_card;
+						tabletd6.innerHTML=data[i].hire_date;
+						tabletd7.innerHTML=data[i].resign_date;
+						tabletd8.innerHTML=data[i].DESCRIPTION;
+						
+						var mbutton = document.createElement("input");
+						mbutton.setAttribute("type", "button");
+						mbutton.setAttribute("value", "查看");
+						mbutton.setAttribute("id", "seemorebutton");
+						mbutton.setAttribute("class", "btn btn-flat-primary mr-1 mb-1");
+						mbutton.setAttribute("onclick", "seemore("+i+")");
+						tabletd9.appendChild(mbutton);
+						
+						tabletr.appendChild(tabletd1);
+						tabletr.appendChild(tabletd2);
+						tabletr.appendChild(tabletd3);
+						tabletr.appendChild(tabletd4);
+						tabletr.appendChild(tabletd5);
+						tabletr.appendChild(tabletd6);
+						tabletr.appendChild(tabletd7);
+						tabletr.appendChild(tabletd8);
+						tabletr.appendChild(tabletd9);
+						tablebody.appendChild(tabletr);
+						
+					}
+					
+					
+					var $dark_green = '#4ea397';
+					var $green = '#22c3aa';
+					var $light_green = '#7bd9a5';
+					var $lighten_green = '#a8e7d2';
+
+					// Bar chart
+					// ------------------------------
+
+					var barChart = echarts.init(document.getElementById('bar-chart-oldpeople'));
+
+					// var i;
+					function randomize() {
+						return Math.round(300 + Math.random() * 700) / 10
+					};
+
+					var barChartoption = {
+						legend: {},
+						tooltip: {},
+						dataset: {
+							source: [
+								['sex', '男', '女'],
+								['20-30', num[0], num[1]],
+								['30-40', num[2], num[3]],
+								['40-50', num[4], num[5]],
+								['50-60', num[6], num[7]],
+							],
+
+						},
+
+						xAxis: {
+							type: 'category',
+							splitLine: { show: true },
+						},
+						yAxis: {},
+						// Declare several bar series, each will be mapped
+						// to a column of dataset.source by default.
+						series: [
+							{
+								type: 'bar',
+								itemStyle: {color: $dark_green},
+							},
+							{
+								type: 'bar',
+								itemStyle: {color: $light_green},
+							}
+						]
+					};
+					barChart.setOption(barChartoption);
+
+
+					// Pie chart
+					// ------------------------------
+
+					var pieChart = echarts.init(document.getElementById('pie-chart-oldpeople'));
+
+					var pieChartoption = {
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							orient: 'vertical',
+							left: 'left',
+							data: ['20-30', '30-40', '40-50', '50-60']
+						},
+						series : [
+							{
+								name: 'Age',
+								type: 'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								color: ['#FF9F43','#28C76F','#EA5455','#87ceeb','#7367F0'],
+								data: [
+								  {value: num[0]+num[1], name: '20-30'},
+								  {value: num[2]+num[3], name: '30-40'},
+								  {value: num[4]+num[5], name: '40-50'},
+								  {value: num[6]+num[7], name: '50-60'},
+								],
+								itemStyle: {
+									emphasis: {
+										shadowBlur: 10,
+										shadowOffsetX: 0,
+										shadowColor: 'rgba(0, 0, 0, 0.5)'
+									}
+								}
+							}
+						],
+					};
+
+					pieChart.setOption(pieChartoption);
 				}
 			});
-		}
 		
+		}
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
@@ -409,27 +521,27 @@
 	<!-- BEGIN: Page JS-->
 	<script src="../static/app-assets/js/scripts/charts/chart-echart.js"></script>
 	<!-- END: Page JS-->
+
+	
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 	
 	<!-- BEGIN: Page Vendor JS-->
-
-	<script src="../static/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
+	<script src="../static/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
 	<!-- END: Page Vendor JS-->
 	
 	<!-- BEGIN: Page JS-->
-	<!-- <script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script> -->
+	<script src="../static/app-assets/js/scripts/datatables/datatable.js"></script>
 	<!-- END: Page JS-->
 	
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
-    <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
-    <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
-    <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
-    <!-- END: Page Vendor JS-->
-
-    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <!-- BEGIN: Page JS-->
-    <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
-    <!-- END: Page JS-->
+	
 </body>
 <!-- END: Body-->
 

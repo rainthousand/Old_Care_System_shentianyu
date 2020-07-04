@@ -192,7 +192,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">新增管理员信息</h4>
+                                <h4 class="card-title">新增义工信息</h4>
                             </div>
                             <div class="card-content">
                                 <div class="card-body">
@@ -205,18 +205,9 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="username">用户名</label>
-                                                        <input type="text" class="form-control" id="username">
+                                                        <label for="name">姓名</label>
+                                                        <input type="text" class="form-control" id="name">
                                                     </div>
-            										<div class="form-group">
-            										    <label for="password">密码</label>
-            										    <input type="text" class="form-control" id="password">
-            										</div>
-            										<div class="form-group">
-            										    <label for="name">真实姓名</label>
-            										    <input type="text" class="form-control" id="name">
-            										</div>
-            										
                                                 </div>
             									<div class="col-sm-6">
             										<div class="form-group">
@@ -229,12 +220,33 @@
             										
             									</div>
                                                 <div class="col-sm-6">
-            										
-                                                    
+                                                    <div class="form-group">
+                                                        <label for="phone">电话</label>
+                                                        <input type="tel" class="form-control" id="phone">
+                                                    </div>
                                                 </div>
                                             </div>
             
-                                            
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="idcard">身份证号</label>
+                                                        <input type="text" class="form-control" id="idcard">
+                                                    </div>
+                                                </div>
+            									
+                                               
+                                            </div>
+            								<div class="row">
+            								    <div class="col-sm-6">
+            								    	<div class="form-group">
+            								    		<label for="brithtime">出生日期</label>
+            								    		<input type="text" class="form-control pickadate" id="brithtime">
+            								    	
+            								    	</div>
+            								    </div>
+            							
+            								</div>
             								
                                         </fieldset>
             
@@ -245,16 +257,13 @@
                                                 <div class="col-sm-6">
             										
                                                     <div class="form-group">
-                                                        <label for="email">邮箱</label>
-                                                        <input type="email" class="form-control" id="email">
+                                                    	<label for="intime">入职日期</label>
+                                                    	<input type="text" class="form-control pickadate" id="intime">
+                                                    
                                                     </div>
             										<div class="form-group">
-            										    <label for="phone">电话</label>
-            										    <input type="tel" class="form-control" id="phone">
-            										</div>
-            										<div class="form-group">
-            											<label for="mobilephone">移动电话</label>
-            											<input type="tel" class="form-control" id="mobilephone">
+            											<label for="outtime">离职日期</label>
+            											<input type="text" class="form-control pickadate" id="outtime">
             										
             										</div>
             										<section class="vuesax-radio-color">
@@ -303,7 +312,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="shortDescription">描述</label>
-                                                        <textarea name="shortDescription" id="shortDescription" rows="8" class="form-control"></textarea>
+                                                        <textarea name="shortDescription" id="shortDescription" rows="10" class="form-control"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -350,21 +359,40 @@
 		});
 		function  mysubmit(){
 			var nowtime = "当前时间";
-			var username_manager=document.getElementById("username");
-			var password_manager=document.getElementById("password");
-			var name_manager=document.getElementById("name");
 			
-			var sex_manager=document.getElementById("name");
 			
-			var email_manager=document.getElementById("email");
-			var phone_manager=document.getElementById("phone");
-			var mobilephone_manager=document.getElementById("mobilephone");
-			var shortDescription_manager=document.getElementById("shortDescription");
-			var submit_json_text={"ID":"0","UserName":username_manager.value,"Password":password_manager.value,"REAL_NAME":name_manager.value,"SEX":sex_manager.value,"EMAIL":email_manager.value,"PHONE":phone_manager.value,"MOBILE":mobilephone_manager.value,"DESCRIPTION":shortDescription_manager.value,"ISACTIVE":"是","CREATED":nowtime,"CREATEBY":param,"UPDATED":nowtime,"UPDATEBY":param,"REMOVE":"0","DATAFILTER":"未知","theme":"新建管理员","defaultpage":"无","logoimage":"无","qqopenid":"无","appversion":"未知","jsonauth":"最高级"};
+			var name_volunteer=document.getElementById("name");
+			var sex_volunteer=document.getElementById("sex");
+			var phone_volunteer=document.getElementById("phone");
+			var idcard_volunteer=document.getElementById("idcard");
+			var brith_volunteer=document.getElementById("brithtime");
+			var intime_volunteer=document.getElementById("intime");
+			var outtime_volunteer=document.getElementById("outtime");
+			var description_volunteer=document.getElementById("shortDescription");
+			
+			var submit_json_text={"id":"0",
+				"username":name_volunteer.value,
+				"gender":sex_volunteer.value,
+				"phone":phone_volunteer.value,
+				"id_card":idcard_volunteer.value,
+				"birthday":brith_volunteer.value,
+				"hire_date":intime_volunteer.value,
+				"resign_date":outtime_volunteer.value,
+				"imgset_dir":"未知",
+				"profile_photo":"未知",
+				"DESCRIPTION":description_volunteer.value,
+				"ISACTIVE":"有效",
+				"CREATED":nowtime,
+				"CREATEBY":param,
+				"UPDATED":nowtime,
+				"UPDATEBY":param,
+				"REMOVE":"n"
+				
+			};
 			
 			$.ajax({
 				
-				url : "http://127.0.0.1:5000/newmanager",
+				url : "http://127.0.0.1:5000/newemployee",
 				type : "POST",
 				async : true,
 				data:JSON.stringify(submit_json_text),
@@ -372,7 +400,7 @@
 				dataType : 'text',
 				success:function(data){
 					alert('添加成功!');
-					window.location.href='/manager'
+					window.location.href='/employee'
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
 					alert('添加失败!'+textStatus);

@@ -10,30 +10,30 @@
     <meta name="keywords" content="admin template, Vuesax admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
     <title>Login Page</title>
-    <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+    <link rel="apple-touch-icon" href="../static/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../static/app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/vendors.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="http://cdn.bootstrapmb.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/semi-dark-layout.css">
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/colors/palette-gradient.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/pages/authentication.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/authentication.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
 
 </head>
@@ -53,7 +53,7 @@
                         <div class="card bg-authentication rounded-0 mb-0">
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
-                                    <img src="../app-assets/images/pages/login.png" alt="branding logo">
+                                    <img src="../static/app-assets/images/pages/login.png" alt="branding logo">
                                 </div>
                                 <div class="col-lg-6 col-12 p-0">
                                     <div class="card rounded-0 mb-0 px-2">
@@ -87,11 +87,11 @@
                                                         <div class="text-left">
                                                             
                                                         </div>
-                                                        <div class="text-right"><a href="forgot-password.html" class="card-link">Forgot Password?</a></div>
+                                                        <div class="text-right"><a href="/forgot-password" class="card-link">Forgot Password?</a></div>
                                                     </div>
                                                     
                                                 </form>
-												<a href="register.html" class="btn btn-primary float-left btn-inline">Register</a>
+												<a href="/register" class="btn btn-primary float-left btn-inline">Register</a>
 												<button class="btn btn-primary float-right btn-inline" onclick="login()">Login</button>
                                             </div>
                                         </div>
@@ -115,8 +115,7 @@
 		function login(){
 			var username=document.getElementById('user-name').value;
 			var password=document.getElementById('user-password').value;
-			alert('username:'+username+' password:'+password);
-			
+
 			// var chkObjs=null;
 			// var obj=document.getElementsByName("radiocolor");
 			// for (var i=0;i<obj.length;i++){ //遍历Radio
@@ -125,38 +124,39 @@
 			// 	}
 			// }
 			// alert('radio:'+ chkObjs);
-			$.cookie("username",username);
-			window.location.href='index.html';
+			// $.cookie("username",username);
+			// window.location.href='index.html';
 			
-			// mui.ajax('http://localhost:8888/login',{
-			// 	data:{
-			// 		username:username,
-			// 		password:password,
-					
-			// 	},
-			// 	dataType:'json',//服务器返回json格式数据
-			// 	type:'post',//HTTP请求类型
-			// 	timeout:10000,//超时时间设置为10秒；
-			// 	success:function(data){
-			// 		$.cookie("username",username);
-			// 		window.location.href='index.html';
-			// 	},
-			// 	error:function(xhr,type,errorThrown){
-					
-			// 	}
-			// });
+			$.ajax({
+
+				url : "http://127.0.0.1:5000/login",
+				type : "POST",
+				async : true,
+				data:JSON.stringify({"username":username, "password":password}),
+				contentType:"application/json; charset=UTF-8",
+				dataType : "text",
+				success:function(data){
+				    if(data == "success")
+                    {
+                        $.cookie("username",username);
+                        window.location.href='/index';
+                    }
+				 else
+				     alert("wrong password or username")
+				}
+			});
 		}
 	</script>
 
     <!-- BEGIN: Vendor JS-->
-    <script src="../app-assets/vendors/js/vendors.min.js"></script>
+    <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
 
     <!-- BEGIN: Theme JS-->
-    <script src="../app-assets/js/core/app-menu.js"></script>
-    <script src="../app-assets/js/core/app.js"></script>
-    <script src="../app-assets/js/scripts/components.js"></script>
+    <script src="../static/app-assets/js/core/app-menu.js"></script>
+    <script src="../static/app-assets/js/core/app.js"></script>
+    <script src="../static/app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
 
 	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>

@@ -10,30 +10,30 @@
     <meta name="keywords" content="admin template, Vuesax admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
     <title>Register Page - Vuesax - Bootstrap HTML admin template</title>
-    <link rel="apple-touch-icon" href="../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../app-assets/images/ico/favicon.ico">
+    <link rel="apple-touch-icon" href="../static/app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../static/app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/vendors.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
     <link rel="stylesheet" type="text/css" href="http://cdn.bootstrapmb.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/themes/semi-dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/semi-dark-layout.css">
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/core/colors/palette-gradient.css">
-    <link rel="stylesheet" type="text/css" href="../app-assets/css/pages/authentication.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/menu/menu-types/vertical-menu.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/authentication.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
 
 </head>
@@ -53,7 +53,7 @@
                         <div class="card bg-authentication rounded-0 mb-0">
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center pl-0 pr-3 py-0">
-                                    <img src="../app-assets/images/pages/register.jpg" alt="branding logo">
+                                    <img src="../static/app-assets/images/pages/register.jpg" alt="branding logo">
                                 </div>
                                 <div class="col-lg-6 col-12 p-0">
                                     <div class="card rounded-0 mb-0 p-2">
@@ -137,7 +137,6 @@
 	   var userConfPassword = document.getElementById('inputConfPassword').value;
 	   var name = document.getElementById('name').value;
 	   alert('username:'+username+'Email:'+userEmail +' password:'+userPassword+' conpassword:'+userConfPassword+' name:'+name);
-	   var register_josn_text = {"username":username,"password":password,"email":userEmail,"name":name};
 	   // var chkObjs=null;
 	   // var obj=document.getElementsByName("radiocolor");
 	   // for (var i=0;i<obj.length;i++){ //遍历Radio
@@ -148,33 +147,38 @@
 	   // alert('radio:'+ chkObjs);
 	   
 	   // window.location.href='login.html';
-	   $.ajax({
 	   
-	   	url : "temphome/register",
-	   	type : "POST",
-	   	async : true,
-	   	data:JSON.stringify(login_josn_text),
-	   	contentType:"application/json; charset=UTF-8",
-	   	dataType : 'text',
-	   	success:function(data){
-	   		alert('注册成功');
-	   		window.location.href='login.html';
-	   	}
+	   mui.ajax('url',{
+	    data:{
+	     username:username,
+	     password:userPassword,
+	     email:userEmail,
+		 name:name
+	    },
+	    dataType:'json',//服务器返回json格式数据
+	    type:'post',//HTTP请求类型
+	    timeout:10000,//超时时间设置为10秒；
+	    success:function(data){
+			alert('注册成功');
+			window.location.href='login.html';
+	    },
+	    error:function(xhr,type,errorThrown){
+	     
+	    }
 	   });
-	   
 	  }
 	 </script>
     <!-- BEGIN: Vendor JS-->
-    <script src="../app-assets/vendors/js/vendors.min.js"></script>
+    <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
-    <script src="../app-assets/js/core/app-menu.js"></script>
-    <script src="../app-assets/js/core/app.js"></script>
-    <script src="../app-assets/js/scripts/components.js"></script>
+    <script src="../static/app-assets/js/core/app-menu.js"></script>
+    <script src="../static/app-assets/js/core/app.js"></script>
+    <script src="../static/app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->

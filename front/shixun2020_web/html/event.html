@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/semi-dark-layout.css">
 
     <!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../../../static/app-assets/vendors/css/charts/apexcharts.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/dashboard-analytics.css">
@@ -36,9 +37,25 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <!-- END: Custom CSS-->
+	<style>
+		.orgs-container::-webkit-scrollbar {    /*滚动条整体样式*/
+		        width: 10px;                        /*高宽分别对应横竖滚动条的尺寸*/
+		        height: 1px;
+		    }
+		    .orgs-container::-webkit-scrollbar-thumb {  /*滚动条里面小方块*/
+		        border-radius: 10px;
+		        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.01);
+		        background: #ebebeb;
+		    }
+		    .orgs-container::-webkit-scrollbar-track {  /*滚动条里面轨道*/
+		        /* -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2); */
+		        border-radius: 10px;
+		        background: #fff;
+		    }
 
+	</style>
 
 </head>
 <!-- END: Head-->
@@ -179,96 +196,101 @@
         <div class="content-wrapper">
             <div class="content-header row">
             </div>
-            <div class="content-body">
-                <section id="column-selectors">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="mb-0">义工信息</h4>
-                                	<button type="button" class="btn btn-success mr-1 mb-1" onclick="window.location.href='/newvolunteer'">新增义工</button>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body card-dashboard">
-                                        
-                                        <div class="table-responsive">
-                                            <table class="table table-striped dataex-html5-selectors">
-                                                <thead>
-                                                    <tr>
-                                                        <tr>
-                											<th>编号</th>
-                                                        	<th>姓名</th>
-                                                        	<th>性别</th>
-                                                        	<th>电话</th>
-                                                        	<th>身份证号</th>
-                                                        	<th>访问日期</th>
-                                                        	<th>离开日期</th>
-                                                        	<th>描述</th>
-                                                        	<th>查看</th>
-                                                        </tr>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tablebody">
-                                                    
-                                                </tbody>
-                                                
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                
-            </div>
+			<section id="apexchart">
+			    <div class="row">
+			        
+			
+			        <!-- Radial Bar Chart -->
+			        <div class="col-lg-6 col-md-12">
+			            <div class="card">
+			                <div class="card-header">
+			                    <h4 class="card-title"> </h4>
+			                </div>
+			                <div class="card-content">
+			                    <div class="card-body">
+			                        <div id="radial-bar-chart"></div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			
+			        <div class="card" style="height: 610px;width: 500px;">
+			        	<div class="card-header">
+			        		<h4 class="card-title">事件时间线</h4>
+			        	</div>
+			        	<div class="card-content orgs-container" style="overflow: auto;">
+			        		<div class="card-body  card-dashboard" >
+			        			<ul id="event_timeline" class="activity-timeline timeline-left list-unstyled">
+									<!-- <li>
+										<div class="timeline-icon bg-success">
+											<i class="feather icon-briefcase font-medium-2 align-middle"></i>
+										</div>
+										<div class="timeline-info">
+											<p class="font-weight-bold mb-0">义工检测</p>
+											<span class="font-small-3">Candy ice cream. Halvah bears Cupcake gummi bears.</span>
+										</div>
+										<small class="text-muted">28 days ago</small>
+									</li>
+									
+									<li>
+										<div class="timeline-icon bg-primary">
+											<i class="feather icon-heart font-medium-2 align-middle"></i>
+										</div>
+										<div class="timeline-info">
+											<p class="font-weight-bold mb-0">情感检测</p>
+											<span class="font-small-3">Candy ice cream cake. Halvah gummi bears</span>
+										</div>
+										<small class="text-muted">20 days ago</small>
+									</li>
+									<li>
+										<div class="timeline-icon bg-info">
+											<i class="feather icon-bell font-medium-2 align-middle"></i>
+										</div>
+										<div class="timeline-info">
+											<p class="font-weight-bold mb-0">陌生人检测</p>
+											<span class="font-small-3">Candy ice cream cake. </span>
+										</div>
+										<small class="text-muted">25 days ago</small>
+									</li>
+									
+			        				<li>
+			        					<div class="timeline-icon bg-warning">
+			        						<i class="feather icon-activity font-medium-2 align-middle"></i>
+			        					</div>
+			        					<div class="timeline-info">
+			        						<p class="font-weight-bold mb-0">摔倒检测</p>
+			        						<span class="font-small-3">Cupcake gummi bears soufflé caramels candy</span>
+			        					</div>
+			        					<small class="text-muted">15 days ago</small>
+			        				</li>
+									
+			        				<li>
+			        					<div class="timeline-icon bg-danger">
+			        						<i class="feather icon-pause font-medium-2 align-middle"></i>
+			        					</div>
+			        					<div class="timeline-info">
+			        						<p class="font-weight-bold mb-0">禁止区检测</p>
+			        						<span class="font-small-3">Candy ice cream. Halvah bears Cupcake gummi bears.</span>
+			        					</div>
+			        					<small class="text-muted">28 days ago</small>
+			        				</li> -->
+			        				
+			        			</ul>
+			        		</div>	
+			        		
+			        	</div>
+			        
+			        </div>
+			    </div>
+			</section>
+			
         </div>
-		<div class="content-wrapper">
-		    <div class="content-body"> 
-		        <!-- Bar Chart -->
-		        <div class="row">
-		            <div class="col-12">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Bar Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="bar-chart-oldpeople" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
 		
-		
-		        <!-- Pie Chart -->
-		        <div class="row">
-		            <div class="col-12">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Pie Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="pie-chart-oldpeople" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		
-		
-		    </div>
-		</div>
+		    
     </div>
     <!-- END: Content-->
 	<script>
-		function seemore(i){
-			
-			$.cookie("volunteer_detail_num",i);
-			window.location.href='/volunteer-detail';
-		}
+		
 		window.onload=function(){
 			var param = $.cookie("username"); 
 			console.log(param); 
@@ -276,218 +298,279 @@
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
 			
-			var volunteer_josn_text={"type":"volunteer"};
-			var num = new Array(8);
+			var event_josn_text={"type":"event"};
+			var num = new Array(5);
 			
 			$.ajax({
 			
-				url : "http://127.0.0.1:5000/volunteer",
+				url : "http://127.0.0.1:5000/event",
 				type : "POST",
 				async : true,
-				data:JSON.stringify(volunteer_josn_text),
+				data:JSON.stringify(event_josn_text),
 				contentType:"application/json; charset=UTF-8",
 				dataType : 'json',
 				success:function(data){
 					var str = [];
-
-					 for(var i = 0 ; i<8 ; i++){
-					  num[i] = 0;
-					 }
-					 //alert(data.length)
-					 //alert(data.people)
-					 for(var i in data){
-					  if(data[i].age>=20&&data[i].age<30&&data[i].gender=="男"){
-					   str.push(data[i].username)
-					   num[0] = num[0]+1
-					   //alert(str);
-					  }
-
-					  if(data[i].age>=20&&data[i].age<30&&data[i].gender=="女"){
-					   str.push(data[i].username)
-					  num[1] = num[1]+1
-					  //alert(str);
-					  }
-
-					  if(data[i].age>=30&&data[i].age<40&&data[i].gender=="男"){
-					   str.push(data[i].username)
-					  num[2] = num[2]+1
-					  //alert(str);
-					  }
-
-					  if(data[i].age>=30&&data[i].age<40&&data[i].gender=="女"){
-					   str.push(data[i].username)
-					  num[3] = num[3]+1
-					  //alert(str);
-					  }
-
-					  if(data[i].age>=40&&data[i].age<50&&data[i].gender=="男"){
-					   str.push(data[i].username)
-					  num[4] = num[4]+1
-					  //alert(str);
-					  }
-
-					  if(data[i].age>=40&&data[i].age<50&&data[i].gender=="女"){
-					   str.push(data[i].username)
-					  num[0] = num[5]+1
-					  //alert(str);
-					  }
-
-					  if(data[i].age>=50&&data[i].age<60&&data[i].gender=="男"){
-					   str.push(data[i].username)
-					  num[6] = num[6]+1
-					  //alert(str);
-					  }
-
-					  if(data[i].age>=50&&data[i].age<60&&data[i].gender=="女"){
-					   str.push(data[i].username)
-					  num[7] = num[7]+1
-					  document.getElementById("demo").innerHTML += num;
-
-					  }
-
-
-					}
-					// alert(num);
 					
-					// var data=[{"id":"1","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很好"},{"id":"2","name":"name1","sex":"男","phone":"185365565555","cardid":"1365655566566956666","intime":"2020-06-01","roomnum":"503","state":"很差"}];
-					var tablebody=document.getElementById('tablebody');
-					tablebody.innerHTML='';
-					for(var i in data){//遍历packJson 数组时，i为索引
+					for(var i = 0 ; i<5 ; i++){
+						num[i] = 0;
+					}
+					//alert(text.length)
+					//alert(text.people)
+					for(var i in data){
+						if(data[i].event_type==0){
+							str.push(data[i].name)
+							num[0] = num[0]+1
+							//alert(str);
+						}
 						
-						var tabletr = document.createElement("tr");
-						var tabletd1 = document.createElement("td");
-						var tabletd2 = document.createElement("td");
-						var tabletd3 = document.createElement("td");
-						var tabletd4 = document.createElement("td");
-						var tabletd5 = document.createElement("td");
-						var tabletd6 = document.createElement("td");
-						var tabletd7 = document.createElement("td");
-						var tabletd8 = document.createElement("td");
-						var tabletd9 = document.createElement("td");
+						if(data[i].event_type==1){
+							str.push(data[i].name)
+						num[1] = num[1]+1
+						//alert(str);
+						}
 						
-						tabletd1.innerHTML=data[i].id;
-						tabletd2.innerHTML=data[i].name
-						tabletd3.innerHTML=data[i].gender;
-						tabletd4.innerHTML=data[i].phone;
-						tabletd5.innerHTML=data[i].id_card;
-						tabletd6.innerHTML=data[i].checkin_date;
-						tabletd7.innerHTML=data[i].checkout_date;
-						tabletd8.innerHTML=data[i].DESCRIPTION;
+						if(data[i].event_type==2){
+							str.push(data[i].name)
+						num[2] = num[2]+1
+						//alert(str);
+						}
 						
-						var mbutton = document.createElement("input");
-						mbutton.setAttribute("type", "button");
-						mbutton.setAttribute("value", "查看");
-						mbutton.setAttribute("id", "seemorebutton");
-						mbutton.setAttribute("class", "btn btn-flat-primary mr-1 mb-1");
-						mbutton.setAttribute("onclick", "seemore("+i+")");
+						if(data[i].event_type==3){
+							str.push(data[i].name)
+						num[3] = num[3]+1
+						//alert(str);
+						}
 						
-						tabletd9.appendChild(mbutton);
-						tabletr.appendChild(tabletd1);
-						tabletr.appendChild(tabletd2);
-						tabletr.appendChild(tabletd3);
-						tabletr.appendChild(tabletd4);
-						tabletr.appendChild(tabletd5);
-						tabletr.appendChild(tabletd6);
-						tabletr.appendChild(tabletd7);
-						tabletr.appendChild(tabletd8);
-						tabletr.appendChild(tabletd9);
-						tablebody.appendChild(tabletr);
-						
+						if(data[i].event_type==4){
+							str.push(data[i].name)
+						num[4] = num[4]+1
+						//alert(str);
+						}
 					}
 					
+					//图表
+					var $primary = '#7367F0',
+					  $success = '#28C76F',
+					  $danger = '#EA5455',
+					  $warning = '#FF9F43',
+					  $info = '#00cfe8',
+					  $label_color_light = '#dae1e7';
 					
-					var $dark_green = '#4ea397';
-					var $green = '#22c3aa';
-					var $light_green = '#7bd9a5';
-					var $lighten_green = '#a8e7d2';
+					var themeColors = [$primary, $success, $danger, $warning, $info];
+					var sum=num[0]+num[1]+num[2]+num[3]+num[4];
+					
+					// Radial Bar Chart
+					// -----------------------------
+					var radialBarChartOptions = {
+					  chart: {
+					    height: 555,
+					    type: 'radialBar',
+					  },
+					  colors: themeColors,
+					  plotOptions: {
+					    radialBar: {
+					      dataLabels: {
+					        name: {
+					          fontSize: '22px',
+					        },
+					        value: {
+					          fontSize: '16px',
+					        },
+					        total: {
+					          show: true,
+					          label: 'Total',
+					          // color: $label_color,
+					          formatter: function (w) {
+					            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+					            return sum;
+					          }
+					        }
+					      }
+					    }
+					  },
+					  series: [num[0]*100/sum, num[1]*100/sum, num[2]*100/sum, num[3]*100/sum,num[4]*100/sum],
+					  labels: ['情感检测', '义工检测', '陌生人检测', '摔倒检测','禁止区域入侵检测'],
+					}
+					var radialBarChart = new ApexCharts(
+					  document.querySelector("#radial-bar-chart"),
+					  radialBarChartOptions
+					);
+					radialBarChart.render();
+			
+					var timelineul=document.getElementById('event_timeline');
+					
+					for(var i in data){
+						
+						switch(data[i].event_type){
+							case 0:
+								timelineul.innerHTML=timelineul.innerHTML+'<li><div class="timeline-icon bg-primary"><i class="feather icon-heart font-medium-2 align-middle"></i></div><div class="timeline-info"><p class="font-weight-bold mb-0">'+'['+data[i].oldperson_id+']  情感检测</p><span class="font-small-3">'+data[i].event_desc+'</span></div><small class="text-muted">'+data[i].event_location+'    '+data[i].event_date+'</small></li>'
+							
+								// var timelineli=document.createElement('li');
+								// var timelinediv1=document.createElement('div');
+								// var timelinediv2=document.createElement('div');
+								// var timelinei=document.createElement('i');
+								// var timelinep=document.createElement('p');
+								// var timelinespan=document.createElement('span');
+								// var timelinesmall=document.createElement('small');
+								
+								// timelinediv1.setAttribute('class',"timeline-icon bg-primary");
+								// timelinei.setAttribute('class',"feather icon-heart font-medium-2 align-middle");
+								// timelinediv2.setAttribute('class',"timeline-info");
+								// timelinep.setAttribute('class',"timeline-icon bg-primary");
+								// timelinespan.setAttribute('class',"font-small-3");
+								// timelinesmall.setAttribute('class',"text-muted");
+								// timelinep.setAttribute('value','['+data[i].oldperson_id+']  情感检测');
+								// timelinespan.setAttribute('value',data[i].event_desc);
+								// timelinesmall.setAttribute('value',data[i].event_location+'    '+data[i].event_date);
+								
+								// timelinediv1.appendChild(timelinei);
+								// timelinediv2.appendChild(timelinep);
+								// timelinediv2.appendChild(timelinespan);
+								
+								// timelineli.appendChild(timelinediv1);
+								// timelineli.appendChild(timelinediv2);
+								// timelineli.appendChild(timelinesmall);
+								// timelineul.appendChild(timelineli);
+								
+								break;
+							case 1:
+								timelineul.innerHTML=timelineul.innerHTML+'<li><div class="timeline-icon bg-success"><i class="feather icon-briefcase font-medium-2 align-middle"></i></div><div class="timeline-info"><p class="font-weight-bold mb-0">'+'['+data[i].oldperson_id+']  义工交互检测</p><span class="font-small-3">'+data[i].event_desc+'</span></div><small class="text-muted">'+data[i].event_location+'    '+data[i].event_date+'</small></li>'
+								
+								// var timelineli=document.createElement('li');
+								// var timelinediv1=document.createElement('div');
+								// var timelinediv2=document.createElement('div');
+								// var timelinei=document.createElement('i');
+								// var timelinep=document.createElement('p');
+								// var timelinespan=document.createElement('span');
+								// var timelinesmall=document.createElement('small');
+								
+								// timelinediv1.setAttribute('class',"timeline-icon bg-success");
+								// timelinei.setAttribute('class',"feather icon-briefcase font-medium-2 align-middle");
+								// timelinediv2.setAttribute('class',"timeline-info");
+								// timelinep.setAttribute('class',"timeline-icon bg-primary");
+								// timelinespan.setAttribute('class',"font-small-3");
+								// timelinesmall.setAttribute('class',"text-muted");
+								// timelinep.setAttribute('value','['+data[i].oldperson_id+']  义工交互检测');
+								// timelinespan.setAttribute('value',data[i].event_desc);
+								// timelinesmall.setAttribute('value',data[i].event_location+'    '+data[i].event_date);
+								
+								// timelinediv1.appendChild(timelinei);
+								// timelinediv2.appendChild(timelinep);
+								// timelinediv2.appendChild(timelinespan);
+								
+								// timelineli.appendChild(timelinediv1);
+								// timelineli.appendChild(timelinediv2);
+								// timelineli.appendChild(timelinesmall);
+								// timelineul.appendChild(timelineli);
+								
+								break;
+							case 2:
+								
+								timelineul.innerHTML=timelineul.innerHTML+'<li><div class="timeline-icon bg-info"><i class="feather icon-bell font-medium-2 align-middle"></i></div><div class="timeline-info"><p class="font-weight-bold mb-0">'+'['+data[i].oldperson_id+']  陌生人检测</p><span class="font-small-3">'+data[i].event_desc+'</span></div><small class="text-muted">'+data[i].event_location+'    '+data[i].event_date+'</small></li>'
+								
+								
+								// var timelineli=document.createElement('li');
+								// var timelinediv1=document.createElement('div');
+								// var timelinediv2=document.createElement('div');
+								// var timelinei=document.createElement('i');
+								// var timelinep=document.createElement('p');
+								// var timelinespan=document.createElement('span');
+								// var timelinesmall=document.createElement('small');
+								
+								// timelinediv1.setAttribute('class',"timeline-icon bg-info");
+								// timelinei.setAttribute('class',"feather icon-bell font-medium-2 align-middle");
+								// timelinediv2.setAttribute('class',"timeline-info");
+								// timelinep.setAttribute('class',"timeline-icon bg-primary");
+								// timelinespan.setAttribute('class',"font-small-3");
+								// timelinesmall.setAttribute('class',"text-muted");
+								// timelinep.setAttribute('value','['+data[i].oldperson_id+']  陌生人检测');
+								// timelinespan.setAttribute('value',data[i].event_desc);
+								// timelinesmall.setAttribute('value',data[i].event_location+'    '+data[i].event_date);
+								
+								// timelinediv1.appendChild(timelinei);
+								// timelinediv2.appendChild(timelinep);
+								// timelinediv2.appendChild(timelinespan);
+								
+								// timelineli.appendChild(timelinediv1);
+								// timelineli.appendChild(timelinediv2);
+								// timelineli.appendChild(timelinesmall);
+								// timelineul.appendChild(timelineli);
+								
+								break;
+							case 3:
+							
+								timelineul.innerHTML=timelineul.innerHTML+'<li><div class="timeline-icon bg-warning"><i class="feather icon-activity font-medium-2 align-middle"></i></div><div class="timeline-info"><p class="font-weight-bold mb-0">'+'['+data[i].oldperson_id+']  摔倒检测</p><span class="font-small-3">'+data[i].event_desc+'</span></div><small class="text-muted">'+data[i].event_location+'    '+data[i].event_date+'</small></li>'
+								
+							
+							// 	var timelineli=document.createElement('li');
+							// 	var timelinediv1=document.createElement('div');
+							// 	var timelinediv2=document.createElement('div');
+							// 	var timelinei=document.createElement('i');
+							// 	var timelinep=document.createElement('p');
+							// 	var timelinespan=document.createElement('span');
+							// 	var timelinesmall=document.createElement('small');
+								
+							// 	timelinediv1.setAttribute('class',"timeline-icon bg-warning");
+							// 	timelinei.setAttribute('class',"feather icon-activity font-medium-2 align-middle");
+							// 	timelinediv2.setAttribute('class',"timeline-info");
+							// 	timelinep.setAttribute('class',"timeline-icon bg-primary");
+							// 	timelinespan.setAttribute('class',"font-small-3");
+							// 	timelinesmall.setAttribute('class',"text-muted");
+							// 	timelinep.setAttribute('value','['+data[i].oldperson_id+']  摔倒检测');
+							// 	timelinespan.setAttribute('value',data[i].event_desc);
+							// 	timelinesmall.setAttribute('value',data[i].event_location+'    '+data[i].event_date);
+								
+							// 	timelinediv1.appendChild(timelinei);
+							// 	timelinediv2.appendChild(timelinep);
+							// 	timelinediv2.appendChild(timelinespan);
+								
+							// 	timelineli.appendChild(timelinediv1);
+							// 	timelineli.appendChild(timelinediv2);
+							// 	timelineli.appendChild(timelinesmall);
+							// 	timelineul.appendChild(timelineli);
+								
+								break;
+							case 4:
+							
+								timelineul.innerHTML=timelineul.innerHTML+'<li><div class="timeline-icon bg-danger"><i class="feather icon-pause font-medium-2 align-middle"></i></div><div class="timeline-info"><p class="font-weight-bold mb-0">'+'['+data[i].oldperson_id+']  禁止区入侵检测</p><span class="font-small-3">'+data[i].event_desc+'</span></div><small class="text-muted">'+data[i].event_location+'    '+data[i].event_date+'</small></li>'
+								
+							
+								// var timelineli=document.createElement('li');
+								// var timelinediv1=document.createElement('div');
+								// var timelinediv2=document.createElement('div');
+								// var timelinei=document.createElement('i');
+								// var timelinep=document.createElement('p');
+								// var timelinespan=document.createElement('span');
+								// var timelinesmall=document.createElement('small');
+								
+								// timelinediv1.setAttribute('class',"timeline-icon bg-danger");
+								// timelinei.setAttribute('class',"feather icon-pause font-medium-2 align-middle");
+								// timelinediv2.setAttribute('class',"timeline-info");
+								// timelinep.setAttribute('class',"timeline-icon bg-primary");
+								// timelinespan.setAttribute('class',"font-small-3");
+								// timelinesmall.setAttribute('class',"text-muted");
+								// timelinep.setAttribute('value','['+data[i].oldperson_id+']  禁止区入侵检测');
+								// timelinespan.setAttribute('value',data[i].event_desc);
+								// timelinesmall.setAttribute('value',data[i].event_location+'    '+data[i].event_date);
+								
+								// timelinediv1.appendChild(timelinei);
+								// timelinediv2.appendChild(timelinep);
+								// timelinediv2.appendChild(timelinespan);
+								
+								// timelineli.appendChild(timelinediv1);
+								// timelineli.appendChild(timelinediv2);
+								// timelineli.appendChild(timelinesmall);
+								// timelineul.appendChild(timelineli);
+								
+								break;
+						}
+					}
 
-					// Bar chart
-					// ------------------------------
-
-					var barChart = echarts.init(document.getElementById('bar-chart-oldpeople'));
-
-					// var i;
-					function randomize() {
-						return Math.round(300 + Math.random() * 700) / 10
-					};
-
-					var barChartoption = {
-						legend: {},
-						tooltip: {},
-						dataset: {
-							source: [
-								['sex', '男', '女'],
-								['20-30', num[0], num[1]],
-								['30-40', num[2], num[3]],
-								['40-50', num[4], num[5]],
-								['50-60', num[6], num[7]],
-							],
-
-						},
-
-						xAxis: {
-							type: 'category',
-							splitLine: { show: true },
-						},
-						yAxis: {},
-						// Declare several bar series, each will be mapped
-						// to a column of dataset.source by default.
-						series: [
-							{
-								type: 'bar',
-								itemStyle: {color: $dark_green},
-							},
-							{
-								type: 'bar',
-								itemStyle: {color: $light_green},
-							}
-						]
-					};
-					barChart.setOption(barChartoption);
-
-
-					// Pie chart
-					// ------------------------------
-
-					var pieChart = echarts.init(document.getElementById('pie-chart-oldpeople'));
-
-					var pieChartoption = {
-						tooltip : {
-							trigger: 'item',
-							formatter: "{a} <br/>{b} : {c} ({d}%)"
-						},
-						legend: {
-							orient: 'vertical',
-							left: 'left',
-							data: ['20-30', '30-40', '40-50', '50-60']
-						},
-						series : [
-							{
-								name: 'Age',
-								type: 'pie',
-								radius : '55%',
-								center: ['50%', '60%'],
-								color: ['#FF9F43','#28C76F','#EA5455','#87ceeb','#7367F0'],
-								data: [
-								  {value: num[0]+num[1], name: '20-30'},
-								  {value: num[2]+num[3], name: '30-40'},
-								  {value: num[4]+num[5], name: '40-50'},
-								  {value: num[6]+num[7], name: '50-60'},
-								],
-								itemStyle: {
-									emphasis: {
-										shadowBlur: 10,
-										shadowOffsetX: 0,
-										shadowColor: 'rgba(0, 0, 0, 0.5)'
-									}
-								}
-							}
-						],
-					};
-
-					pieChart.setOption(pieChartoption);
 				}
 			});
+			
+			
 		
 		}
 	</script>
