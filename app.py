@@ -1,24 +1,29 @@
 import datetime
 import json
-from flask import Flask, render_template, Response, request, redirect, url_for
+from gevent import pywsgi
+from geventwebsocket.handler import WebSocketHandler
+from flask import Flask, render_template, Response, request, redirect, url_for, abort
+from geventwebsocket.websocket import WebSocket
+
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db
 from video import image_stream
 import video.views as vv
 
 app = Flask(__name__)
 
+
 @app.route('/video')
 def index():
     return render_template('video.html')
 
-#图片流
-@app.route('/test')
-def img_stream():
-    img_path = 'static/images/bg1.jpg'
-    img_stream = image_stream.image_stream(img_path)
 
-    return render_template('test.html', img_stream=img_stream)
-
+# #图片流
+# @app.route('/test')
+# def img_stream():
+#     img_path = 'static/images/bg1.jpg'
+#     img_stream = image_stream.image_stream(img_path)
+#
+#     return render_template('test.html', img_stream=img_stream)
 
 # 主界面
 @app.route('/index')
@@ -122,7 +127,8 @@ def detail_old():
     if request.method == 'GET':
         return render_template('oldpeople-detail.html')
 
-#添加
+
+# 添加
 @app.route('/newoldpeople', methods=['GET', 'POST'])
 def new_oldpeople():
     if request.method == 'GET':
@@ -158,16 +164,19 @@ def new_oldpeople():
         health_state = jsondata.get("health_state")
         DESCRIPTION = jsondata.get("DESCRIPTION")
         ISACTIVE = "有效"
-        CREATED = now   #jsondata.get("CREATED")
-        CREATEBY = user_db.getUserID(jsondata.get("CREATEBY"))   #jsondata.get("CREATEBY")
-        UPDATED = now  #jsondata.get("UPDATED")
+        CREATED = now  # jsondata.get("CREATED")
+        CREATEBY = user_db.getUserID(jsondata.get("CREATEBY"))  # jsondata.get("CREATEBY")
+        UPDATED = now  # jsondata.get("UPDATED")
         UPDATEBY = user_db.getUserID(jsondata.get("CREATEBY"))
         REMOVE = 'n'
 
-        oldperson_db.addOld(ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,checkin_date,checkout_date,imgset_dir,
-                profile_photo,room_number,firstguardian_name,firstguardian_relationship,firstguardian_phone,firstguardian_wechat
-           ,secondguardian_name,secondguardian_relationship,secondguardian_phone,secondguardian_wechat,
-           health_state,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE)
+        oldperson_db.addOld(ORG_ID, CLIENT_ID, username, gender, phone, id_card, birthday, checkin_date, checkout_date,
+                            imgset_dir,
+                            profile_photo, room_number, firstguardian_name, firstguardian_relationship,
+                            firstguardian_phone, firstguardian_wechat
+                            , secondguardian_name, secondguardian_relationship, secondguardian_phone,
+                            secondguardian_wechat,
+                            health_state, DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE)
         return "success"
 
 
@@ -233,8 +242,9 @@ def delete_oldpeople():
         oldperson_db.deleteOld_by_Name(name)
         return "success"
 
+
 # _____________________________________________________________________________oldperson
-#______________________________________________________________________________employee
+# ————————————————————————————————————————————————————————————————————————————————————————————————————————————employee
 @app.route('/employee', methods=['GET', 'POST'])
 def employee():
     if request.method == 'GET':
@@ -242,12 +252,14 @@ def employee():
     if request.method == 'POST':
         return employee_db.getEmployees()
 
+
 @app.route('/employee-detail', methods=['GET', 'POST'])  # 查看按钮跳转
 def detail_employ():
     if request.method == 'GET':
         return render_template('employee-detail.html')
 
-#添加
+
+# 添加
 @app.route('/newemployee', methods=['GET', 'POST'])
 def new_employee():
     if request.method == 'GET':
@@ -273,14 +285,15 @@ def new_employee():
         profile_photo = jsondata.get("profile_photo")
         DESCRIPTION = jsondata.get("DESCRIPTION")
         ISACTIVE = "有效"
-        CREATED = now   #jsondata.get("CREATED")
-        CREATEBY = user_db.getUserID(jsondata.get("CREATEBY"))   #jsondata.get("CREATEBY")
-        UPDATED = now  #jsondata.get("UPDATED")
+        CREATED = now  # jsondata.get("CREATED")
+        CREATEBY = user_db.getUserID(jsondata.get("CREATEBY"))  # jsondata.get("CREATEBY")
+        UPDATED = now  # jsondata.get("UPDATED")
         UPDATEBY = user_db.getUserID(jsondata.get("CREATEBY"))
         REMOVE = 'n'
 
-        employee_db.addEmployee(ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,
-                profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE)
+        employee_db.addEmployee(ORG_ID, CLIENT_ID, username, gender, phone, id_card, birthday, hire_date, resign_date,
+                                imgset_dir,
+                                profile_photo, DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE)
         return "success"
 
 
@@ -314,8 +327,9 @@ def update_employee():
         UPDATEBY = user_db.getUserID(jsondata.get("CREATEBY"))
         REMOVE = 'n'
 
-        employee_db.updateEmp(id,ORG_ID, CLIENT_ID, username, gender, phone,id_card, birthday,hire_date,resign_date,imgset_dir,
-                profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE)
+        employee_db.updateEmp(id, ORG_ID, CLIENT_ID, username, gender, phone, id_card, birthday, hire_date, resign_date,
+                              imgset_dir,
+                              profile_photo, DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE)
 
         return "success"
 
@@ -332,11 +346,42 @@ def delete_employee():
         employee_db.deleteEmployeeByName(name)
         return "success"
 
-#-------------------------------------------------------------------------------employee
-@app.route('/event')
-def event():
-    return event_db.getEvents()
 
+# -------------------------------------------------------------------------------————————————————————————————————employee
+# --————————————————————————————————————————————————————————————————————————————————-------------event
+@app.route('/event', methods=['GET', 'POST'])
+def event():
+    if request.method == 'GET':
+        return render_template('event.html')
+    if request.method == 'POST':
+        return event_db.getEvents()
+
+
+@app.route('/eventtest', methods=['GET', 'POST'])
+def eventtest():
+    if request.method == 'GET':
+        return render_template('websockettest_2.html')
+
+
+# websocket传event
+@app.route('/event_ws')
+def event_send():
+    user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
+    if user_socket:
+        print("here")
+        ws = request.environ['wsgi.websocket']
+        if ws is None:
+            abort(404)
+        else:
+            while True:
+                if not ws.closed:
+                    # message = ws.receive()
+                    ws.send("success!!!")
+
+    return " "
+
+
+# _____________________________________________________________________________________________event
 
 # ______________________________________________________________________________________volunteer
 @app.route('/volunteer', methods=['GET', 'POST'])
@@ -345,6 +390,7 @@ def volunteer():
         return render_template('volunteer.html')
     if request.method == 'POST':
         return volunteer_db.getVolunteers()
+
 
 # 添加志愿者
 @app.route('/newvolunteer', methods=['GET', 'POST'])
@@ -377,13 +423,16 @@ def add_volunteer():
         UPDATED = now  # jsondata.get("UPDATED")
         UPDATEBY = user_db.getUserID(jsondata.get("CREATEBY"))
         REMOVE = 'n'
-        volunteer_db.addVolunteer(ORG_ID, CLIENT_ID, name, gender, phone, id_card, birthday, checkin_date, checkout_date, imgset_dir,
-                     profile_photo, DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE)
+        volunteer_db.addVolunteer(ORG_ID, CLIENT_ID, name, gender, phone, id_card, birthday, checkin_date,
+                                  checkout_date, imgset_dir,
+                                  profile_photo, DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE)
         return "success"
 
-@app.route('/volunteer-detail') #查看详情
+
+@app.route('/volunteer-detail')  # 查看详情
 def volunteer_detail():
     return render_template("volunteer-detail.html")
+
 
 # 更新志愿者
 @app.route('/updatevolunteer', methods=['GET', 'POST'])
@@ -418,9 +467,11 @@ def update_volunteer():
         UPDATEBY = user_db.getUserID(jsondata.get("CREATEBY"))
         REMOVE = 'n'
 
-        volunteer_db.updateVol(id,ORG_ID, CLIENT_ID, name, gender, phone,id_card, birthday,checkin_date,checkout_date,imgset_dir,
-                profile_photo,DESCRIPTION,ISACTIVE,CREATED,CREATEBY,UPDATED,UPDATEBY,REMOVE)
+        volunteer_db.updateVol(id, ORG_ID, CLIENT_ID, name, gender, phone, id_card, birthday, checkin_date,
+                               checkout_date, imgset_dir,
+                               profile_photo, DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE)
         return "success"
+
 
 # 删除志愿者
 @app.route('/deletevolunteer', methods=['GET', 'POST'])
@@ -435,17 +486,20 @@ def delete_volunteer():
         volunteer_db.deleteVolunteerByName(name)
         return "success"
 
+
 # ______________________________________________________________________________________volunteer
 
-@app.route('/oldperson') #查看json数据
+@app.route('/oldperson')  # 查看json数据
 def oldperson():
     return oldperson_db.getOldpersons()  # 年龄
     # return oldperson_db.getOlds() #birthday
 
-#_________________________________________________________________________________________manager
-@app.route('/user')  #查看json数据
+
+# _________________________________________________________________________________________manager
+@app.route('/user')  # 查看json数据
 def user():
     return user_db.getUsers()
+
 
 @app.route('/manager', methods=['GET', 'POST'])
 def manager():
@@ -454,10 +508,13 @@ def manager():
     if request.method == 'POST':
         return user_db.getUsers()
 
+
 @app.route('/manager-detail')
 def manager_detail():
     return render_template("manager-detail.html")
-#添加
+
+
+# 添加
 @app.route('/newmanager', methods=['GET', 'POST'])
 def newmanager():
     if request.method == 'GET':
@@ -481,9 +538,9 @@ def newmanager():
         MOBILE = jsondata.get("MOBILE")
         DESCRIPTION = jsondata.get("DESCRIPTION")
         ISACTIVE = "有效"
-        CREATED = now   #jsondata.get("CREATED")
-        CREATEBY = user_db.getUserID(jsondata.get("CREATEBY"))   #jsondata.get("CREATEBY")
-        UPDATED = now  #jsondata.get("UPDATED")
+        CREATED = now  # jsondata.get("CREATED")
+        CREATEBY = user_db.getUserID(jsondata.get("CREATEBY"))  # jsondata.get("CREATEBY")
+        UPDATED = now  # jsondata.get("UPDATED")
         UPDATEBY = user_db.getUserID(jsondata.get("CREATEBY"))
         REMOVE = 'n'
         DATAFILTER = jsondata.get("DATAFILTER")
@@ -495,9 +552,10 @@ def newmanager():
         jsonauth = jsondata.get("jsonauth")
 
         user_db.addUser(ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
-            DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
-            theme, defaultpage, logoimage, qqopenid, appversion, jsonauth)
+                        DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
+                        theme, defaultpage, logoimage, qqopenid, appversion, jsonauth)
         return "success"
+
 
 @app.route('/updatemanager', methods=['GET', 'POST'])
 def update_manager():
@@ -533,11 +591,12 @@ def update_manager():
         appversion = jsondata.get("appversion")
         jsonauth = jsondata.get("jsonauth")
 
-        user_db.updateU(ID,ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
-            DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
-            theme, defaultpage, logoimage, qqopenid, appversion, jsonauth)
+        user_db.updateU(ID, ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
+                        DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
+                        theme, defaultpage, logoimage, qqopenid, appversion, jsonauth)
 
         return "success"
+
 
 @app.route('/deletemanager', methods=['GET', 'POST'])
 def delete_manager():
@@ -550,10 +609,17 @@ def delete_manager():
         print(name)
         user_db.deleteUserByName(name)
         return "success"
-#____________________________________________________________________________________________manager
 
 
+# ____________________________________________________________________________________________manager
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', threaded=True)
+    # app.run(host='0.0.0.0', threaded=True)
+    # print("132")
+    server = pywsgi.WSGIServer(('127.0.0.1', 5000), app, handler_class=WebSocketHandler)
+    if server:
+        print('server start!!!!!!!!!')
+    else:
+        print("BO")
+    server.serve_forever()

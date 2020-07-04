@@ -64,6 +64,7 @@ def deleteEvent(id):
         # 发生错误时回滚
         db.rollback()
 
+
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
 #addEvent(0,now,"beside desk","fall off",1)
