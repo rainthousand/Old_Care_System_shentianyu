@@ -6,9 +6,9 @@ from flask import Flask, render_template, Response, request, redirect, url_for, 
 from geventwebsocket.websocket import WebSocket
 
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db
-from video import image_stream
+from face import get_frame
+from version.activity.testingvolunteeractivity import get_activity_frame
 import video.views as vv
-
 app = Flask(__name__)
 
 
@@ -40,7 +40,7 @@ def video_test():
 # 普通视频流
 @app.route('/video_viewer')
 def video_viewer():
-    return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(get_activity_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 # 登录
