@@ -31,7 +31,13 @@ def tempindex():
     return render_template('index.html')
 
 
-# 视频流
+# 视频测试
+@app.route('/videotest')
+def video_test():
+    return render_template('index_video.html')
+
+
+# 普通视频流
 @app.route('/video_viewer')
 def video_viewer():
     return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -368,16 +374,32 @@ def eventtest():
 def event_send():
     user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
     if user_socket:
-        print("here")
+        jsondata = []
+        data = {'id': 1, 'event_type': '2', 'event_date': '3', 'event_location': '2', 'event_desc': '3',
+                'oldperson_id': '0'}
+        data['id'] = 6
+        data['event_type'] = "1"
+        data['event_date'] = "6-5"
+        data['event_location'] = "kitchen"
+        data['event_desc'] = "reallyGOOD"
+        data['oldperson_id'] = "2"
+        jsondata.append(data)
+        jsondatas = json.dumps(data)
+
         ws = request.environ['wsgi.websocket']
+        # ws.send("2")
+        ws.send(jsondatas)
         if ws is None:
             abort(404)
         else:
             while True:
                 if not ws.closed:
-                    # message = ws.receive()
-                    ws.send("success!!!")
-
+                    message = ws.receive()
+                    print(message)
+                    if message == "close":
+                        break
+                    # ws.send("success!!!")
+        ws.closed()
     return " "
 
 
@@ -616,10 +638,9 @@ def delete_manager():
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', threaded=True)
-    # print("132")
     server = pywsgi.WSGIServer(('127.0.0.1', 5000), app, handler_class=WebSocketHandler)
     if server:
         print('server start!!!!!!!!!')
     else:
-        print("BO")
+        print("ERROR")
     server.serve_forever()

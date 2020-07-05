@@ -19,20 +19,34 @@
     </body>
     <script>
         var socket;
- 
+        var myMessage;
         function connect() {
-            var host = "ws://" + $("serverIP").value + ":" + $("serverPort").value + "/event_ws"
+            {#var host = "ws://" + $("serverIP").value + ":" + $("serverPort").value + "/event_ws"#}
+            var host = "ws://127.0.0.1:5000/event_ws"
             socket = new WebSocket(host);
             try {
  
                 socket.onopen = function (msg) {
-                    $("btnConnect").disabled = true;
+                    {#$("btnConnect").disabled = true;#}
                     alert("连接成功！");
                 };
  
                 socket.onmessage = function (msg) {
+                    console.log(msg.data)
+                    //myMessage = JSON.parse(msg);
+                    myMessage = msg;
+                    alert("接收消息")
                     if (typeof msg.data == "string") {
-                        displayContent(msg.data);
+                        //displayContent(msg.data);
+                        var objectString = msg.data;
+                        myMessage = JSON.parse(msg.data);
+                        alert("第"+myMessage.id+"种事件出现")
+                        console.log(myMessage.event_type)
+                        console.log(myMessage.event_type)
+                        console.log(myMessage.event_date)
+                        console.log(myMessage.event_location)
+                        console.log(myMessage.event_desc)
+                        console.log(myMessage.oldperson_id)
                     }
                     else {
                         alert("非文本消息");
