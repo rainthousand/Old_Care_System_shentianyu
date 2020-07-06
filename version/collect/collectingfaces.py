@@ -16,13 +16,14 @@ import numpy as np
 import os
 import shutil
 import time
+from version.collect.trainingfacerecognition import training
 
 # 全局参数
 # audio_dir = '/home/reed/git-project/old_care_system/任务源代码/任务5.老人员工义工人脸图像采集/audios'
 global_frame = None
 
 def get_face_collect_frame(image_dir, id):
-    audio_dir = '../../../audios'
+    audio_dir = '../../audios'
 
     # 控制参数
     error = 0
@@ -74,17 +75,17 @@ def get_face_collect_frame(image_dir, id):
             cv2.rectangle(image, (left, top), (right, bottom),
                           (0, 0, 255), 2)
 
-        # if ret:
-        #     global_frame = image
-        #     yield (b'--frame\r\n'
-        #            b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', image)[1].tobytes()
-        #            + b'\r\n\r\n')
-        # else:
-        #     yield (b'--frame\r\n'
-        #            b'Content-Type: image/jpeg\r\n\r\n'
-        #            + global_frame + b'\r\n\r\n')
+        if ret:
+            global_frame = image
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', image)[1].tobytes()
+                   + b'\r\n\r\n')
+        else:
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n'
+                   + global_frame + b'\r\n\r\n')
 
-        cv2.imshow('Collecting Faces', image)  # show the image
+        #cv2.imshow('Collecting Faces', image)  # show the image
         # Press 'ESC' for exiting video
         k = cv2.waitKey(100) & 0xff
         if k == 27:
@@ -95,12 +96,14 @@ def get_face_collect_frame(image_dir, id):
             print('[WARNING] 没有检测到人脸')
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'no_face_detected.mp3'))
+
             error = 1
             start_time = time.time()
         elif error == 0 and face_count == 1:  # 可以开始采集图像了
             print('[INFO] 可以开始采集图像了')
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'start_image_capturing.mp3'))
+
             break
         elif error == 0 and face_count > 1:  # 检测到多张人脸
             print('[WARNING] 检测到多张人脸')
@@ -128,7 +131,7 @@ def get_face_collect_frame(image_dir, id):
         counter = 1
         for i in range(15):
             print('%s-%d' % (action_name, i))
-            _, img_OpenCV = cam.read()
+            ret, img_OpenCV = cam.read()
             img_OpenCV = cv2.flip(img_OpenCV, 1)
             origin_img = img_OpenCV.copy()  # 保存时使用
 
@@ -142,7 +145,7 @@ def get_face_collect_frame(image_dir, id):
 
             draw = ImageDraw.Draw(img_PIL)
             draw.text((int(image.shape[1] / 2), 30), action_name,
-                      font=ImageFont.truetype('../NotoSansCJK-Black.ttc', 40),
+                      font=ImageFont.truetype('./NotoSansCJK-Black.ttc', 40),
                       fill=(255, 0, 0))  # linux
 
             # 转换回OpenCV格式
@@ -152,7 +155,7 @@ def get_face_collect_frame(image_dir, id):
             if ret:
                 global_frame = image
                 yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', image)[1].tobytes()
+                       b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', img_OpenCV)[1].tobytes()
                        + b'\r\n\r\n')
             else:
                 yield (b'--frame\r\n'
@@ -174,9 +177,17 @@ def get_face_collect_frame(image_dir, id):
                 break
             counter += 1
 
+
+        # Press 'ESC' for exiting video
+        k = cv2.waitKey(100) & 0xff
+        if k == 27:
+            break
+
     # 结束
     print('[INFO] 采集完毕')
     #audioplayer.play_audio(os.path.join(audio_dir, 'end_capturing.mp3'))
+
+    training()
 
     # 释放全部资源
     cam.release()

@@ -36,9 +36,15 @@ VIDEO_WIDTH = 640
 VIDEO_HEIGHT = 480
 ACTUAL_DISTANCE_LIMIT = 100  # cm
 
+
+# -----------------------------------------------------
 # 得到 ID->姓名的map 、 ID->职位类型的map
 id_card_to_name, id_card_to_type = fileassistant.get_people_info(
     people_info_path)
+
+# 查询数据库构造两个字典 id->姓名 id->职位类型
+
+# -----------------------------------------------------
 
 # 初始化摄像头
 if not input_video:
@@ -163,6 +169,14 @@ def get_activity_frame():
                           % (current_time,
                              id_card_to_name[old_people_name[j_index]]))
 
+                    cv2.imwrite('./version/supervision/activity/'+current_time+".jpg", frame)
+
+                    # --------------------------------
+                    # 写入数据库义工和老人交互的操作
+                    # --------------------------------
+
+
+
         # show our detected faces along with smiling/not smiling labels
         # cv2.imshow("Checking Volunteer's Activities", frame)
 
@@ -184,5 +198,3 @@ def get_activity_frame():
     # cleanup the camera and close any open windows
     vs.release()
     cv2.destroyAllWindows()
-
-get_activity_frame()
