@@ -4,12 +4,14 @@ from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, render_template, Response, request, redirect, url_for, abort
 from geventwebsocket.websocket import WebSocket
-
+from vision.falldown.FallDownDetection import fallDetect2
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db
+from vision.fire.fireDetection import fireDetect
 from video import image_stream
 import video.views as vv
 
 app = Flask(__name__)
+
 
 
 @app.route('/video')
@@ -30,12 +32,33 @@ def index():
 def tempindex():
     return render_template('index.html')
 
+# 视频测试
+@app.route('/videotest')
+def video_test():
+    return render_template('index_video.html')
 
 # 视频流
+# @app.route('/video_viewer')
+# def video_viewer():
+#     return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+#
+# @app.route('/video_viewer2')
+# def video_viewer2():
+#     return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video_viewer2')
+def video_viewer2():
+    return Response(fireDetect(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 @app.route('/video_viewer')
 def video_viewer():
-    return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(fallDetect2("vision/falldown/fall3.mp4"),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
+# @app.route('/video_viewer')
+# def video_viewer():
+#     return Response(get_face_collect_frame('./image/faces/old_people', '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # 登录
 @app.route('/login', methods=['GET', 'POST'])

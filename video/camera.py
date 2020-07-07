@@ -72,6 +72,13 @@ class VideoCamera(object):
         else:
             return None
 
+    def first_frame(self):
+        n = 1
+        while n < 30:
+            success, image = self.cap.read()
+            n += 1
+        return image
+
     def start_record(self):
         self.is_record = True
         self.recordingThread = RecordingThread("Video Recording Thread", self.cap)

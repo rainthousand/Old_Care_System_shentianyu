@@ -55,6 +55,7 @@ def getUserID(name):
 
 def userlogin(name,password):
     sql = "select Password from sys_user where UserName='" + name + "'"
+    print(sql)
     conn.execute(sql)
     result = conn.fetchall()
     if result:
