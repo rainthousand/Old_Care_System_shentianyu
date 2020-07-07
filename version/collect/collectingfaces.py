@@ -23,6 +23,7 @@ from version.collect.trainingfacerecognition import training
 global_frame = None
 
 def get_face_collect_frame(image_dir, id):
+    time.sleep(5)
     audio_dir = '../../audios'
 
     # 控制参数

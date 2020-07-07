@@ -9,13 +9,17 @@ python testingvolunteeractivity.py --filename tests/desk_01.mp4
 
 from version.activity.faceutildlib import FaceUtil
 from scipy.spatial import distance as dist
-from version.activity import fileassistant
 from PIL import Image, ImageDraw, ImageFont
 import cv2
 import time
 import imutils
 import numpy as np
 import argparse
+from database import event_db
+from database import oldperson_db
+from database import volunteer_db
+from database import employee_db
+import json
 
 # 传入参数
 ap = argparse.ArgumentParser()
@@ -39,29 +43,54 @@ ACTUAL_DISTANCE_LIMIT = 100  # cm
 
 # -----------------------------------------------------
 # 得到 ID->姓名的map 、 ID->职位类型的map
-id_card_to_name, id_card_to_type = fileassistant.get_people_info(
-    people_info_path)
+# id_card_to_name, id_card_to_type = fileassistant.get_people_info(
+#     people_info_path)
 
 # 查询数据库构造两个字典 id->姓名 id->职位类型
 
+# print(id_card_to_name)
+# print(id_card_to_type)
+
+old_persons = json.loads(oldperson_db.getOldpersons())
+employees = json.loads(employee_db.getEmployees())
+volunteers = json.loads(volunteer_db.getVolunteers())
+
+id_card_to_type = {}
+id_card_to_name = {}
+
+for old_person in old_persons:
+    id_card_to_name[str(old_person.get('ID'))] = old_person.get('username')
+    id_card_to_type[str(old_person.get('ID'))] = 'old_people'
+
+for employee in employees:
+    id_card_to_name[str(employee.get('id'))] = employee.get('username')
+    id_card_to_type[str(employee.get('id'))] = 'employee'
+
+for volunteer in volunteers:
+    id_card_to_name[str(volunteer.get('id'))] = volunteer.get('username')
+    id_card_to_type[str(volunteer.get('id'))] = 'volunteer'
+
+id_card_to_name['Unknown'] = '陌生人'
+id_card_to_type['Unknown'] = ''
+
+print(id_card_to_name)
+print(id_card_to_type)
+
 # -----------------------------------------------------
-
-# 初始化摄像头
-if not input_video:
-    vs = cv2.VideoCapture(0)
-    time.sleep(2)
-else:
-    vs = cv2.VideoCapture(input_video)
-
-# 加载模型
-faceutil = FaceUtil(model_path)
-
-print('[INFO] 开始检测义工和老人是否有互动...')
-
-
 # 不断循环
 
 def get_activity_frame():
+    # 初始化摄像头
+    if not input_video:
+        vs = cv2.VideoCapture(0)
+        time.sleep(2)
+    else:
+        vs = cv2.VideoCapture(input_video)
+
+    # 加载模型
+    faceutil = FaceUtil(model_path)
+
+    print('[INFO] 开始检测义工和老人是否有互动...')
     global global_frame
     counter = 0
     while True:
@@ -170,15 +199,13 @@ def get_activity_frame():
                              id_card_to_name[old_people_name[j_index]]))
 
                     cv2.imwrite('./version/supervision/activity/'+current_time+".jpg", frame)
-
-                    # --------------------------------
-                    # 写入数据库义工和老人交互的操作
-                    # --------------------------------
+                    current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+                    event_db.addEvent('1', current_time, 'location', '义工交互', name)
 
 
-
-        # show our detected faces along with smiling/not smiling labels
-        # cv2.imshow("Checking Volunteer's Activities", frame)
+        k = cv2.waitKey(1) & 0xff
+        if k == 27:
+            break
 
         if grabbed:
             global_frame = frame
@@ -191,9 +218,6 @@ def get_activity_frame():
                    + global_frame + b'\r\n\r\n')
 
         # Press 'ESC' for exiting video
-        k = cv2.waitKey(1) & 0xff
-        if k == 27:
-            break
 
     # cleanup the camera and close any open windows
     vs.release()

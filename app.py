@@ -6,8 +6,6 @@ from flask import Flask, render_template, Response, request, redirect, url_for, 
 from geventwebsocket.websocket import WebSocket
 
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db
-from face import get_frame
-from version.activity.testingvolunteeractivity import get_activity_frame
 import video.views as vv
 from version.collect.collectingfaces import get_face_collect_frame
 app = Flask(__name__)

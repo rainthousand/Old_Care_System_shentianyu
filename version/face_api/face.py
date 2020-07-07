@@ -1,16 +1,21 @@
+import threading
+
 import requests
 from json import JSONDecoder
 import cv2
-import time
+import json
 from version.activity.faceutildlib import FaceUtil
 from database import event_db
 from database import oldperson_db
+import time
+
 
 url = 'https://api-cn.faceplusplus.com/facepp/v3/detect'
 key = '11Gew209e-E8vcwqsqjsf8MCmV7BbV2-'
 secret = 'b6i0QAOIDLFmCw3fSAF5OGlmY-9cz7SA'
 
 model_path = './version/models/face_recognition_hog.pickle'
+
 
 # 请求face++api 并返回结果转成json
 def face_detect_dict(img_content):
@@ -35,6 +40,24 @@ def face_detect_dict(img_content):
 
 
 def get_emotion(req_dict):
+    if req_dict is not None:
+        if 'error_message' in req_dict.keys():
+            return None
+        face_number = req_dict.get('face_num')
+
+        if face_number == 0:
+            return None
+        else:
+            attributes = req_dict.get('faces')[0].get('attributes')
+            emotion_dict = attributes.get('emotion')
+            emotion_result = max(emotion_dict, key=emotion_dict.get)
+            return emotion_result
+    else:
+        return None
+
+
+def get_information(req_dict):
+    information = []
     if 'error_message' in req_dict.keys():
         return None
     face_number = req_dict.get('face_num')
@@ -42,10 +65,18 @@ def get_emotion(req_dict):
     if face_number == 0:
         return None
     else:
-        attributes = req_dict.get('faces')[0].get('attributes')
-        emotion_dict = attributes.get('emotion')
-        emotion_result = max(emotion_dict, key=emotion_dict.get)
-        return emotion_result
+        faces = req_dict.get('faces')
+        for face in faces:
+            attributes = face.get('attributes')
+            emotion_dict = attributes.get('emotion')
+            emotion_result = max(emotion_dict, key=emotion_dict.get)
+            face_rectangle = face.get('face_rectangle')
+            top = face_rectangle.get('top')
+            left = face_rectangle.get('left')
+            width = face_rectangle.get('width')
+            height = face_rectangle.get('height')
+            information.append((emotion_result, top, left, width, height))
+        return information
 
 
 def get_rectangle(req_dict):
@@ -72,39 +103,44 @@ faceutil = FaceUtil(model_path)
 def press_esc():
     pass
 
+
 def get_frame():
     global global_frame
     cap = cv2.VideoCapture(0)
-    cap.set(0, 640)  # set Width (the first parameter is property_id)
-    cap.set(1, 480)  # set Height
+    # cap.set(0, 160)  # set Width (the first parameter is property_id)
+    # cap.set(1, 120)  # set Height
     while True:  # 拍100张图片就结束
         ret, img = cap.read()
         # 人脸检测不依赖色彩，所以先把人脸图像转成灰度图像
         img = cv2.flip(img, 1)
 
-        oldperson_db.getOldpersons()
+        old_persons = []
 
-        req_dict = face_detect_dict(img)
+        for old in json.loads(oldperson_db.getOldpersons()):
+            old_persons.append(str(old.get('ID')))
 
-        _, names = faceutil.get_face_location_and_name(img)
+        face_location_list, names = faceutil.get_face_location_and_name(img)
 
-        print(names)
-
-        if get_rectangle(req_dict):
-            top, left, width, height = get_rectangle(req_dict)
-            cv2.rectangle(img, (left, top), (left + width, top + height), (0, 255, 0))
-            cv2.putText(img, get_emotion(req_dict), (left, top - 10),
+        for ((left, top, right, bottom), name) in zip(face_location_list, names):
+            cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0))
+            cv2.putText(img, name, (left, top - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
-            current_time = time.strftime('%Y-%m-%d %H:%M:%S',
-                                         time.localtime(time.time()))
+            if name in old_persons:
+                expression_image = img[top:bottom, left:right]
+                req_dict = face_detect_dict(expression_image)
+                emotion = get_emotion(req_dict)
 
-            if get_emotion(req_dict) == 'happiness':
-                cv2.imwrite('./version/supervision/emotion/'+current_time+get_emotion(req_dict)+'.jpg', img)
+                cv2.putText(img, emotion, (left + 100, top - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
-                # ------------------------------
-                # 插入数据库识别到微笑表情
-                # -------------------------------
+                if emotion == 'happiness':
+                    current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+                    cv2.imwrite('./version/supervision/emotion/' +
+                                current_time + get_emotion(req_dict) + '.jpg', img)
+
+                    # 写入数据库，记录老人微笑
+                    event_db.addEvent('0', current_time, 'location', name + ' ' + emotion, name)
 
         # Press 'ESC' for exiting video
         k = cv2.waitKey(100) & 0xff
