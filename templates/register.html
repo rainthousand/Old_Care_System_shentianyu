@@ -67,13 +67,17 @@
                                             <div class="card-body pt-0">
                                                 <form action="index.html">
                                                     <div class="form-label-group">
-                                                        <input type="text" id="inputName" class="form-control" placeholder="Name" required>
-                                                        <label for="inputName">Name</label>
+                                                        <input type="text" id="inputName" class="form-control" placeholder="UserName" required>
+                                                        <label for="inputName">UserName</label>
                                                     </div>
                                                     <div class="form-label-group">
                                                         <input type="email" id="inputEmail" class="form-control" placeholder="Email" required>
                                                         <label for="inputEmail">Email</label>
                                                     </div>
+													<div class="form-label-group">
+													    <input type="text" id="phone" class="form-control" placeholder="Phone" required>
+													    <label for="phone">Phone</label>
+													</div>
                                                     <div class="form-label-group">
                                                         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                                                         <label for="inputPassword">Password</label>
@@ -86,7 +90,16 @@
 													    <input type="text" id="name" class="form-control" placeholder="Name" required>
 													    <label for="name">Name</label>
 													</div>
-													
+													<div class="col-sm-6">
+														<div class="form-group">
+														    <label for="sex">Sex</label>
+														    <select class="custom-select form-control" id="sex" name="sex">
+														        <option value="女">女</option>
+														        <option value="男">男</option>
+														    </select>
+														</div>
+														
+													</div>
                                                     <div class="form-group row">
                                                         <div class="col-12">
                                                             <fieldset class="checkbox">
@@ -105,7 +118,7 @@
                                                   
                                                 </form>
 												<a href="login.html" class="btn btn-primary float-left btn-inline mb-50">Login</a>
-												<button type="submit" class="btn btn-primary float-right btn-inline mb-50">Register</button>
+												<button type="submit" class="btn btn-primary float-right btn-inline mb-50" onclick="register()">Register</button>
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +149,8 @@
 	   var userPassword = document.getElementById('inputPassword').value;
 	   var userConfPassword = document.getElementById('inputConfPassword').value;
 	   var name = document.getElementById('name').value;
-	   alert('username:'+username+'Email:'+userEmail +' password:'+userPassword+' conpassword:'+userConfPassword+' name:'+name);
+	  var sex = document.getElementById('sex').value;
+	  var phone = document.getElementById('phone').value;
 	   // var chkObjs=null;
 	   // var obj=document.getElementsByName("radiocolor");
 	   // for (var i=0;i<obj.length;i++){ //遍历Radio
@@ -147,25 +161,25 @@
 	   // alert('radio:'+ chkObjs);
 	   
 	   // window.location.href='login.html';
+	   var register_text={"UserName":username,"Password":userPassword,"REAL_NAME":name,"SEX":sex,"EMAIL":userEmail,"PHONE":phone};
+	   $.ajax({
 	   
-	   mui.ajax('url',{
-	    data:{
-	     username:username,
-	     password:userPassword,
-	     email:userEmail,
-		 name:name
-	    },
-	    dataType:'json',//服务器返回json格式数据
-	    type:'post',//HTTP请求类型
-	    timeout:10000,//超时时间设置为10秒；
-	    success:function(data){
-			alert('注册成功');
-			window.location.href='login.html';
-	    },
-	    error:function(xhr,type,errorThrown){
-	     
-	    }
+	   	url : "http://127.0.0.1:5000/register",
+	   	type : "POST",
+	   	async : true,
+	   	data:JSON.stringify(register_text),
+	   	contentType:"application/json; charset=UTF-8",
+	   	dataType : "text",
+	   	success:function(data){
+	   	    if(data == "success")
+	           {
+	               window.location.href='/login';
+	           }
+			else
+	   	       alert(data);
+	   	}
 	   });
+	   
 	  }
 	 </script>
     <!-- BEGIN: Vendor JS-->

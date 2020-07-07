@@ -33,12 +33,13 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/dashboard-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/card-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
+
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/extensions/toastr.css">
 	
     <!-- END: Page CSS-->
 	
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
 
 </head>
@@ -62,23 +63,23 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a onclick="goto('/index')"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
+                <li class=" nav-item"><a href="/index"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
                    
                 </li>
                 <li class=" navigation-header"><span></span>
                 </li>
-                <li class=" nav-item"><a onclick="goto('/old-people')"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
+                <li class=" nav-item"><a href="/old-people"><i class="feather icon-mail"></i><span class="menu-title" data-i18n="Email">老年人信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a onclick="goto('/volunteer')" ><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
+                <li class=" nav-item"><a href="/volunteer"><i class="feather icon-message-square"></i><span class="menu-title" data-i18n="Chat">义工信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a onclick="goto('/employee')"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
+                <li class=" nav-item"><a href="/employee"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">工作人员信息管理</span></a>
                 </li>
-                <li class=" nav-item"><a onclick="goto('/manager')"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
+                <li class=" nav-item"><a href="/manager"><i class="feather icon-calendar"></i><span class="menu-title" data-i18n="Calender">系统管理员信息管理</span></a>
                 </li>
-				<li class=" nav-item"><a onclick="goto('/video')"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
-				</li>
-				<li class=" nav-item"><a onclick="goto('/event')"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
-				</li>
+        		<li class=" nav-item"><a href="/video"><i class="feather icon-circle"></i><span class="menu-title" data-i18n="Calender">实时监测</span></a>
+        		</li>
+        		<li class=" nav-item"><a href="/event"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
+        		</li>
                 
             </ul>
         </div>
@@ -99,7 +100,14 @@
                             <ul class="nav navbar-nav">
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
-                            
+                            <ul class="nav navbar-nav">
+          <li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+
+       </ul>
+                            <ul class="nav navbar-nav">
+          <li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+
+       </ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -220,6 +228,7 @@
 		var myMessage;
 		
 		window.onload=function(){
+		
 			var param = $.cookie("username"); 
 			console.log(param); 
 			
@@ -232,11 +241,6 @@
 			connect();
 			
 		}
-		function goto(url){
-		    socket.close();
-			window.location.href=url;
-		 }
-
 		
 		function connect() {
 			var host = "ws://127.0.0.1:5000/event_ws"
@@ -245,33 +249,31 @@
  
 				socket.onopen = function (msg) {
 					
-					alert("连接成功！");
 				};
  
 				socket.onmessage = function (msg) {
 					console.log(msg.data)
-					//myMessage = JSON.parse(msg);
+					
 					myMessage = msg;
-					alert("接收消息")
+					
 					if (typeof msg.data == "string") {
-						//displayContent(msg.data);
+						
 						var objectString = msg.data;
 						myMessage = JSON.parse(msg.data);
-						alert("第"+myMessage.id+"种事件出现")
 						console.log(myMessage.event_type)
 						console.log(myMessage.event_type)
 						console.log(myMessage.event_date)
 						console.log(myMessage.event_location)
 						console.log(myMessage.event_desc)
 						console.log(myMessage.oldperson_id)
-						toastr.warning('老人'+myMessage.oldperson_id+'  '+myMessage.event_type, myMessage.event_date+'  '+myMessage.event_location, { "showMethod": "slideDown", "hideMethod": "slideUp","showMethod": "fadeIn", "hideMethod": "fadeOut",positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+						toastr.warning('老人'+myMessage.oldperson_id+'  '+myMessage.event_type, myMessage.event_date+'  '+myMessage.event_location+'  '+myMessage.event_desc, { "showMethod": "slideDown", "hideMethod": "slideUp","showMethod": "fadeIn", "hideMethod": "fadeOut",positionClass: 'toast-top-right', containerId: 'toast-top-right' });
 					}
 					else {
 						alert("非文本消息");
 					}
 				};
  
-				socket.onclose = function (msg) { alert("socket closed!") };
+				// socket.onclose = function (msg) { alert("socket closed!") };
 			}
 			catch (ex) {
 				log(ex);
@@ -280,14 +282,12 @@
  
 		function send(msg) {
 			
-				socket.send(msg);
-			
+			socket.send(msg);
 
 		}
  
 		window.onbeforeunload = function () {
 			try {
-				alert('即将关闭');
 				socket.close();
 				socket = null;
 			}

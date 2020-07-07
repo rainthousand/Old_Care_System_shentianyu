@@ -33,14 +33,14 @@ def invasionDetect(frame, image):
         avg = gray.copy().astype("float")
     cv2.accumulateWeighted(gray, avg, 0.5)
     # 显示处理后的图像
-    cv2.imshow('frame', gray)
+    #cv2.imshow('frame', gray)
     # 计算当前帧与第一帧的区别
     frameDelta = cv2.absdiff(gray2, cv2.convertScaleAbs(avg))
     # cv2.imshow('first2',frameDelta)
     # 填充孔洞
     thresh = cv2.threshold(frameDelta, 45, 255, cv2.THRESH_BINARY)[1]
     thresh = cv2.dilate(thresh, None, iterations=2)
-    cv2.imshow('thresh', thresh)
+    #cv2.imshow('thresh', thresh)
     # 查找轮廓
     contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2:]
     #  cv2.imshow('thresh2',thresh.copy())
@@ -52,7 +52,7 @@ def invasionDetect(frame, image):
         # 计算轮廓的边界框，在当前帧中画出该框
         (x, y, w, h) = cv2.boundingRect(c)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        cv2.imshow('found', frame)
+        #cv2.imshow('found', frame)
         text = "Occupied"
         sign = True
         cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
@@ -73,7 +73,7 @@ def invasionDetect2():
     while n < 30:
         success, image = cap.read()
         n += 1
-    cv2.imshow('first',image)
+    #cv2.imshow('first',image)
     gray2 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  # 变成灰色图像
     gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)  # 高斯滤波
 
@@ -104,7 +104,7 @@ def invasionDetect2():
             continue
         cv2.accumulateWeighted(gray,avg,0.5)
         # 显示处理后的图像
-        cv2.imshow('frame',gray)
+        #cv2.imshow('frame',gray)
         #计算当前帧与第一帧的区别
         frameDelta = cv2.absdiff(gray2,cv2.convertScaleAbs(avg))
         # cv2.imshow('first2',frameDelta)

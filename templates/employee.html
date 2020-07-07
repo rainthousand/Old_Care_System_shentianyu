@@ -34,7 +34,9 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/tables/datatable/datatables.min.css">
     <!-- END: Page CSS-->
+<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/extensions/toastr.css">
 
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/toastr.css">
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
@@ -166,7 +168,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <div class="user-nav d-sm-flex d-none"><h1 id="head-username" class="mb-2" style="font-size: larger;">null</h1><span class="user-status">online</span></div><span><img class="round" src="../static/app-assets/images/portrait/small/avatar-s-11.png" alt="avatar" height="40" width="40" /></span>
+                                    <div class="user-nav d-sm-flex d-none"><h1 id="head-username" class="mb-2" style="font-size: larger;">null</h1><span class="user-status">online</span></div><span><img class="round" src="../app-assets/images/portrait/small/avatar-s-5.png" alt="avatar" height="40" width="40" /></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
@@ -193,7 +195,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body card-dashboard">
-                                        
+                                        <button type="button" class="btn btn-success mr-1 mb-1" onclick="method5(tableitems)">导出EXCEL</button>
                                         <div class="table-responsive">
                                             <table class="table table-striped dataex-html5-selectors">
                                                 <thead>
@@ -267,6 +269,9 @@
     </div>
     <!-- END: Content-->
 	<script>
+		var socket;
+		var myMessage;
+		
 		function seemore(i){
 			
 			$.cookie("employee_detail_num",i);
@@ -491,9 +496,164 @@
 					pieChart.setOption(pieChartoption);
 				}
 			});
+			connect();
+		}
+		function connect() {
+			var host = "ws://127.0.0.1:5000/event_ws"
+			socket = new WebSocket(host);
+			try {
+		 
+				socket.onopen = function (msg) {
+					
+				};
+		 
+				socket.onmessage = function (msg) {
+					console.log(msg.data)
+					
+					myMessage = msg;
+					
+					if (typeof msg.data == "string") {
+						
+						var objectString = msg.data;
+						myMessage = JSON.parse(msg.data);
+						console.log(myMessage.event_type)
+						console.log(myMessage.event_type)
+						console.log(myMessage.event_date)
+						console.log(myMessage.event_location)
+						console.log(myMessage.event_desc)
+						console.log(myMessage.oldperson_id)
+						toastr.warning('老人'+myMessage.oldperson_id+'  '+myMessage.event_type, myMessage.event_date+'  '+myMessage.event_location+'  '+myMessage.event_desc, { "showMethod": "slideDown", "hideMethod": "slideUp","showMethod": "fadeIn", "hideMethod": "fadeOut",positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+					}
+					else {
+						alert("非文本消息");
+					}
+				};
+		 
+				// socket.onclose = function (msg) { alert("socket closed!") };
+			}
+			catch (ex) {
+				log(ex);
+			}
+		}
+		 
+		function send(msg) {
+			
+			socket.send(msg);
 		
 		}
+		 
+		window.onbeforeunload = function () {
+			try {
+				socket.close();
+				socket = null;
+			}
+			catch (ex) {
+			}
+		};
+		 
+		function $(id) { return document.getElementById(id); }
+		function onkey(event) { if (event.keyCode == 13) { send(); } }
 	</script>
+	<script type="text/javascript">
+	    //excel按钮
+	    //打印表格
+	    var idTmr;
+	    function  getExplorer() {
+	        var explorer = window.navigator.userAgent ;
+	        //ie
+	        if (explorer.indexOf("MSIE") >= 0) {
+	            return 'ie';
+	        }
+	        //firefox
+	        else if (explorer.indexOf("Firefox") >= 0) {
+	            return 'Firefox';
+	        }
+	        //Chrome
+	        else if (explorer.indexOf("Chrome") >= 0) {
+	            return 'Chrome';
+	        }
+	        //Opera
+	        else if (explorer.indexOf("Opera") >= 0) {
+	            return 'Opera';
+	        }
+	        //Safari
+	        else if (explorer.indexOf("Safari") >= 0) {
+	            return 'Safari';
+	        }
+	    }
+	    function method5(tableid) {
+	        if (getExplorer() == 'ie') {
+	            var curTbl = document.getElementById(tableid);
+	            var oXL = new ActiveXObject("Excel.Application");
+	            var oWB = oXL.Workbooks.Add();
+	            var xlsheet = oWB.Worksheets(1);
+	            var sel = document.body.createTextRange();
+	            sel.moveToElementText(curTbl);
+	            sel.select();
+	            sel.execCommand("Copy");
+	            xlsheet.Paste();
+	            oXL.Visible = true;
+	
+	            try {
+	                var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+	                    "Excel Spreadsheets (*.xls), *.xls");
+	            } catch (e) {
+	                print("Nested catch caught " + e);
+	            } finally {
+	                oWB.SaveAs(fname);
+	                oWB.Close(savechanges = false);
+	                oXL.Quit();
+	                oXL = null;
+	                idTmr = window.setInterval("Cleanup();", 1);
+	            }
+	
+	        } else {
+	            tableToExcel(tableid)
+	        }
+	    }
+	    function Cleanup() {
+	        window.clearInterval(idTmr);
+	        CollectGarbage();
+	    }
+	    var tableToExcel = (function() {
+	        var uri = 'data:application/vnd.ms-excel;base64,', template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>', base64 = function(
+	            s) {
+	            return window.btoa(unescape(encodeURIComponent(s)))
+	        }, format = function(s, c) {
+	            return s.replace(/{(\w+)}/g, function(m, p) {
+	                return c[p];
+	            })
+	        }
+	        return function(table, name) {
+	            if (!table.nodeType)
+	                table = document.getElementById(table)
+	            var ctx = {
+	                worksheet : name || 'Worksheet',
+	                table : table.innerHTML
+	            }
+	            window.location.href = uri + base64(format(template, ctx))
+	        }
+	    })()
+	    function jsonToArray(data) {
+	        var dataArray = [];
+	        var i = 0;
+	        for (i = 0; i < data.length; i++) {
+	            var dataLine = [];
+	            var d = data[i];
+	            dataLine.push('')
+	            dataLine.push(d.contractId);
+	            dataLine.push(d.contractName);
+	            dataLine.push(d.customer);
+	            dataLine.push(d.endTime);
+	            dataLine.push(d.beginTime);
+	            dataLine.push(d.contractContent);
+	            dataLine.push(d.username);
+	            console.log(dataLine);
+	            dataArray.push(dataLine)
+	        }
+	        return dataArray;
+	    }
+	    </script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
@@ -536,7 +696,7 @@
 	<script src="../static/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js"></script>
 	<script src="../static/app-assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js"></script>
 	<!-- END: Page Vendor JS-->
-	
+	<script src="../static/app-assets/vendors/js/extensions/toastr.min.js"></script>
 	<!-- BEGIN: Page JS-->
 	<script src="../static/app-assets/js/scripts/datatables/datatable.js"></script>
 	<!-- END: Page JS-->
