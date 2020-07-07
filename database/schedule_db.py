@@ -27,13 +27,14 @@ def getScheduleByUserName(username):
         data['end_date'] = str(em[3])
         data['sche_content'] = str(em[4])
         data['username'] = str(em[5])
+        data['color'] = str(em[6])
         jsondata.append(data)
     jsondatas = json.dumps(jsondata, ensure_ascii=False)
     return jsondatas
 
-def addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username):
-    sql="insert into schedule(sche_id,sche_name,start_date,end_date,sche_content,username) values(%s,%s,%s,%s,%s,%s)" %\
-        (sche_id,"'"+sche_name+"'","'"+start_date+"'","'"+end_date+"'","'"+sche_content+"'","'"+username+"'")
+def addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username,color):
+    sql="insert into schedule(sche_id,sche_name,start_date,end_date,sche_content,username,color) values(%s,%s,%s,%s,%s,%s,%s)" %\
+        (sche_id,"'"+sche_name+"'","'"+start_date+"'","'"+end_date+"'","'"+sche_content+"'","'"+username+"'","'"+color+"'")
 
     print(sql)
     try:
@@ -61,5 +62,5 @@ def deleteScheduleByName(sche_name,username):
 
 
 # print(getScheduleByUserName("wang"))
-# addNewSchedule(2,"bbb","2020-07-07","2020-07-09","azczcxzczcx","wang")
-deleteScheduleByName("bbb","wang")
+# addNewSchedule(2,"bbb","2020-07-07","2020-07-09","azczcxzczcx","sys","#7367f0")
+# deleteScheduleByName("bbb","wang")

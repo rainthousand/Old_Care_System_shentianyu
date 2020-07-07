@@ -633,12 +633,13 @@ def delete_manager():
         user_db.deleteUserByName(name)
         return "success"
 
-@app.route('/getschedule', methods=['GET', 'POST'])
-def get_schedule():
+@app.route('/calender', methods=['GET', 'POST'])
+def calender():
     if request.method == 'GET':
-        return render_template("schedule.html")
+        return render_template('calender.html')
     if request.method == 'POST':
         data = request.get_data()
+        print(data)
         if data:
             print("rec!!!!!")
         jdata = json.loads(data)
@@ -647,8 +648,21 @@ def get_schedule():
         returndata = schedule_db.getScheduleByUserName(name)
         return returndata
 
-@app.route('/newschedule', methods=['GET', 'POST'])
-def get_schedule():
+# @app.route('/getschedule', methods=['GET', 'POST'])
+# def get_schedule():
+#     if request.method == 'POST':
+#         data = request.get_data()
+#         print(data)
+#         if data:
+#             print("rec!!!!!")
+#         jdata = json.loads(data)
+#         name = jdata.get("username")
+#         print(name)
+#         returndata = schedule_db.getScheduleByUserName(name)
+#         return returndata
+
+@app.route('/addschedule', methods=['GET', 'POST'])
+def new_schedule():
     if request.method == 'POST':
         data = request.get_data()
         if data:
@@ -660,13 +674,14 @@ def get_schedule():
         end_date = jdata.get("end_date")
         sche_content = jdata.get("sche_content")
         username = jdata.get("username")
+        color = jdata.get("color")
 
-        schedule_db.addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username)
+        schedule_db.addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username,color)
 
         return "success"
 
 @app.route('/deleteschedule', methods=['GET', 'POST'])
-def get_schedule():
+def delete_schedule():
     if request.method == 'POST':
         data = request.get_data()
         if data:
