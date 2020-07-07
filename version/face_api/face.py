@@ -104,6 +104,41 @@ def press_esc():
     pass
 
 
+def get_new_frame(frame):
+
+    img = cv2.flip(frame, 1)
+
+    old_persons = []
+
+    for old in json.loads(oldperson_db.getOldpersons()):
+        old_persons.append(str(old.get('ID')))
+
+    face_location_list, names = faceutil.get_face_location_and_name(img)
+
+    for ((left, top, right, bottom), name) in zip(face_location_list, names):
+        cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0))
+        cv2.putText(img, name, (left, top - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+
+        if name in old_persons:
+            expression_image = img[top:bottom, left:right]
+            req_dict = face_detect_dict(expression_image)
+            emotion = get_emotion(req_dict)
+
+            cv2.putText(img, emotion, (left + 100, top - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+
+            if emotion == 'happiness':
+                current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+                cv2.imwrite('./version/supervision/emotion/' +
+                            current_time + get_emotion(req_dict) + '.jpg', img)
+
+                # 写入数据库，记录老人微笑
+                event_db.addEvent('0', current_time, 'location', name + ' ' + emotion, name)
+
+    return img
+
+
 def get_frame():
     global global_frame
     cap = cv2.VideoCapture(0)
