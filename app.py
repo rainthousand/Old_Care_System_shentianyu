@@ -5,7 +5,7 @@ from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, render_template, Response, request, redirect, url_for, abort
 from geventwebsocket.websocket import WebSocket
 from vision.falldown.FallDownDetection import fallDetect2
-from database import employee_db, event_db, oldperson_db, user_db, volunteer_db
+from database import employee_db, event_db, oldperson_db, user_db, volunteer_db, schedule_db
 from vision.fire.fireDetection import fireDetect
 from video import image_stream
 import video.views as vv
@@ -633,6 +633,50 @@ def delete_manager():
         user_db.deleteUserByName(name)
         return "success"
 
+@app.route('/getschedule', methods=['GET', 'POST'])
+def get_schedule():
+    if request.method == 'GET':
+        return render_template("schedule.html")
+    if request.method == 'POST':
+        data = request.get_data()
+        if data:
+            print("rec!!!!!")
+        jdata = json.loads(data)
+        name = jdata.get("username")
+        print(name)
+        returndata = schedule_db.getScheduleByUserName(name)
+        return returndata
+
+@app.route('/newschedule', methods=['GET', 'POST'])
+def get_schedule():
+    if request.method == 'POST':
+        data = request.get_data()
+        if data:
+            print("rec!!!!!")
+        jdata = json.loads(data)
+        sche_id = jdata.get("sche_id")
+        sche_name = jdata.get("sche_name")
+        start_date = jdata.get("start_date")
+        end_date = jdata.get("end_date")
+        sche_content = jdata.get("sche_content")
+        username = jdata.get("username")
+
+        schedule_db.addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username)
+
+        return "success"
+
+@app.route('/deleteschedule', methods=['GET', 'POST'])
+def get_schedule():
+    if request.method == 'POST':
+        data = request.get_data()
+        if data:
+            print("rec!!!!!")
+        jdata = json.loads(data)
+        sche_name = jdata.get("sche_name")
+        username = jdata.get("username")
+
+        schedule_db.deleteScheduleByName(sche_name,username)
+        return "success"
 
 # ____________________________________________________________________________________________manager
 
