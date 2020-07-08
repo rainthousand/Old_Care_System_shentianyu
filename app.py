@@ -1,22 +1,31 @@
+import copy
 import datetime
 import json
+import requests
+import base64
+import cv2
+import numpy as np
 from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
-from flask import Flask, render_template, Response, request, redirect, url_for, abort
 from geventwebsocket.websocket import WebSocket
-from vision.falldown.FallDownDetection import fallDetect2
+from flask import Flask, render_template, Response, request, redirect, url_for, abort, session
+from version.collect import collectingfaces
+
+from config import config_dict
+from event_ws import event_handle
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db, schedule_db
-from vision.fire.fireDetection import fireDetect
-from video import image_stream
-import video.views as vv
+import video.image_stream as ims
 
+config_class = config_dict['dev']
 app = Flask(__name__)
+app.config.from_object(config_class)
+user_socket_list = []
 
 
-
-@app.route('/video')
+@app.route('/video', methods=['GET', 'POST'])
 def index():
-    return render_template('video.html')
+    if request.method == "GET":
+        return render_template('video.html')
 
 
 # #图片流
@@ -32,33 +41,146 @@ def index():
 def tempindex():
     return render_template('index.html')
 
+
+@app.route('/question')
+def question():
+    return render_template('question.html')
+
+
 # 视频测试
 @app.route('/videotest')
 def video_test():
     return render_template('index_video.html')
 
-# 视频流
-# @app.route('/video_viewer')
-# def video_viewer():
-#     return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-#
-# @app.route('/video_viewer2')
-# def video_viewer2():
-#     return Response(vv.video_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-@app.route('/video_viewer2')
-def video_viewer2():
-    return Response(fireDetect(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/video_viewer')
 def video_viewer():
-    return Response(fallDetect2("vision/falldown/fall3.mp4"),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(collectingfaces.get_face_collect_frame("./image/faces/old_people", '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
+    # if not session.get("username"):
+    #     return redirect(url_for("login"))
 
-# @app.route('/video_viewer')
-# def video_viewer():
-#     return Response(get_face_collect_frame('./image/faces/old_people', '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+# 普通视频流
+@app.route('/video_socket')
+def video_socket():
+    path_smile = "static\\images\\smile.jpg"
+    path_invas = "static\\images\\invas.jpg"
+    path_face = "static\\images\\face.jpg"
+    path_volun_act = "static\\images\\volun_act.jpg"
+    pathfall = "static\\images\\tempfall.jpg"
+    pathfire = "static\\images\\tempfire.jpg"
+    fall_video_path = 'version\\falldown\\fall_new.mp4'
+    fire_video_path = "version\\fire\\fire_new.mp4"
+
+    fall_k = 0
+    fire_k = 0
+    invas_k = 0
+    first_frame = None
+
+    user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
+    if user_socket is None:
+        abort(404)
+    else:
+        print("WebSocket Connected!!!")
+        # camera = cv2.VideoCapture(0)
+
+        fall_vid = cv2.VideoCapture(fall_video_path)
+        fall_fs = fall_vid.get(7)
+        fire_vid = cv2.VideoCapture(fire_video_path)
+        fire_fs = fire_vid.get(7)
+
+        headers = {'Proxy-Connection': 'keep-alive'}
+
+        while True:
+            # suc, fall = fall_vid.read()
+            # if suc:
+            #     if fall_k == fall_fs - 1:  # 最后一帧
+            #         fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            #         fall_k = 0
+            #     cv2.imwrite(pathfall, fall)
+            #     user_socket.send("2$" + ims.image_stream(pathfall))
+            #     fall_k += 1
+            #
+            # succc, fire = fire_vid.read()
+            # if succc:
+            #     if fire_k == fire_fs - 1:
+            #         fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            #         fire_k = 0
+            #     cv2.imwrite(pathfire, fire)
+            #     user_socket.send("4$" + ims.image_stream(pathfire))
+            #     fire_k += 1
+
+            # ret, frame = camera.read()
+
+            img = requests.get("http://127.0.0.1:6000/getvideo", stream=True, headers=headers)
+            print("content:::::::::::::::::::::::")
+            print(img.content)
+
+            # img = base64.b64decode(img.content)
+            # image_data = base64.b64decode(str(img))
+            # image_data = np.fromstring(img, np.uint8)
+            # frame = cv2.imdecode(image_data, cv2.IMREAD_COLOR)
+
+            img_data = base64.b64decode(str(img.content))
+            imgData = base64.b64decode(img.content)
+            nparr = np.fromstring(imgData, np.uint8)
+            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            # img_array = np.fromstring(img_data, np.uint8)  # 转换np序列
+            # print(img_array)
+            # frame = cv2.imdecode(img_array, cv2.COLOR_BGR2RGB)  # 转换Opencv格式
+
+            if frame is None:
+                print("no frame")
+            # print(frame)
+            else:
+                cv2.imshow("test", frame)
+                frame_inv = copy.copy(frame)
+                frame_s = copy.copy(frame)
+                frame_face = copy.copy(frame)
+                frame_vol_act = copy.copy(frame)
+                frame_temp = copy.copy(frame)
+                # # 人脸检测
+                # frame_f = event_handle.detect_face(frame_face)
+                # cv2.imwrite(path_face, frame_f)
+                # user_socket.send("5$" + ims.image_stream(path_face))
+                # #义工活动
+                # frame_va = event_handle.detect_volun_activity(frame_vol_act)
+                # cv2.imwrite(path_volun_act, frame_va)
+                # user_socket.send("6$" + ims.image_stream(path_volun_act))
+                # # 入侵
+                # if invas_k % 10 == 0:
+                #     first_frame = frame_temp
+                # frame_invas = event_handle.detect_invasion(frame_inv, first_frame)
+                # invas_k += 1
+                # cv2.imwrite(path_invas, frame_invas)
+                # user_socket.send("3$" + ims.image_stream(path_invas))
+                # 微笑
+                frame_smile = event_handle.detect_smile(frame_s)
+                cv2.imwrite(path_smile, frame_smile)
+                user_socket.send("1$" + ims.image_stream(path_smile))
+
+
+        #     key = cv2.waitKey(1) & 0xFF
+        #     if key == ord('s'):
+        #         break
+        #     elif key == 27:
+        #         break
+        # cv2.destroyAllWindows()
+        # camera.release()
+    return "success"
+
+    # if not session.get("username"):
+    #     return redirect(url_for("login"))
+
+
+# @app.route('/enter_face')
+# def enter_face():
+#     return Response(collectingfaces.get_face_collect_frame("./image/faces/old_people", '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/catch_face')
+def catch_face():
+    return render_template("catch_face.html")
+
 
 # 登录
 @app.route('/login', methods=['GET', 'POST'])
@@ -74,6 +196,7 @@ def login():
         print(user_name + user_password)
         print(user_db.userlogin(user_name, user_password))
         if user_db.userlogin(user_name, user_password):
+            session["username"] = user_name
             return "success"
             # return render_template('index.html')
         return " "
@@ -85,6 +208,8 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     if request.method == 'POST':
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
         recv_data = request.get_data()
         jsondata = json.loads(recv_data)
         # print(jsondata)
@@ -96,28 +221,28 @@ def register():
         SEX = jsondata.get("SEX")
         EMAIL = jsondata.get("EMAIL")
         PHONE = jsondata.get("PHONE")
-        MOBILE = jsondata.get("MOBILE")
-        DESCRIPTION = jsondata.get("DESCRIPTION")
-        ISACTIVE = jsondata.get("ISACTIVE")
-        CREATED = jsondata.get("CREATED")
-        CREATEBY = jsondata.get("CREATEBY")
-        UPDATED = jsondata.get("UPDATED")
-        UPDATEBY = jsondata.get("UPDATEBY")
-        REMOVE = jsondata.get("REMOVE")
-        DATAFILTER = jsondata.get("DATAFILTER")
-        theme = jsondata.get("theme")
-        defaultpage = jsondata.get("defaultpage")
-        logoimage = jsondata.get("logoimage")
-        qqopenid = jsondata.get("qqopenid")
-        appversion = jsondata.get("appversion")
-        jsonauth = jsondata.get("jsonauth")
+        MOBILE = jsondata.get("PHONE")  # jsondata.get("MOBILE")
+        DESCRIPTION = "new"  # jsondata.get("DESCRIPTION")
+        ISACTIVE = "有效"  # jsondata.get("ISACTIVE")
+        CREATED = now  # jsondata.get("CREATED")
+        CREATEBY = 0  # jsondata.get("CREATEBY")
+        UPDATED = now  # jsondata.get("UPDATED")
+        UPDATEBY = 0  # jsondata.get("UPDATEBY")
+        REMOVE = "no"  # jsondata.get("REMOVE")
+        DATAFILTER = "new register"  # jsondata.get("DATAFILTER")
+        theme = "theme"  # jsondata.get("theme")
+        defaultpage = "defaultpage"  # jsondata.get("defaultpage")
+        logoimage = "loginimage"  # jsondata.get("logoimage")
+        qqopenid = "qqopenid"  # jsondata.get("qqopenid")
+        appversion = "appversion"  # jsondata.get("appversion")
+        jsonauth = "jsonquth"  # jsondata.get("jsonauth")
         print(UserName + Password)
 
         user_db.addUser(ORG_ID, CLIENT_ID, UserName, Password, REAL_NAME, SEX, EMAIL, PHONE, MOBILE,
                         DESCRIPTION, ISACTIVE, CREATED, CREATEBY, UPDATED, UPDATEBY, REMOVE, DATAFILTER,
                         theme, defaultpage, logoimage, qqopenid, appversion, jsonauth)
 
-        return " "
+        return "success"
 
 
 # 忘记密码
@@ -135,6 +260,54 @@ def forgetpassword():
         print(user_db.getpassword(email))  # 根据email打印密码
         return " "
 
+#日程表_________________________________________________________________________calender
+@app.route('/calender', methods=['GET', 'POST'])
+def calender():
+    if request.method == 'GET':
+        return render_template('calender.html')
+    if request.method == 'POST':
+        data = request.get_data()
+        print(data)
+        if data:
+            print("rec!!!!!")
+        jdata = json.loads(data)
+        name = jdata.get("username")
+        print(name)
+        returndata = schedule_db.getScheduleByUserName(name)
+        return returndata
+
+@app.route('/addschedule', methods=['GET', 'POST'])
+def new_schedule():
+    if request.method == 'POST':
+        data = request.get_data()
+        if data:
+            print("rec!!!!!")
+        jdata = json.loads(data)
+        sche_id = jdata.get("sche_id")
+        sche_name = jdata.get("sche_name")
+        start_date = jdata.get("start_date")
+        end_date = jdata.get("end_date")
+        sche_content = jdata.get("sche_content")
+        username = jdata.get("username")
+        color = jdata.get("color")
+
+        schedule_db.addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username,color)
+
+        return "success"
+
+@app.route('/deleteschedule', methods=['GET', 'POST'])
+def delete_schedule():
+    if request.method == 'POST':
+        data = request.get_data()
+        if data:
+            print("rec!!!!!")
+        jdata = json.loads(data)
+        sche_name = jdata.get("sche_name")
+        username = jdata.get("username")
+
+        schedule_db.deleteScheduleByName(sche_name,username)
+        return "success"
+#____________________________________________________________________________________calender
 
 # _____________________________________________________________________________oldperson
 @app.route('/old-people', methods=['GET', 'POST'])
@@ -380,27 +553,34 @@ def event():
         return event_db.getEvents()
 
 
-@app.route('/eventtest', methods=['GET', 'POST'])
-def eventtest():
-    if request.method == 'GET':
-        return render_template('websockettest_2.html')
-
-
 # websocket传event
 @app.route('/event_ws')
 def event_send():
     user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
-    if user_socket:
-        print("here")
-        ws = request.environ['wsgi.websocket']
-        if ws is None:
-            abort(404)
-        else:
-            while True:
-                if not ws.closed:
-                    # message = ws.receive()
-                    ws.send("success!!!")
-
+    user_socket_list.append(user_socket)
+    if user_socket is None:
+        abort(404)
+    else:
+        jsondata = []
+        data = {'id': 1, 'event_type': '2', 'event_date': '3', 'event_location': '2', 'event_desc': '3',
+                'oldperson_id': 0}
+        data['id'] = 6
+        data['event_type'] = "1"
+        data['event_date'] = "6-5"
+        data['event_location'] = "kitchen"
+        data['event_desc'] = "reallyGOOD"
+        data['oldperson_id'] = "2"
+        jsondata.append(data)
+        jsondatas = json.dumps(data)
+        # while True:
+        # message = user_socket.receive()
+        # print(message)
+        for user in user_socket_list:
+            try:
+                user.send(jsondatas)
+            except Exception as e:
+                continue
+                # user_socket_list.remove(user_socket)
     return " "
 
 
@@ -633,75 +813,15 @@ def delete_manager():
         user_db.deleteUserByName(name)
         return "success"
 
-@app.route('/calender', methods=['GET', 'POST'])
-def calender():
-    if request.method == 'GET':
-        return render_template('calender.html')
-    if request.method == 'POST':
-        data = request.get_data()
-        print(data)
-        if data:
-            print("rec!!!!!")
-        jdata = json.loads(data)
-        name = jdata.get("username")
-        print(name)
-        returndata = schedule_db.getScheduleByUserName(name)
-        return returndata
-
-# @app.route('/getschedule', methods=['GET', 'POST'])
-# def get_schedule():
-#     if request.method == 'POST':
-#         data = request.get_data()
-#         print(data)
-#         if data:
-#             print("rec!!!!!")
-#         jdata = json.loads(data)
-#         name = jdata.get("username")
-#         print(name)
-#         returndata = schedule_db.getScheduleByUserName(name)
-#         return returndata
-
-@app.route('/addschedule', methods=['GET', 'POST'])
-def new_schedule():
-    if request.method == 'POST':
-        data = request.get_data()
-        if data:
-            print("rec!!!!!")
-        jdata = json.loads(data)
-        sche_id = jdata.get("sche_id")
-        sche_name = jdata.get("sche_name")
-        start_date = jdata.get("start_date")
-        end_date = jdata.get("end_date")
-        sche_content = jdata.get("sche_content")
-        username = jdata.get("username")
-        color = jdata.get("color")
-
-        schedule_db.addNewSchedule(sche_id,sche_name,start_date,end_date,sche_content,username,color)
-
-        return "success"
-
-@app.route('/deleteschedule', methods=['GET', 'POST'])
-def delete_schedule():
-    if request.method == 'POST':
-        data = request.get_data()
-        if data:
-            print("rec!!!!!")
-        jdata = json.loads(data)
-        sche_name = jdata.get("sche_name")
-        username = jdata.get("username")
-
-        schedule_db.deleteScheduleByName(sche_name,username)
-        return "success"
 
 # ____________________________________________________________________________________________manager
 
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', threaded=True)
-    # print("132")
     server = pywsgi.WSGIServer(('127.0.0.1', 5000), app, handler_class=WebSocketHandler)
     if server:
         print('server start!!!!!!!!!')
     else:
-        print("BO")
+        print("ERROR")
     server.serve_forever()

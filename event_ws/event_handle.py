@@ -4,9 +4,12 @@ import json
 import cv2
 
 from database import event_db
-from vision.falldown.FallDownDetection import fallDetect
-from vision.invasion.invasionDetection import invasionDetect
-from vision.smile.smileDetection import smileDetect
+from version.activity import testingvolunteeractivity
+from version.face_api import face
+from version.falldown.FallDownDetection import fallDetect2
+from version.invasion.invasionDetection import invasionDetect
+from version.smile.smileDetection import smileDetect
+
 
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -38,29 +41,35 @@ def detect_smile(frame):
         smile_num = smile_num + 1
         frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\smile" + str(smile_num) + ".png"
         cv2.imwrite(frames_save_path, frame)
-
     return frame
 
-def detect_fall(frame):
-    fall_num = 0
-    frame, sign, j = fallDetect(frame)
-    if sign:
-        fall_num = fall_num + 1
-        frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\fall" + str(fall_num) + ".png"
-        cv2.imwrite(frames_save_path, frame)
-    cv2.imshow("fall",frame)
-    return frame
+def detect_fall():
+    # fall_num = 0
+    # frame, sign = fallDetect2(frame)
+    # if sign:
+    #     fall_num = fall_num + 1
+    #     frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\fall" + str(fall_num) + ".png"
+    #     cv2.imwrite(frames_save_path, frame)
+    # cv2.imshow("fall",frame)
+    return fallDetect2('F:\\Pycharm_project\\care_sys\\version\\falldown\\fall.mp4')
 
 def detect_invasion(frame,first):
     invasion_num = 0
     #first = VideoCamera.first_frame()
     frame, sign = invasionDetect(frame, first)
-
     if sign:
         invasion_num = invasion_num + 1
         frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\invasion" + str(invasion_num) + ".png"
         cv2.imwrite(frames_save_path, frame)
-
     return frame
+
+
+def detect_face(frame):
+    return face.get_new_frame(frame)
+
+
+def detect_volun_activity(frame):
+    return testingvolunteeractivity.get_new_activity_frame(frame)
+
 
 # print(event_to_json("da","dwad","dwad","dwad",12))
