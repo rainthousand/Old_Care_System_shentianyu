@@ -99,13 +99,7 @@ global_frame = None
 
 faceutil = FaceUtil(model_path)
 
-
-def press_esc():
-    pass
-
-
 def get_new_frame(frame):
-
     img = cv2.flip(frame, 1)
 
     old_persons = []

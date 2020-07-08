@@ -4,10 +4,9 @@ from gevent import pywsgi
 from geventwebsocket.handler import WebSocketHandler
 from flask import Flask, render_template, Response, request, redirect, url_for, abort
 from geventwebsocket.websocket import WebSocket
-
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db
-import video.views as vv
-from version.collect.collectingfaces import get_face_collect_frame
+
+
 app = Flask(__name__)
 
 
@@ -39,7 +38,7 @@ def video_test():
 # 普通视频流
 @app.route('/video_viewer')
 def video_viewer():
-    return Response(get_face_collect_frame('./image/faces/old_people', '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(get_activity_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 # 登录

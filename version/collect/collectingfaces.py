@@ -9,7 +9,6 @@ python collectingfaces.py --id 106 --imagedir /home/reed/git-project/old_care_sy
 '''
 import argparse
 from version.activity.faceutildlib import FaceUtil
-import version.collect.audioplayer as audioplayer
 from PIL import Image, ImageDraw, ImageFont
 import cv2
 import numpy as np
@@ -110,6 +109,7 @@ def get_face_collect_frame(image_dir, id):
             print('[WARNING] 检测到多张人脸')
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'multi_faces_detected.mp3'))
+
             error = 1
             start_time = time.time()
         else:
@@ -126,7 +126,7 @@ def get_face_collect_frame(image_dir, id):
 
     # 开始采集人脸
     for action in action_list:
-        audioplayer.play_audio(os.path.join(audio_dir, action + '.mp3'))
+        # audioplayer.play_audio(os.path.join(audio_dir, action + '.mp3'))
         action_name = action_map[action]
 
         counter = 1
