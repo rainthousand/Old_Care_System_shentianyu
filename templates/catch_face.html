@@ -191,10 +191,7 @@
 			                </div>
 			                <div class="card-content">
 			                    <div class="card-body">
-			                       
-										<img id="video" src="{{ url_for('enter_face') }}" alt="videostream">
-							
-		
+			                       <img id="videoface" src="data:image/jpg;base64,"/>
 			                    </div>
 			                </div>
 			            </div>
@@ -208,16 +205,63 @@
     </div>
     <!-- END: Content-->
 	<script>
+		
+		var socket;
+		var myMessage;
 		var param;
 		window.onload=function(){
+		
 			param = $.cookie("username"); 
 			console.log(param); 
+	
 		
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
-
+			
+			connect();
+			
 		}
 		
+		function connect() {
+			var host = "ws://127.0.0.1:5000/enter_face";
+			socket = new WebSocket(host);
+			try {
+		 
+				socket.onopen = function (msg) {
+					
+				};
+		 
+				socket.onmessage = function (msg) {
+				    var myMessage = msg.data;
+					  var myvideo=document.getElementById('videoface');
+					  myvideo.setAttribute("src","data:image/jpg;base64,"+myMessage);
+
+				};
+		 
+				// socket.onclose = function (msg) { alert("socket closed!") };
+			}
+			catch (ex) {
+				log(ex);
+			}
+		}
+		 
+		function send(msg) {
+			
+			socket.send(msg);
+		
+		}
+		 
+		window.onbeforeunload = function () {
+			try {
+				socket.close();
+				socket = null;
+			}
+			catch (ex) {
+			}
+		};
+		 
+		function $(id) { return document.getElementById(id); }
+		function onkey(event) { if (event.keyCode == 13) { send(); } }
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>

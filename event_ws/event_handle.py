@@ -15,18 +15,9 @@ now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
 
 
-def event_msg(jsondata):
-    event_type = jsondata.get("event_type")
-    event_date = jsondata.get("event_date")
-    event_location = jsondata.get("event_location")
-    event_desc = jsondata.get("event_desc")
-    oldperson_id = jsondata.get("oldperson_id")
-    event_db.addEvent(event_type, event_date, event_location, event_desc, oldperson_id)
-
-
 def event_to_json(event_type, event_date, event_location, event_desc, oldperson_id):
-    data = {'event_type': event_type, 'event_date': event_date, 'event_location': event_location,
-            'event_desc': event_desc, 'oldperson_id': oldperson_id}
+    data = [{"event_type": event_type, "event_date": event_date, "event_location": event_location,
+            "event_desc": event_desc, "oldperson_id": oldperson_id}]
     jdata = json.dumps(data)
     return jdata
 
@@ -38,9 +29,12 @@ def detect_smile(frame):
     smile_num = 0
     frame, sign = smileDetect(frame)
     if sign:
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
         smile_num = smile_num + 1
         frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\smile" + str(smile_num) + ".png"
         cv2.imwrite(frames_save_path, frame)
+        event_db.addEvent(0,now,"location","smile",61)
     return frame
 
 def detect_fall():
@@ -58,9 +52,13 @@ def detect_invasion(frame,first):
     #first = VideoCamera.first_frame()
     frame, sign = invasionDetect(frame, first)
     if sign:
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
         invasion_num = invasion_num + 1
         frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\invasion" + str(invasion_num) + ".png"
         cv2.imwrite(frames_save_path, frame)
+        event_db.addEvent(4, now, "location", "stranger_invade", 0)
+
     return frame
 
 
@@ -72,4 +70,4 @@ def detect_volun_activity(frame):
     return testingvolunteeractivity.get_new_activity_frame(frame)
 
 
-# print(event_to_json("da","dwad","dwad","dwad",12))
+#print(event_to_json("da","dwad","dwad","dwad",12))

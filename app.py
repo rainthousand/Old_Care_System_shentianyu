@@ -10,6 +10,9 @@ from geventwebsocket.handler import WebSocketHandler
 from geventwebsocket.websocket import WebSocket
 from flask import Flask, render_template, Response, request, redirect, url_for, abort, session
 from flask_socketio import SocketIO, emit
+from playsound import playsound
+
+from sms import send_message
 from version.collect import collectingfaces
 
 from config import config_dict
@@ -17,6 +20,7 @@ from event_ws import event_handle
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db, schedule_db
 import video.views as vv
 import video.image_stream as ims
+from version.stranger.testingstranger import get_new_stranger_frame
 
 config_class = config_dict['dev']
 app = Flask(__name__)
@@ -58,14 +62,14 @@ def video_test():
 @app.route('/video_viewer')
 def video_viewer():
     return Response(collectingfaces.get_face_collect_frame("./image/faces/old_people", '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
-    # if not session.get("username"):
-    #     return redirect(url_for("login"))
+
 
 
 # 普通视频流
 @app.route('/video_socket')
 def video_socket():
-    path_smile = "F:\\Pycharm_project\\care_sys\\static\\images\\smile.jpg"
+    #path_smile = "F:\\Pycharm_project\\care_sys\\static\\images\\smile.jpg"
+    path_stranger = "F:\\Pycharm_project\\care_sys\\static\\images\\stranger.jpg"
     path_invas = "F:\\Pycharm_project\\care_sys\\static\\images\\invas.jpg"
     path_face = "F:\\Pycharm_project\\care_sys\\static\\images\\face.jpg"
     path_volun_act = "F:\\Pycharm_project\\care_sys\\static\\images\\volun_act.jpg"
@@ -73,7 +77,8 @@ def video_socket():
     pathfire = "F:\\Pycharm_project\\care_sys\\static\\images\\tempfire.jpg"
     fall_video_path = 'F:\\Pycharm_project\\care_sys\\version\\falldown\\fall_new.mp4'
     fire_video_path = "F:\\Pycharm_project\\care_sys\\version\\fire\\fire_new.mp4"
-
+    now = datetime.datetime.now()
+    now = now.strftime("%Y-%m-%d %H:%M:%S")
     fall_k = 0
     fire_k = 0
     invas_k = 0
@@ -91,19 +96,23 @@ def video_socket():
         fire_fs = fire_vid.get(7)
 
         while True:
-            suc, fall = fall_vid.read()
+            suc, fall = fall_vid.read() #摔倒检测
             if suc:
                 if fall_k == fall_fs - 1:  # 最后一帧
                     fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    event_db.addEvent(3, now, "location", "oldpeople falldown!!", 61)
+                    #send_message("The old person falls! Please taken immediate measure!")   #发送消息
                     fall_k = 0
                 cv2.imwrite(pathfall, fall)
                 user_socket.send("2$" + ims.image_stream(pathfall))
                 fall_k += 1
 
-            succc, fire = fire_vid.read()
+            succc, fire = fire_vid.read() #火灾检测
             if succc:
                 if fire_k == fire_fs - 1:
                     fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    event_db.addEvent(4,now,"location","fire!!fire!!",61)
+                   # send_message("The old person encouters fire! Please taken immediate measure!")   #发送消息
                     fire_k = 0
                 cv2.imwrite(pathfire, fire)
                 user_socket.send("4$" + ims.image_stream(pathfire))
@@ -112,7 +121,8 @@ def video_socket():
             ret, frame = camera.read()
             if ret:
                 frame_inv = copy.copy(frame)
-                frame_s = copy.copy(frame)
+                #frame_s = copy.copy(frame)
+                frame_stranger = copy.copy(frame)
                 frame_face = copy.copy(frame)
                 frame_vol_act = copy.copy(frame)
                 frame_temp = copy.copy(frame)
@@ -130,11 +140,16 @@ def video_socket():
                 frame_invas = event_handle.detect_invasion(frame_inv, first_frame)
                 invas_k += 1
                 cv2.imwrite(path_invas, frame_invas)
+                #send_message("The old person encouters invasion! Please taken immediate measure!") #发送消息
                 user_socket.send("3$" + ims.image_stream(path_invas))
+                # 陌生人检测
+                framestranger = get_new_stranger_frame(frame_stranger)
+                cv2.imwrite(path_stranger, framestranger)
+                user_socket.send("1$" + ims.image_stream(path_stranger))
                 # 微笑
-                frame_smile = event_handle.detect_smile(frame_s)
-                cv2.imwrite(path_smile, frame_smile)
-                user_socket.send("1$" + ims.image_stream(path_smile))
+                # frame_smile = event_handle.detect_smile(frame_s)
+                # cv2.imwrite(path_smile, frame_smile)
+                # user_socket.send("1$" + ims.image_stream(path_smile))
 
             else:
                 print("no frame")
@@ -147,13 +162,45 @@ def video_socket():
         # camera.release()
     return "success"
 
-    # if not session.get("username"):
-    #     return redirect(url_for("login"))
 
 
 @app.route('/enter_face')
 def enter_face():
-    return Response(collectingfaces.get_face_collect_frame("./image/faces/old_people", '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
+    pathtemp = "F:\\Pycharm_project\\care_sys\\static\\images\\temp.jpg"
+    user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
+    if user_socket is None:
+        abort(404)
+    else:
+        collectface = collectingfaces.get_face_collect_frame("./image/faces/old_people", '302')
+        while not collectingfaces.global_judge:
+            for face in collectface:
+                cv2.imwrite(pathtemp, face)
+                user_socket.send(ims.image_stream(pathtemp))
+                if collectingfaces.global_signal == 0:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")
+                elif collectingfaces.global_signal == 1:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")
+                elif collectingfaces.global_signal == 2:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\open_mouth.mp3")
+                elif collectingfaces.global_signal == 3:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\smile.mp3")
+                elif collectingfaces.global_signal == 4:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\rise_head.mp3")
+                elif collectingfaces.global_signal == 5:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\look_left.mp3")
+                elif collectingfaces.global_signal == 6:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\look_right.mp3")
+                elif collectingfaces.global_signal == 7:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\no_face_detected.mp3")
+                elif collectingfaces.global_signal == 8:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\start_image_capturing.mp3")
+                elif collectingfaces.global_signal == 9:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\multi_faces_detected.mp3")
+                elif collectingfaces.global_signal == 10:
+                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\end_capturing.mp3")
+
+    return "success"
+
 
 @app.route('/catch_face')
 def catch_face():
@@ -539,20 +586,9 @@ def event_send():
     if user_socket is None:
         abort(404)
     else:
-        jsondata = []
-        data = {'id': 1, 'event_type': '2', 'event_date': '3', 'event_location': '2', 'event_desc': '3',
-                'oldperson_id': 0}
-        data['id'] = 6
-        data['event_type'] = "1"
-        data['event_date'] = "6-5"
-        data['event_location'] = "kitchen"
-        data['event_desc'] = "reallyGOOD"
-        data['oldperson_id'] = "2"
-        jsondata.append(data)
-        jsondatas = json.dumps(data)
-        # while True:
-        # message = user_socket.receive()
-        # print(message)
+        now = datetime.datetime.now()
+        now = now.strftime("%Y-%m-%d %H:%M:%S")
+        jsondatas = event_handle.event_to_json(1,now,"kitchen","fall_down",61)
         for user in user_socket_list:
             try:
                 user.send(jsondatas)
@@ -560,7 +596,6 @@ def event_send():
                 continue
                 # user_socket_list.remove(user_socket)
     return " "
-
 
 # _____________________________________________________________________________________________event
 
@@ -666,7 +701,6 @@ def delete_volunteer():
         print(name)
         volunteer_db.deleteVolunteerByName(name)
         return "success"
-
 
 # ______________________________________________________________________________________volunteer
 

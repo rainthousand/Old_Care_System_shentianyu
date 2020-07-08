@@ -21,6 +21,13 @@ from version.collect.trainingfacerecognition import training
 # 全局参数
 # audio_dir = '/home/reed/git-project/old_care_system/任务源代码/任务5.老人员工义工人脸图像采集/audios'
 global_frame = None
+global_signal = 0
+global_judge = False
+
+# 0 'blink', 1 'open_mouth', 2 'smile', 3 'rise_head', 4 'bow_head',
+#                    5 'look_left', 6 'look_right'
+# 7 'no_face_detected', 8 'start_image_capturing', 9  'multi_faces_detected'
+
 
 def get_face_collect_frame(image_dir, id):
     time.sleep(5)
@@ -52,9 +59,9 @@ def get_face_collect_frame(image_dir, id):
 
     faceutil = FaceUtil()
 
-
     global global_frame
-
+    global global_signal
+    global global_judge
     counter = 0
     while True:
 
@@ -78,15 +85,11 @@ def get_face_collect_frame(image_dir, id):
 
         if ret:
             global_frame = image
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', image)[1].tobytes()
-                   + b'\r\n\r\n')
+            yield image
         else:
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n'
-                   + global_frame + b'\r\n\r\n')
+            yield global_frame
 
-        #cv2.imshow('Collecting Faces', image)  # show the image
+        # cv2.imshow('Collecting Faces', image)  # show the image
         # Press 'ESC' for exiting video
         k = cv2.waitKey(100) & 0xff
         if k == 27:
@@ -95,19 +98,23 @@ def get_face_collect_frame(image_dir, id):
         face_count = len(face_location_list)
         if error == 0 and face_count == 0:  # 没有检测到人脸
             print('[WARNING] 没有检测到人脸')
+            global_signal = 7
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'no_face_detected.mp3'))
+            # send("no_face_detected")
 
             error = 1
             start_time = time.time()
         elif error == 0 and face_count == 1:  # 可以开始采集图像了
             print('[INFO] 可以开始采集图像了')
+            global_signal = 8
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'start_image_capturing.mp3'))
 
             break
         elif error == 0 and face_count > 1:  # 检测到多张人脸
             print('[WARNING] 检测到多张人脸')
+            global_signal = 9
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'multi_faces_detected.mp3'))
             error = 1
@@ -126,6 +133,7 @@ def get_face_collect_frame(image_dir, id):
 
     # 开始采集人脸
     for action in action_list:
+        global_signal = action_list.index(action)
         audioplayer.play_audio(os.path.join(audio_dir, action + '.mp3'))
         action_name = action_map[action]
 
@@ -155,13 +163,9 @@ def get_face_collect_frame(image_dir, id):
 
             if ret:
                 global_frame = image
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + cv2.imencode('.jpg', img_OpenCV)[1].tobytes()
-                       + b'\r\n\r\n')
+                yield img_OpenCV
             else:
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n'
-                       + global_frame + b'\r\n\r\n')
+                yield global_frame
 
             # cv2.imshow('Collecting Faces', img_OpenCV)  # show the image
 
@@ -178,7 +182,6 @@ def get_face_collect_frame(image_dir, id):
                 break
             counter += 1
 
-
         # Press 'ESC' for exiting video
         k = cv2.waitKey(100) & 0xff
         if k == 27:
@@ -186,7 +189,9 @@ def get_face_collect_frame(image_dir, id):
 
     # 结束
     print('[INFO] 采集完毕')
-    #audioplayer.play_audio(os.path.join(audio_dir, 'end_capturing.mp3'))
+    global_signal = 10
+    # audioplayer.play_audio(os.path.join(audio_dir, 'end_capturing.mp3'))
+    global_judge = True
 
     training()
 
@@ -194,4 +199,4 @@ def get_face_collect_frame(image_dir, id):
     cam.release()
     cv2.destroyAllWindows()
 
-
+    #return judge
