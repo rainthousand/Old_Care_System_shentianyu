@@ -82,7 +82,7 @@ def video_socket():
         abort(404)
     else:
         print("WebSocket Connected!!!")
-        # camera = cv2.VideoCapture(0)
+        camera = cv2.VideoCapture(0)
 
         fall_vid = cv2.VideoCapture(fall_video_path)
         fall_fs = fall_vid.get(7)
@@ -92,39 +92,39 @@ def video_socket():
         headers = {'Proxy-Connection': 'keep-alive'}
 
         while True:
-            # suc, fall = fall_vid.read()
-            # if suc:
-            #     if fall_k == fall_fs - 1:  # 最后一帧
-            #         fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            #         fall_k = 0
-            #     cv2.imwrite(pathfall, fall)
-            #     user_socket.send("2$" + ims.image_stream(pathfall))
-            #     fall_k += 1
-            #
-            # succc, fire = fire_vid.read()
-            # if succc:
-            #     if fire_k == fire_fs - 1:
-            #         fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            #         fire_k = 0
-            #     cv2.imwrite(pathfire, fire)
-            #     user_socket.send("4$" + ims.image_stream(pathfire))
-            #     fire_k += 1
+            suc, fall = fall_vid.read()
+            if suc:
+                if fall_k == fall_fs - 1:  # 最后一帧
+                    fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    fall_k = 0
+                cv2.imwrite(pathfall, fall)
+                user_socket.send("2$" + ims.image_stream(pathfall))
+                fall_k += 1
 
-            # ret, frame = camera.read()
+            succc, fire = fire_vid.read()
+            if succc:
+                if fire_k == fire_fs - 1:
+                    fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                    fire_k = 0
+                cv2.imwrite(pathfire, fire)
+                user_socket.send("4$" + ims.image_stream(pathfire))
+                fire_k += 1
 
-            img = requests.get("http://127.0.0.1:6000/getvideo", stream=True, headers=headers)
-            print("content:::::::::::::::::::::::")
-            print(img.content)
+            ret, frame = camera.read()
+
+            # img = requests.get("http://127.0.0.1:6000/getvideo", stream=True, headers=headers)
+            # print("content:::::::::::::::::::::::")
+            # print(img.content)
 
             # img = base64.b64decode(img.content)
             # image_data = base64.b64decode(str(img))
             # image_data = np.fromstring(img, np.uint8)
             # frame = cv2.imdecode(image_data, cv2.IMREAD_COLOR)
 
-            img_data = base64.b64decode(str(img.content))
-            imgData = base64.b64decode(img.content)
-            nparr = np.fromstring(imgData, np.uint8)
-            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            # img_data = base64.b64decode(str(img.content))
+            # imgData = base64.b64decode(img.content)
+            # nparr = np.fromstring(imgData, np.uint8)
+            # frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             # img_array = np.fromstring(img_data, np.uint8)  # 转换np序列
             # print(img_array)
             # frame = cv2.imdecode(img_array, cv2.COLOR_BGR2RGB)  # 转换Opencv格式
@@ -139,21 +139,21 @@ def video_socket():
                 frame_face = copy.copy(frame)
                 frame_vol_act = copy.copy(frame)
                 frame_temp = copy.copy(frame)
-                # # 人脸检测
-                # frame_f = event_handle.detect_face(frame_face)
-                # cv2.imwrite(path_face, frame_f)
-                # user_socket.send("5$" + ims.image_stream(path_face))
-                # #义工活动
-                # frame_va = event_handle.detect_volun_activity(frame_vol_act)
-                # cv2.imwrite(path_volun_act, frame_va)
-                # user_socket.send("6$" + ims.image_stream(path_volun_act))
-                # # 入侵
-                # if invas_k % 10 == 0:
-                #     first_frame = frame_temp
-                # frame_invas = event_handle.detect_invasion(frame_inv, first_frame)
-                # invas_k += 1
-                # cv2.imwrite(path_invas, frame_invas)
-                # user_socket.send("3$" + ims.image_stream(path_invas))
+                # 人脸检测
+                frame_f = event_handle.detect_face(frame_face)
+                cv2.imwrite(path_face, frame_f)
+                user_socket.send("5$" + ims.image_stream(path_face))
+                #义工活动
+                frame_va = event_handle.detect_volun_activity(frame_vol_act)
+                cv2.imwrite(path_volun_act, frame_va)
+                user_socket.send("6$" + ims.image_stream(path_volun_act))
+                # 入侵
+                if invas_k % 10 == 0:
+                    first_frame = frame_temp
+                frame_invas = event_handle.detect_invasion(frame_inv, first_frame)
+                invas_k += 1
+                cv2.imwrite(path_invas, frame_invas)
+                user_socket.send("3$" + ims.image_stream(path_invas))
                 # 微笑
                 frame_smile = event_handle.detect_smile(frame_s)
                 cv2.imwrite(path_smile, frame_smile)

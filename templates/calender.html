@@ -41,6 +41,7 @@
     <script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
 
     <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>-->
 
 </head>
 <!-- END: Head-->
@@ -295,10 +296,10 @@
     </div>
     <!-- END: Content-->
 	<script>
-	    var param;
+        var param = $.cookie("username");
 		window.onload=function(){
-			param = $.cookie("username");
-			console.log(param); 
+
+			console.log(param);
 					
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;

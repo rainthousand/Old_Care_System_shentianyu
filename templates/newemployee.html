@@ -46,7 +46,9 @@
 	<!-- BEGIN: Vendor CSS-->
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
 	<!-- END: Vendor CSS-->
-	
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+    <script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 
 
@@ -329,17 +331,15 @@
 		</div>
     </div>
     <!-- END: Content-->
-		<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-			<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+
 	<script>
-		var param;
+		var param=$.cookie("username");
 		window.onload=function(){
-			
-			param = $.cookie("username");
-			console.log(param); 
-					
+
+			console.log(param);
+
 			var headusername=document.getElementById('head-username');
-			headusername.value=param;
+			headusername.innerHTML=param;
 			
 		}
 		
