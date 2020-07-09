@@ -85,10 +85,10 @@
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -100,7 +100,14 @@
                             <ul class="nav navbar-nav">
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
-                            
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -165,7 +172,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <div class="user-nav d-sm-flex d-none"><h1 id="head-username" class="mb-2" style="font-size: larger;">null</h1><span class="user-status">online</span></div><span><img class="round" src="../app-assets/images/portrait/small/avatar-s-11.png" alt="avatar" height="40" width="40" /></span>
+                                    <div class="user-nav d-sm-flex d-none"><h1 id="head-username" class="mb-2" style="font-size: larger;">null</h1><span class="user-status">online</span></div><span><img class="round" src="../static/app-assets/images/portrait/small/avatar-s-11.png" alt="avatar" height="40" width="40" /></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="page-user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a><a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
@@ -226,44 +233,6 @@
                 
             </div>
         </div>
-		<div class="content-wrapper">
-		    <div class="content-body"> 
-		        <!-- Bar Chart -->
-		        <div class="row">
-		            <div class="col-12">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Bar Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="bar-chart-oldpeople" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		
-		
-		        <!-- Pie Chart -->
-		        <div class="row">
-		            <div class="col-12">
-		                <div class="card">
-		                    <div class="card-header">
-		                        <h4 class="card-title">Pie Chart</h4>
-		                    </div>
-		                    <div class="card-content">
-		                        <div class="card-body">
-		                            <div id="pie-chart-oldpeople" class="height-400"></div>
-		                        </div>
-		                    </div>
-		                </div>
-		            </div>
-		        </div>
-		
-		
-		    </div>
-		</div>
     </div>
     <!-- END: Content-->
 	<script>

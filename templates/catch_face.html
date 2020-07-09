@@ -88,10 +88,10 @@
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -103,7 +103,14 @@
                             <ul class="nav navbar-nav">
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
-                            
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -223,7 +230,7 @@
 		}
 		
 		function connect() {
-			var host = "ws://127.0.0.1:5000/enter_face";
+			var host = "ws://127.0.0.1:5000/enter_face"
 			socket = new WebSocket(host);
 			try {
 		 
@@ -232,10 +239,10 @@
 				};
 		 
 				socket.onmessage = function (msg) {
-				    var myMessage = msg.data;
+					
+					 var myMessage=msg.data;
 					  var myvideo=document.getElementById('videoface');
 					  myvideo.setAttribute("src","data:image/jpg;base64,"+myMessage);
-
 				};
 		 
 				// socket.onclose = function (msg) { alert("socket closed!") };

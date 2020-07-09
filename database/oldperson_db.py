@@ -9,9 +9,10 @@ db = pymysql.connect(host="47.94.95.94", user="root", passwd="abcd1234", db="pro
 conn = db.cursor()
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
-print(now)
+#print(now)
 now_year = parser.parse(now).year
-print(now_year)
+#print(now_year)
+
 #select
 def getOlds():
     sql = "select * from oldperson_info"

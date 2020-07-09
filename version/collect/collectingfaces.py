@@ -8,6 +8,9 @@ python collectingfaces.py --id 106 --imagedir /home/reed/git-project/old_care_sy
 
 '''
 import argparse
+
+from playsound import playsound
+
 from version.activity.faceutildlib import FaceUtil
 import version.collect.audioplayer as audioplayer
 from PIL import Image, ImageDraw, ImageFont
@@ -21,8 +24,8 @@ from version.collect.trainingfacerecognition import training
 # 全局参数
 # audio_dir = '/home/reed/git-project/old_care_system/任务源代码/任务5.老人员工义工人脸图像采集/audios'
 global_frame = None
-global_signal = 0
-global_judge = False
+global_signal=20
+global_judge= False
 
 # 0 'blink', 1 'open_mouth', 2 'smile', 3 'rise_head', 4 'bow_head',
 #                    5 'look_left', 6 'look_right'
@@ -31,7 +34,7 @@ global_judge = False
 
 def get_face_collect_frame(image_dir, id):
     time.sleep(5)
-    audio_dir = '../../audios'
+    audio_dir = 'F:\\Pycharm_project\\care_sys\\static\\audios'
 
     # 控制参数
     error = 0
@@ -58,6 +61,7 @@ def get_face_collect_frame(image_dir, id):
     cam.set(4, 480)  # set video height
 
     faceutil = FaceUtil()
+
 
     global global_frame
     global global_signal
@@ -89,7 +93,7 @@ def get_face_collect_frame(image_dir, id):
         else:
             yield global_frame
 
-        # cv2.imshow('Collecting Faces', image)  # show the image
+        #cv2.imshow('Collecting Faces', image)  # show the image
         # Press 'ESC' for exiting video
         k = cv2.waitKey(100) & 0xff
         if k == 27:
@@ -99,6 +103,7 @@ def get_face_collect_frame(image_dir, id):
         if error == 0 and face_count == 0:  # 没有检测到人脸
             print('[WARNING] 没有检测到人脸')
             global_signal = 7
+            playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\no_face_detected.mp3")
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'no_face_detected.mp3'))
             # send("no_face_detected")
@@ -108,6 +113,7 @@ def get_face_collect_frame(image_dir, id):
         elif error == 0 and face_count == 1:  # 可以开始采集图像了
             print('[INFO] 可以开始采集图像了')
             global_signal = 8
+            playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\start_image_capturing.mp3")
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'start_image_capturing.mp3'))
 
@@ -115,6 +121,7 @@ def get_face_collect_frame(image_dir, id):
         elif error == 0 and face_count > 1:  # 检测到多张人脸
             print('[WARNING] 检测到多张人脸')
             global_signal = 9
+            playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\multi_faces_detected.mp3")
             # audioplayer.play_audio(os.path.join(audio_dir,
             #                                    'multi_faces_detected.mp3'))
             error = 1
@@ -134,7 +141,8 @@ def get_face_collect_frame(image_dir, id):
     # 开始采集人脸
     for action in action_list:
         global_signal = action_list.index(action)
-        audioplayer.play_audio(os.path.join(audio_dir, action + '.mp3'))
+        #audioplayer.play_audio(os.path.join(audio_dir, action + '.mp3'))
+        playsound(os.path.join(audio_dir, action + '.mp3'))
         action_name = action_map[action]
 
         counter = 1
@@ -182,6 +190,7 @@ def get_face_collect_frame(image_dir, id):
                 break
             counter += 1
 
+
         # Press 'ESC' for exiting video
         k = cv2.waitKey(100) & 0xff
         if k == 27:
@@ -190,8 +199,9 @@ def get_face_collect_frame(image_dir, id):
     # 结束
     print('[INFO] 采集完毕')
     global_signal = 10
-    # audioplayer.play_audio(os.path.join(audio_dir, 'end_capturing.mp3'))
-    global_judge = True
+    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\end_capturing.mp3")
+    #audioplayer.play_audio(os.path.join(audio_dir, 'end_capturing.mp3'))
+    global_judge=True
 
     training()
 
@@ -199,4 +209,4 @@ def get_face_collect_frame(image_dir, id):
     cam.release()
     cv2.destroyAllWindows()
 
-    #return judge
+

@@ -2,6 +2,7 @@ import base64
 import copy
 import datetime
 import json
+import threading
 import time
 
 import cv2
@@ -12,35 +13,27 @@ from flask import Flask, render_template, Response, request, redirect, url_for, 
 from flask_socketio import SocketIO, emit
 from playsound import playsound
 
-from sms import send_message
+import play_thread
 from version.collect import collectingfaces
 
 from config import config_dict
 from event_ws import event_handle
 from database import employee_db, event_db, oldperson_db, user_db, volunteer_db, schedule_db
+from sms import send_message
 import video.views as vv
 import video.image_stream as ims
-from version.stranger.testingstranger import get_new_stranger_frame
 
 config_class = config_dict['dev']
 app = Flask(__name__)
 app.config.from_object(config_class)
 user_socket_list = []
+classfy = 0
 
 
 @app.route('/video', methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
         return render_template('video.html')
-
-
-# #图片流
-# @app.route('/test')
-# def img_stream():
-#     img_path = 'static/images/bg1.jpg'
-#     img_stream = image_stream.image_stream(img_path)
-#
-#     return render_template('test.html', img_stream=img_stream)
 
 # 主界面
 @app.route('/index')
@@ -62,14 +55,15 @@ def video_test():
 @app.route('/video_viewer')
 def video_viewer():
     return Response(collectingfaces.get_face_collect_frame("./image/faces/old_people", '302'), mimetype='multipart/x-mixed-replace; boundary=frame')
-
+    # if not session.get("username"):
+    #     return redirect(url_for("login"))
 
 
 # 普通视频流
 @app.route('/video_socket')
 def video_socket():
     #path_smile = "F:\\Pycharm_project\\care_sys\\static\\images\\smile.jpg"
-    path_stranger = "F:\\Pycharm_project\\care_sys\\static\\images\\stranger.jpg"
+    path_stranger= "F:\\Pycharm_project\\care_sys\\static\\images\\stranger.jpg"
     path_invas = "F:\\Pycharm_project\\care_sys\\static\\images\\invas.jpg"
     path_face = "F:\\Pycharm_project\\care_sys\\static\\images\\face.jpg"
     path_volun_act = "F:\\Pycharm_project\\care_sys\\static\\images\\volun_act.jpg"
@@ -83,11 +77,14 @@ def video_socket():
     fire_k = 0
     invas_k = 0
     first_frame = None
+    time_end = 0
+    global classfy  # 1 fire ; 2 fall; 3 invasion
 
     user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
     if user_socket is None:
         abort(404)
     else:
+        time_start = time.time()
         print("WebSocket Connected!!!")
         camera = cv2.VideoCapture(0)
         fall_vid = cv2.VideoCapture(fall_video_path)
@@ -101,7 +98,7 @@ def video_socket():
                 if fall_k == fall_fs - 1:  # 最后一帧
                     fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
                     event_db.addEvent(3, now, "location", "oldpeople falldown!!", 61)
-                    #send_message("The old person falls! Please taken immediate measure!")   #发送消息
+                    #send_message("The old person falls! Please taken immediate measure!")  #发消息
                     fall_k = 0
                 cv2.imwrite(pathfall, fall)
                 user_socket.send("2$" + ims.image_stream(pathfall))
@@ -112,7 +109,7 @@ def video_socket():
                 if fire_k == fire_fs - 1:
                     fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
                     event_db.addEvent(4,now,"location","fire!!fire!!",61)
-                   # send_message("The old person encouters fire! Please taken immediate measure!")   #发送消息
+                    #send_message("The old person encouters fire! Please taken immediate measure!")
                     fire_k = 0
                 cv2.imwrite(pathfire, fire)
                 user_socket.send("4$" + ims.image_stream(pathfire))
@@ -126,7 +123,7 @@ def video_socket():
                 frame_face = copy.copy(frame)
                 frame_vol_act = copy.copy(frame)
                 frame_temp = copy.copy(frame)
-                # 人脸检测
+                # 情感检测
                 frame_f = event_handle.detect_face(frame_face)
                 cv2.imwrite(path_face, frame_f)
                 user_socket.send("5$" + ims.image_stream(path_face))
@@ -134,23 +131,25 @@ def video_socket():
                 frame_va = event_handle.detect_volun_activity(frame_vol_act)
                 cv2.imwrite(path_volun_act, frame_va)
                 user_socket.send("6$" + ims.image_stream(path_volun_act))
-                # 入侵
+                # 入侵检测
                 if invas_k % 10 == 0:
                     first_frame = frame_temp
                 frame_invas = event_handle.detect_invasion(frame_inv, first_frame)
                 invas_k += 1
                 cv2.imwrite(path_invas, frame_invas)
-                #send_message("The old person encouters invasion! Please taken immediate measure!") #发送消息
+                #send_message("The old person encouters invasion! Please taken immediate measure!")
                 user_socket.send("3$" + ims.image_stream(path_invas))
                 # 陌生人检测
-                framestranger = get_new_stranger_frame(frame_stranger)
+                framestranger = event_handle.detect_stranger(frame_stranger)
                 cv2.imwrite(path_stranger, framestranger)
                 user_socket.send("1$" + ims.image_stream(path_stranger))
                 # 微笑
                 # frame_smile = event_handle.detect_smile(frame_s)
                 # cv2.imwrite(path_smile, frame_smile)
                 # user_socket.send("1$" + ims.image_stream(path_smile))
-
+                time_end = time.time()
+                if time_end-time_start>300:  #       60s结束socket
+                    break
             else:
                 print("no frame")
         #     key = cv2.waitKey(1) & 0xFF
@@ -158,16 +157,18 @@ def video_socket():
         #         break
         #     elif key == 27:
         #         break
-        # cv2.destroyAllWindows()
-        # camera.release()
+
+        cv2.destroyAllWindows()
+        camera.release()
     return "success"
 
 
-
+#人脸录入
 @app.route('/enter_face')
 def enter_face():
     pathtemp = "F:\\Pycharm_project\\care_sys\\static\\images\\temp.jpg"
     user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
+
     if user_socket is None:
         abort(404)
     else:
@@ -176,32 +177,12 @@ def enter_face():
             for face in collectface:
                 cv2.imwrite(pathtemp, face)
                 user_socket.send(ims.image_stream(pathtemp))
-                if collectingfaces.global_signal == 0:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")
-                elif collectingfaces.global_signal == 1:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")
-                elif collectingfaces.global_signal == 2:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\open_mouth.mp3")
-                elif collectingfaces.global_signal == 3:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\smile.mp3")
-                elif collectingfaces.global_signal == 4:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\rise_head.mp3")
-                elif collectingfaces.global_signal == 5:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\look_left.mp3")
-                elif collectingfaces.global_signal == 6:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\look_right.mp3")
-                elif collectingfaces.global_signal == 7:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\no_face_detected.mp3")
-                elif collectingfaces.global_signal == 8:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\start_image_capturing.mp3")
-                elif collectingfaces.global_signal == 9:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\multi_faces_detected.mp3")
-                elif collectingfaces.global_signal == 10:
-                    playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\end_capturing.mp3")
 
+    user_socket.closed()
     return "success"
 
 
+#人脸录入界面
 @app.route('/catch_face')
 def catch_face():
     return render_template("catch_face.html")
@@ -223,7 +204,6 @@ def login():
         if user_db.userlogin(user_name, user_password):
             session["username"] = user_name
             return "success"
-            # return render_template('index.html')
         return " "
 
 
@@ -597,6 +577,7 @@ def event_send():
                 # user_socket_list.remove(user_socket)
     return " "
 
+
 # _____________________________________________________________________________________________event
 
 # ______________________________________________________________________________________volunteer
@@ -701,6 +682,7 @@ def delete_volunteer():
         print(name)
         volunteer_db.deleteVolunteerByName(name)
         return "success"
+
 
 # ______________________________________________________________________________________volunteer
 

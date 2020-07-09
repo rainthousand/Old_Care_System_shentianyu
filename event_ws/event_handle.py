@@ -9,7 +9,7 @@ from version.face_api import face
 from version.falldown.FallDownDetection import fallDetect2
 from version.invasion.invasionDetection import invasionDetect
 from version.smile.smileDetection import smileDetect
-
+from version.stranger.testingstranger import get_new_stranger_frame
 
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -69,5 +69,6 @@ def detect_face(frame):
 def detect_volun_activity(frame):
     return testingvolunteeractivity.get_new_activity_frame(frame)
 
-
+def detect_stranger(frame):
+   return get_new_stranger_frame(frame)
 #print(event_to_json("da","dwad","dwad","dwad",12))

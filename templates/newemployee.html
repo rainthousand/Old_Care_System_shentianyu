@@ -49,7 +49,8 @@
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
 	<!-- END: Vendor CSS-->
 	
-
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 
 </head>
@@ -95,10 +96,10 @@
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -110,7 +111,14 @@
                             <ul class="nav navbar-nav">
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
-                            
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -331,20 +339,19 @@
 		</div>
     </div>
     <!-- END: Content-->
-		<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
 		
 	<script>
-		var param;
+		var param = 'sys';
 		var socket;
 		var myMessage;
 		
 		window.onload=function(){
 			
-			param = $.cookie("username");
+			
 			console.log(param); 
 					
 			var headusername=document.getElementById('head-username');
-			headusername.value=param;
+			headusername.innerHTML=param;
 			
 			$(".number-tab-steps").steps({
 			    headerTag: "h6",
@@ -513,7 +520,7 @@
     <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <!-- END: Page Vendor JS-->
 
-    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>
     <!-- END: Page JS-->
