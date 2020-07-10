@@ -1,4 +1,6 @@
 # 导入包
+import imutils
+
 from version.activity.faceutildlib import FaceUtil
 import cv2
 import time
@@ -7,6 +9,8 @@ from database import oldperson_db
 from database import volunteer_db
 from database import employee_db
 import json
+from PIL import Image, ImageDraw, ImageFont
+import numpy as np
 
 model_path = './version/models/face_recognition_hog.pickle'
 global_frame = None
@@ -53,17 +57,31 @@ def get_new_stranger_frame(frame):
     global strangers_timing
     global strangers_start_time
 
+    id_card_to_type, id_card_to_name = query_database()
+
     img = cv2.flip(frame, 1)
     face_util = FaceUtil(model_path)
+    img = imutils.resize(img, width=VIDEO_WIDTH, height=VIDEO_HEIGHT)
     face_location_list, names = face_util.get_face_location_and_name(img)
 
     for ((left, top, right, bottom), name) in zip(face_location_list,
                                                   names):  # 处理单个人
 
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+        cv2.rectangle(img, (left, top), (right, bottom), (0, 0, 255), 2)
 
-        cv2.putText(frame, name, (left, top - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+        # cv2.putText(img, id_card_to_name[name], (left, top - 10),
+        #             cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+
+        img_PIL = Image.fromarray(cv2.cvtColor(img,
+                                               cv2.COLOR_BGR2RGB))
+        draw = ImageDraw.Draw(img_PIL)
+        final_label = id_card_to_name[name]
+        draw.text((left, top - 30), final_label,
+                  font=ImageFont.truetype('./NotoSansCJK-Black.ttc',
+                                          20), fill=(255, 0, 0))  # linux
+
+        img = cv2.cvtColor(np.asarray(img_PIL),
+                                  cv2.COLOR_RGB2BGR)
 
         if 'Unknown' in names:  # alert
             if strangers_timing == 0:  # just start timing
@@ -83,7 +101,7 @@ def get_new_stranger_frame(frame):
                     event_location = '房间'
                     print('[EVENT] %s, 房间, 陌生人出现!!!' % (current_time))
                     cv2.imwrite('./version/supervision/stranger/' + current_time + 'stranger' + '.jpg',
-                                frame)  # snapshot
+                                img)  # snapshot
 
                     event_db.addEvent('2', current_time, event_desc, event_location, name)
         else:  # everything is ok
@@ -94,6 +112,6 @@ def get_new_stranger_frame(frame):
             unknown_face_center = (int((right + left) / 2),
                                    int((top + bottom) / 2))
 
-            cv2.circle(frame, (unknown_face_center[0],
+            cv2.circle(img, (unknown_face_center[0],
                                unknown_face_center[1]), 4, (0, 255, 0), -1)
-    return frame
+    return img

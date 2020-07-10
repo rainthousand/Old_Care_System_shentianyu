@@ -306,7 +306,9 @@
 					 }
 				};
 		 
-				socket.onclose = function (msg) { alert("socket closed!") };
+				socket.onclose = function (msg) {
+				    {#alert("socket closed!") #}
+				};
 			}
 			catch (ex) {
 				log(ex);

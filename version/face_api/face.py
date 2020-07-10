@@ -1,5 +1,6 @@
 import threading
 
+import imutils
 import requests
 from json import JSONDecoder
 import cv2
@@ -8,6 +9,9 @@ from version.activity.faceutildlib import FaceUtil
 from database import event_db
 from database import oldperson_db
 import time
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+from version.activity.testingvolunteeractivity import query_database
 
 
 url = 'https://api-cn.faceplusplus.com/facepp/v3/detect'
@@ -15,6 +19,19 @@ key = '11Gew209e-E8vcwqsqjsf8MCmV7BbV2-'
 secret = 'b6i0QAOIDLFmCw3fSAF5OGlmY-9cz7SA'
 
 model_path = './version/models/face_recognition_hog.pickle'
+
+VIDEO_WIDTH = 640
+VIDEO_HEIGHT = 480
+
+emotion_map = {
+    'anger': '愤怒',
+    'disgust': '厌恶',
+    'fear': '恐惧',
+    'happiness': '高兴',
+    'neutral': '平静',
+    'sadness': '伤心',
+    'surprise': '惊讶'
+}
 
 
 # 请求face++api 并返回结果转成json
@@ -102,6 +119,10 @@ faceutil = FaceUtil(model_path)
 def get_new_frame(frame):
     img = cv2.flip(frame, 1)
 
+    img = imutils.resize(img, width=VIDEO_WIDTH, height=VIDEO_HEIGHT)
+
+    id_card_to_type, id_card_to_name = query_database()
+
     old_persons = []
 
     for old in json.loads(oldperson_db.getOldpersons()):
@@ -111,18 +132,40 @@ def get_new_frame(frame):
 
     for ((left, top, right, bottom), name) in zip(face_location_list, names):
         cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0))
-        cv2.putText(img, name, (left, top - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+        # cv2.putText(img, id_card_to_name[name], (left, top - 10),
+        #             cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+
+        img_PIL = Image.fromarray(cv2.cvtColor(img,
+                                               cv2.COLOR_BGR2RGB))
+        draw = ImageDraw.Draw(img_PIL)
+        final_label = id_card_to_name[name]
+        print(final_label)
+        draw.text((left, top - 30), final_label,
+                  font=ImageFont.truetype('./NotoSansCJK-Black.ttc',
+                                          20), fill=(255, 0, 0))  # linux
+        img = cv2.cvtColor(np.asarray(img_PIL), cv2.COLOR_RGB2BGR)
 
         if name in old_persons:
             expression_image = img[top:bottom, left:right]
             req_dict = face_detect_dict(expression_image)
             emotion = get_emotion(req_dict)
 
-            cv2.putText(img, emotion, (left + 100, top - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+            emotion = emotion_map.get(emotion)
+
+            # cv2.putText(img, emotion, (left + 100, top - 10),
+            #             cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 4)
+            img_PIL = Image.fromarray(cv2.cvtColor(img,
+                                                   cv2.COLOR_BGR2RGB))
+            draw = ImageDraw.Draw(img_PIL)
+
+            draw.text((left+50, top - 30), emotion,
+                      font=ImageFont.truetype('./NotoSansCJK-Black.ttc',
+                                              20), fill=(255, 0, 0))  # linux
+            # 转换回OpenCV格式
+            img = cv2.cvtColor(np.asarray(img_PIL), cv2.COLOR_RGB2BGR)
 
             if emotion == 'happiness':
+
                 current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
                 cv2.imwrite('./version/supervision/emotion/' +
                             current_time + get_emotion(req_dict) + '.jpg', img)

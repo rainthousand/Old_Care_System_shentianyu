@@ -148,7 +148,7 @@ def video_socket():
                 # cv2.imwrite(path_smile, frame_smile)
                 # user_socket.send("1$" + ims.image_stream(path_smile))
                 time_end = time.time()
-                if time_end-time_start>300:  #       60s结束socket
+                if time_end-time_start>20:  #       60s结束socket
                     break
             else:
                 print("no frame")

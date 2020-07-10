@@ -47,8 +47,6 @@ def query_database():
     id_card_to_name['Unknown'] = '陌生人'
     id_card_to_type['Unknown'] = ''
 
-    print(id_card_to_name)
-    print(id_card_to_type)
     return id_card_to_type, id_card_to_name
 
 
@@ -87,8 +85,8 @@ def get_new_activity_frame(frame):
         cv2.rectangle(frame, (left, top), (right, bottom),
                       rectangle_color, 2)
 
-        cv2.putText(frame, name, (left, top - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+        # cv2.putText(frame, name, (left, top - 10),
+        #            cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
         if person_type == 'volunteer':  # 如果检测到有义工存在
             # 获得义工位置
@@ -121,7 +119,7 @@ def get_new_activity_frame(frame):
         final_label = id_card_to_name[name]
         draw.text((left, top - 30), final_label,
                   font=ImageFont.truetype('./NotoSansCJK-Black.ttc',
-                                          40), fill=(255, 0, 0))  # linux
+                                          20), fill=(255, 0, 0))  # linux
         # 转换回OpenCV格式
         frame = cv2.cvtColor(np.asarray(img_PIL), cv2.COLOR_RGB2BGR)
 
@@ -138,6 +136,7 @@ def get_new_activity_frame(frame):
                 cv2.line(frame, (int(i[0]), int(i[1])),
                          (int(j[0]), int(j[1])), (255, 0, 255), 2)
                 label = 'distance: %dcm' % (actual_distance)
+
                 cv2.putText(frame, label, (frame.shape[1] - 150, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5,
                             (0, 0, 255), 2)
