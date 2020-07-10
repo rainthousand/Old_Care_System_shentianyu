@@ -178,7 +178,7 @@ def enter_face():
                 cv2.imwrite(pathtemp, face)
                 user_socket.send(ims.image_stream(pathtemp))
 
-    user_socket.closed()
+    #user_socket.closed()
     return "success"
 
 
@@ -568,10 +568,15 @@ def event_send():
     else:
         now = datetime.datetime.now()
         now = now.strftime("%Y-%m-%d %H:%M:%S")
-        jsondatas = event_handle.event_to_json(1,now,"kitchen","fall_down",61)
+        jsondatas_fall = event_handle.event_to_json(3,now,"Watch the surveillance!!","fall_down",61)
+        jsondatas_fire = event_handle.event_to_json(4,now, "Watch the surveillance!!", "fire", 61)
+        jsondatas_invasion = event_handle.event_to_json(2, now, "Watch the surveillance!!", "invasion", 61)
         for user in user_socket_list:
             try:
-                user.send(jsondatas)
+                if event_handle .invasion_sign:
+                    user.send(jsondatas_invasion)
+                user.send(jsondatas_fall)
+                user.send(jsondatas_fire)
             except Exception as e:
                 continue
                 # user_socket_list.remove(user_socket)

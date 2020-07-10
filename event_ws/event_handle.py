@@ -13,11 +13,11 @@ from version.stranger.testingstranger import get_new_stranger_frame
 
 now = datetime.datetime.now()
 now = now.strftime("%Y-%m-%d %H:%M:%S")
-
+invasion_sign = 0
 
 def event_to_json(event_type, event_date, event_location, event_desc, oldperson_id):
-    data = [{"event_type": event_type, "event_date": event_date, "event_location": event_location,
-            "event_desc": event_desc, "oldperson_id": oldperson_id}]
+    data = {"event_type": event_type, "event_date": event_date, "event_location": event_location,
+            "event_desc": event_desc, "oldperson_id": oldperson_id}
     jdata = json.dumps(data)
     return jdata
 
@@ -48,12 +48,14 @@ def detect_fall():
     return fallDetect2('F:\\Pycharm_project\\care_sys\\version\\falldown\\fall.mp4')
 
 def detect_invasion(frame,first):
+    global invasion_sign
     invasion_num = 0
     #first = VideoCamera.first_frame()
     frame, sign = invasionDetect(frame, first)
     if sign:
         now = datetime.datetime.now()
         now = now.strftime("%Y-%m-%d %H:%M:%S")
+        invasion_sign = 1
         invasion_num = invasion_num + 1
         frames_save_path = "F:\\Pycharm_project\\care_sys\\image\\invasion" + str(invasion_num) + ".png"
         cv2.imwrite(frames_save_path, frame)
