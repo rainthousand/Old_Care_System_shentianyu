@@ -31,28 +31,26 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/colors/palette-gradient.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/dashboard-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/card-analytics.css">
-    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
     <!-- END: Page CSS-->
 	
 	<!-- BEGIN: Page CSS-->
 
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/forms/wizard.css">
 	<!-- END: Page CSS-->
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/extensions/toastr.css">
 
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/toastr.css">
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
     <!-- END: Custom CSS-->
 	
 	<!-- BEGIN: Vendor CSS-->
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/pickers/pickadate/pickadate.css">
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/sweetalert2.min.css">
 	<!-- END: Vendor CSS-->
-
-    <script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-    <script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
-    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 	
-
-
+	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 </head>
 <!-- END: Head-->
@@ -97,10 +95,10 @@
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -112,7 +110,14 @@
                             <ul class="nav navbar-nav">
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
-                            
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -358,33 +363,40 @@
     </div>
     <!-- END: Content-->
 
+
 	<script>
 		var param = $.cookie("username");
+		var socket;
+		var myMessage;
+		
 		window.onload=function(){
-
+			
+			
 			console.log(param); 
 					
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
+			$(".number-tab-steps").steps({
+			    headerTag: "h6",
+			    bodyTag: "fieldset",
+			    transitionEffect: "fade",
+			    titleTemplate: '<span class="step">#index#</span> #title#',
+			    labels: {
+			        finish: 'Submit'
+			    },
+			    onFinished: function (event, currentIndex) {
+			       
+					mysubmit();
+					
+			    }
+			});
 			
+			connect();
 		}
 		
-		$(".number-tab-steps").steps({
-		    headerTag: "h6",
-		    bodyTag: "fieldset",
-		    transitionEffect: "fade",
-		    titleTemplate: '<span class="step">#index#</span> #title#',
-		    labels: {
-		        finish: 'Submit'
-		    },
-		    onFinished: function (event, currentIndex) {
-		        {#alert("ok.");#}
-				mysubmit();
-				
-		    }
-		});
+		
 		function  mysubmit(){
-			{#alert('submit');#}
+	
 			var nowtime = '当前时间';
 			
 			var name_oldpeople=document.getElementById("Name");
@@ -421,7 +433,7 @@
 				dataType : 'text',
 				success:function(data){
 					alert('添加成功!');
-					window.location.href='/old-people'
+					window.location.href='/catch_face'
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
 					alert('添加失败!'+textStatus);
@@ -429,18 +441,71 @@
 				}
 			});
 		}
+		function connect() {
+			var host = "ws://127.0.0.1:5000/event_ws"
+			socket = new WebSocket(host);
+			try {
+		 
+				socket.onopen = function (msg) {
+					
+				};
+		 
+				socket.onmessage = function (msg) {
+					console.log(msg.data)
+					
+					myMessage = msg;
+					
+					if (typeof msg.data == "string") {
+						
+						var objectString = msg.data;
+						myMessage = JSON.parse(msg.data);
+						console.log(myMessage.event_type)
+						console.log(myMessage.event_type)
+						console.log(myMessage.event_date)
+						console.log(myMessage.event_location)
+						console.log(myMessage.event_desc)
+						console.log(myMessage.oldperson_id)
+						toastr.warning('老人'+myMessage.oldperson_id+'  '+myMessage.event_type, myMessage.event_date+'  '+myMessage.event_location+'  '+myMessage.event_desc, { "showMethod": "slideDown", "hideMethod": "slideUp","showMethod": "fadeIn", "hideMethod": "fadeOut",positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+					}
+					else {
+						alert("非文本消息");
+					}
+				};
+		 
+				// socket.onclose = function (msg) { alert("socket closed!") };
+			}
+			catch (ex) {
+				log(ex);
+			}
+		}
+		 
+		function send(msg) {
+			
+			socket.send(msg);
 		
+		}
+		 
+		window.onbeforeunload = function () {
+			try {
+				socket.close();
+				socket = null;
+			}
+			catch (ex) {
+			}
+		};
+		 
+		function $(id) { return document.getElementById(id); }
+		function onkey(event) { if (event.keyCode == 13) { send(); } }
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../static/app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="../static/app-assets/vendors/js/extensions/tether.min.js"></script>
     <script src="../static/app-assets/vendors/js/extensions/shepherd.min.js"></script>
     <!-- END: Page Vendor JS-->
-
+	<script src="../static/app-assets/vendors/js/extensions/toastr.min.js"></script>
     <!-- BEGIN: Theme JS-->
     <script src="../static/app-assets/js/core/app-menu.js"></script>
     <script src="../static/app-assets/js/core/app.js"></script>
@@ -450,31 +515,20 @@
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
     <!-- END: Page JS-->
-	
-	<!-- BEGIN: Page Vendor JS-->
-	<script src="../static/app-assets/vendors/js/charts/echarts/echarts.min.js"></script>
-	<!-- END: Page Vendor JS-->
-	
-	<!-- BEGIN: Page JS-->
-	<script src="../static/app-assets/js/scripts/charts/chart-echart.js"></script>
-	<!-- END: Page JS-->
+
 	
 	<!-- BEGIN: Page Vendor JS-->
 
 	<script src="../static/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
 	<!-- END: Page Vendor JS-->
-	
-	<!-- BEGIN: Page JS-->
-	<!-- <script src="../static/app-assets/js/scripts/forms/wizard-steps.js"></script> -->
-	<!-- END: Page JS-->
-	
+	<script src="../static/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>
+
     <!-- BEGIN: Page Vendor JS-->
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
     <script src="../static/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
     <!-- END: Page Vendor JS-->
-
 
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pickers/dateTime/pick-a-datetime.js"></script>

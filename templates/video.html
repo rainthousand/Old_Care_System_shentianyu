@@ -39,9 +39,9 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
-
+	
 	<link href="https://vjs.zencdn.net/7.8.3/video-js.css" rel="stylesheet" />
-
+	
 	<!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
 	<script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
@@ -67,7 +67,7 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class=" nav-item"><a href="/index"><i class="feather icon-home"></i><span class="menu-title" data-i18n="Dashboard">首页</span></a>
-
+                   
                 </li>
                 <li class=" navigation-header"><span></span>
                 </li>
@@ -83,15 +83,15 @@
         		</li>
         		<li class=" nav-item"><a href="/event"><i class="feather icon-zap"></i><span class="menu-title" data-i18n="Calender">事件管理</span></a>
         		</li>
-
+                
             </ul>
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -103,11 +103,18 @@
                             <ul class="nav navbar-nav">
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
-
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
+                            <ul class="nav navbar-nav">
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
-
-
+                            
+                            
                             <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i class="ficon feather icon-search"></i></a>
                                 <div class="search-input">
                                     <div class="search-input-icon"><i class="feather icon-search primary"></i></div>
@@ -191,7 +198,7 @@
 			                </div>
 			                <div class="card-content">
 			                    <div class="card-body">
-
+			                       
 			                       <ul class="nav nav-tabs nav-justified" id="myTab2" role="tablist">
 			                            <li class="nav-item">
 			                                <a class="nav-link active" id="home-tab-justified" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just" aria-selected="true">微笑检查</a>
@@ -212,14 +219,14 @@
 											<a class="nav-link" id="cameras-tab-justified" data-toggle="tab" href="#cameras-just" role="tab" aria-controls="cameras-just" aria-selected="false" >义工检测</a>
 										</li>
 			                        </ul>
-
+			                       			
 			                        <!-- Tab panes -->
-
-
+			                       									
+			                       									
 			                       <div class="tab-content pt-1">
 			                           <div class="tab-pane active" id="home-just" role="tabpanel" aria-labelledby="home-tab-justified">
 			                              <img id="video1" src="data:image/jpg;base64,"/>
-
+ 
 			                           </div>
 			                           <div class="tab-pane" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-justified">
 			                              <img id="video2" src="data:image/jpg;base64,"/>
@@ -237,7 +244,7 @@
 									   		<img id="video6" src="data:image/jpg;base64,"/>
 									   </div>
 			                       </div>
-
+		
 			                    </div>
 			                </div>
 			            </div>
@@ -258,9 +265,9 @@
 			send(i);
 		}
 		window.onload=function(){
-			var param = $.cookie("username");
-			console.log(param);
-
+			var param = $.cookie("username"); 
+			console.log(param); 
+		
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
 			connect();
@@ -269,11 +276,11 @@
 			var host = "ws://127.0.0.1:5000/video_socket"
 			socket = new WebSocket(host);
 			try {
-
+		 
 				socket.onopen = function (msg) {
 					alert('onopen');
 				};
-
+		 
 				socket.onmessage = function (msg) {
 
 					var myIndex=msg.data.split('$')[0];
@@ -298,7 +305,7 @@
 					  myvideo.setAttribute("src","data:image/jpg;base64,"+myMessage);
 					 }
 				};
-
+		 
 				socket.onclose = function (msg) { alert("socket closed!") };
 			}
 			catch (ex) {
@@ -308,11 +315,11 @@
 
 
 		function send(msg) {
-
+			
 			socket.send(msg);
-
+		
 		}
-
+		 
 		window.onbeforeunload = function () {
 			try {
 				socket.close();
@@ -321,20 +328,20 @@
 			catch (ex) {
 			}
 		};
-
+		 
 		function $(id) { return document.getElementById(id); }
 		function onkey(event) { if (event.keyCode == 13) { send(); } }
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
-
+    
     <!-- BEGIN: Page Vendor JS-->
     <script src="../static/app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="../static/app-assets/vendors/js/extensions/tether.min.js"></script>
     <script src="../static/app-assets/vendors/js/extensions/shepherd.min.js"></script>
     <!-- END: Page Vendor JS-->
-
+    
     <!-- BEGIN: Theme JS-->
     <script src="../static/app-assets/js/core/app-menu.js"></script>
     <script src="../static/app-assets/js/core/app.js"></script>

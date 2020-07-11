@@ -36,12 +36,14 @@
 
 	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/extensions/toastr.css">
 	
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
     <!-- END: Page CSS-->
 	
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
 
+	    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/faq.css">
 </head>
 <!-- END: Head-->
 
@@ -85,10 +87,10 @@
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -101,13 +103,13 @@
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
                             <ul class="nav navbar-nav">
-          <li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
-
-       </ul>
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
                             <ul class="nav navbar-nav">
-          <li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
-
-       </ul>
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -186,50 +188,104 @@
         <!-- END: Header-->
 
         <div class="content-wrapper">
-			
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <!-- Dashboard Analytics Start -->
-                <section id="dashboard-analytics">
-                    <div style="width: 2800px;height: auto;">
-                        <div class="col-lg-6 col-md-12 col-sm-12">
-                            <div class="card bg-analytics text-white">
-                                <div class="card-content">
-                                    <div class="card-body text-center">
-                                        <img src="../static/app-assets/images/elements/decore-left.png" class="img-left" alt="card-img-left">
-                                        <img src="../static/app-assets/images/elements/decore-right.png" class="img-right" alt="card-img-right">
-                                        <div class="avatar avatar-xl bg-primary shadow mt-0">
-                                            <div class="avatar-content">
-                                                <i class="feather icon-award white font-large-1"></i>
+		
+                    <div class="content-body">
+                        <section id="faq-search">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card faq-bg white">
+                                        <div class="card-content">
+                                            <div class="card-body p-sm-4 p-2">
+                                                <h1 class="white">Have Any Questions?</h1>
+                                                
+                                                <form>
+                                                    <fieldset class="form-group position-relative has-icon-left mb-0">
+                                                        <input type="text" class="form-control form-control-lg" id="searchbar" placeholder="Search">
+                                                        <div class="form-control-position">
+                                                            <i class="feather icon-search px-2"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
                                             </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <h1 id="head" class="mb-2 text-white">Hello，mcz</h1>
-                                            <p class="m-auto w-75">Welcome to Smart pension system！</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                       
-                        </div>
-                    </div>
-                 
-                </section>
-                <!-- Dashboard Analytics end -->
-
-            </div>
-        </div>
+                        </section>
+                        <section class="faq">
+                            
+                                <div class="col-xl-9 col-md-7 col-12">
+                                    <div class="card bg-transparent border-0 shadow-none collapse-icon accordion-icon-rotate">
+                                        <div class="card-body p-0">
+                                            <div class="accordion search-content-info" id="accordionExample">
+                                                <div class="collapse-margin search-content mt-0">
+                                                    <div class="card-header" id="headingOne">
+                                                        <span class="lead collapse-title" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                            如何添加老人？
+                                                        </span>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                            您可以进入老人管理界面，点击表格右上方新增老人按钮进行添加。您也可以点击这里<a href="/newoldpeople">新增老人</a>。
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse-margin">
+                                                    <div class="card-header" id="headingTwo">
+                                                        <span class="lead collapse-title collapsed" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                            如何添加管理员？
+                                                        </span>
+                                                    </div>
+                                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                           您可以进入管理员管理界面，点击表格右上方新增管理员按钮进行添加。您也可以点击这里<a href="/newmanager">新增管理员</a>。
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse-margin search-content">
+                                                    <div class="card-header" id="headingThree">
+                                                        <span class="lead collapse-title collapsed" role="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                           如何添加义工？
+                                                        </span>
+                                                    </div>
+                                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                              </div>
+															   您可以进入义工管理界面，点击表格右上方新增义工按钮进行添加。您也可以点击这里<a href="/newvolunteer">新增义工</a>。
+															</div>
+                                                </div>
+                                                <div class="collapse-margin search-content">
+                                                    <div class="card-header" id="headingFour">
+                                                        <span class="lead collapse-title collapsed" role="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                                          如何添加工作人员？
+                                                        </span>
+                                                    </div>
+                                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                                        <div class="card-body">
+															 您可以进入工作人员管理界面，点击表格右上方新增工作人员按钮进行添加。您也可以点击这里<a href="/newemployee">新增工作人员</a>。
+														 </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </section>
+				</div>	
+			</div>
+           </div>
+         <div>
     </div>
     <!-- END: Content-->
 	<script>
 		
 		var socket;
 		var myMessage;
-		var param;
+		
 		window.onload=function(){
 		
-			param = $.cookie("username"); 
+			var param = $.cookie("username"); 
 			console.log(param); 
 			
 			var head=document.getElementById('head');
@@ -237,9 +293,7 @@
 		
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
-			
 			connect();
-			
 		}
 		
 		function connect() {
@@ -252,25 +306,16 @@
 				};
  
 				socket.onmessage = function (msg) {
-					console.log(msg.data)
-					
-					myMessage = msg;
-					
-					if (typeof msg.data == "string") {
-						
-						var objectString = msg.data;
-						myMessage = JSON.parse(msg.data);
-						console.log(myMessage.event_type)
-						console.log(myMessage.event_type)
-						console.log(myMessage.event_date)
-						console.log(myMessage.event_location)
-						console.log(myMessage.event_desc)
-						console.log(myMessage.oldperson_id)
-						toastr.warning('老人'+myMessage.oldperson_id+'  '+myMessage.event_type, myMessage.event_date+'  '+myMessage.event_location+'  '+myMessage.event_desc, { "showMethod": "slideDown", "hideMethod": "slideUp","showMethod": "fadeIn", "hideMethod": "fadeOut",positionClass: 'toast-top-right', containerId: 'toast-top-right' });
+					var myIndex=msg.data.split('$')[0];
+					var myMessage=msg.data.split('$')[1];
+					if(myIndex=='1'){
+						var myvideo=document.getElementById('video1');
+						myvideo.setAttribute("src","data:image/jpg;base64,"+myMessage);
+					}else{
+						var myvideo=document.getElementById('video2');
+						myvideo.setAttribute("src","data:image/jpg;base64,"+myMessage);
 					}
-					else {
-						alert("非文本消息");
-					}
+				   
 				};
  
 				// socket.onclose = function (msg) { alert("socket closed!") };
@@ -313,16 +358,19 @@
     <script src="../static/app-assets/js/core/app.js"></script>
     <script src="../static/app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
-    <script src="../static/app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- <script src="../static/app-assets/vendors/js/extensions/toastr.min.js"></script> -->
 
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
 
     <!-- END: Page JS-->
+	<script src="../static/app-assets/js/scripts/extensions/tour.js"></script>
 
 	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 	
+	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+	<script src="../static/app-assets/js/scripts/pages/faq-kb.js"></script>
+
 </body>
 <!-- END: Body-->
 

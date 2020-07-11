@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/tether-theme-arrows.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/tether.min.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/shepherd-theme-default.css">
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/toastr.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -33,14 +32,18 @@
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/dashboard-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/card-analytics.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/tour/tour.css">
-
-	<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/extensions/toastr.css">
-	
     <!-- END: Page CSS-->
-	
+<link rel="stylesheet" type="text/css" href="../static/app-assets/css/plugins/extensions/toastr.css">
+
+	<link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/extensions/toastr.css">
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
+	
+	<link href="https://vjs.zencdn.net/7.8.3/video-js.css" rel="stylesheet" />
+	
+	<!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+	<script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
 </head>
 <!-- END: Head-->
@@ -85,10 +88,10 @@
         </div>
     </div>
     <!-- END: Main Menu-->
-
+    
     <!-- BEGIN: Content-->
     <div class="app-content content">
-
+    
         <!-- BEGIN: Header-->
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -101,13 +104,13 @@
                                <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i class="ficon feather icon-maximize"></i></a></li>
                             </ul>
                             <ul class="nav navbar-nav">
-          <li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
-
-       </ul>
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/question'"><i class="ficon feather icon-help-circle"></i></a></li>
+    
+    						</ul>
                             <ul class="nav navbar-nav">
-          <li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
-
-       </ul>
+    							<li class="nav-item d-none d-lg-block"><a onclick="window.location.href='/calender'"><i class="ficon feather icon-calendar"></i></a></li>
+    
+    						</ul>
                         </div>
                         <ul class="nav navbar-nav float-right">
                             
@@ -186,40 +189,26 @@
         <!-- END: Header-->
 
         <div class="content-wrapper">
-			
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <!-- Dashboard Analytics Start -->
-                <section id="dashboard-analytics">
-                    <div style="width: 2800px;height: auto;">
-                        <div class="col-lg-6 col-md-12 col-sm-12">
-                            <div class="card bg-analytics text-white">
-                                <div class="card-content">
-                                    <div class="card-body text-center">
-                                        <img src="../static/app-assets/images/elements/decore-left.png" class="img-left" alt="card-img-left">
-                                        <img src="../static/app-assets/images/elements/decore-right.png" class="img-right" alt="card-img-right">
-                                        <div class="avatar avatar-xl bg-primary shadow mt-0">
-                                            <div class="avatar-content">
-                                                <i class="feather icon-award white font-large-1"></i>
-                                            </div>
-                                        </div>
-                                        <div class="text-center">
-                                            <h1 id="head" class="mb-2 text-white">Hello，mcz</h1>
-                                            <p class="m-auto w-75">Welcome to Smart pension system！</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                       
-                        </div>
-                    </div>
-                 
-                </section>
-                <!-- Dashboard Analytics end -->
-
-            </div>
-        </div>
+			<section id="nav-justified">
+			    <div class="row">
+			        <div class="col-sm-12">
+			            <div class="card overflow-hidden">
+			                <div class="card-header">
+			                    <h4 class="card-title">人脸录入</h4>
+			                </div>
+			                <div class="card-content">
+			                    <div class="card-body">
+			                       <img id="videoface" src="data:image/jpg;base64,"/>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</section>
+			<!-- <video id="videoContainer" class="video-js" controls preload="none" width="640" height="264" poster="logo.png" data-setup="{}">
+				<source src="1.mp4" type="video/mp4">
+			</video> -->
+		</div>
     </div>
     <!-- END: Content-->
 	<script>
@@ -231,9 +220,7 @@
 		
 			param = $.cookie("username"); 
 			console.log(param); 
-			
-			var head=document.getElementById('head');
-			head.innerHTML='Hello,'+param+'!';
+	
 		
 			var headusername=document.getElementById('head-username');
 			headusername.innerHTML=param;
@@ -246,46 +233,79 @@
 			var host = "ws://127.0.0.1:5000/event_ws"
 			socket = new WebSocket(host);
 			try {
- 
+		 
 				socket.onopen = function (msg) {
 					
 				};
- 
+		 
 				socket.onmessage = function (msg) {
-					console.log(msg.data)
 					
-					myMessage = msg;
-					
-					if (typeof msg.data == "string") {
-						
-						var objectString = msg.data;
-						myMessage = JSON.parse(msg.data);
-						console.log(myMessage.event_type)
-						console.log(myMessage.event_type)
-						console.log(myMessage.event_date)
-						console.log(myMessage.event_location)
-						console.log(myMessage.event_desc)
-						console.log(myMessage.oldperson_id)
-						toastr.warning('老人'+myMessage.oldperson_id+'  '+myMessage.event_type, myMessage.event_date+'  '+myMessage.event_location+'  '+myMessage.event_desc, { "showMethod": "slideDown", "hideMethod": "slideUp","showMethod": "fadeIn", "hideMethod": "fadeOut",positionClass: 'toast-top-right', containerId: 'toast-top-right' });
-					}
-					else {
-						alert("非文本消息");
-					}
+					 var myMessage=msg.data;
+					 if(myMessage=='0'){
+						var mp3 = "/blink.mp3";
+						var mp3 = new Audio(mp3);
+						mp3.play(); 
+
+					 }else if(myMessage=='1'){
+					  var mp3 = "/open_mouth.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='2'){
+					  var mp3 = "/smile.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='3'){
+					  var mp3 = "/rise_head.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='4'){
+					  var mp3 = "/bow_head.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='5'){
+					  var mp3 = "/look_left.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='6'){
+					  var mp3 = "/look_right.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='7'){
+					  var mp3 = "/no_face_detected.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='8'){
+					  var mp3 = "/start_image_capturing.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='9'){
+					  var mp3 = "/multi_faces_detected.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play(); 
+					 }else if(myMessage=='10'){
+					  var mp3 = "/end_capturing.mp3";
+					  var mp3 = new Audio(mp3);
+					  mp3.play();
+					  window.location.href='/index';
+					 }else{
+					  var myvideo=document.getElementById('videoface');
+					  myvideo.setAttribute("src","data:image/jpg;base64,"+myMessage);
+					 }
 				};
- 
+		 
 				// socket.onclose = function (msg) { alert("socket closed!") };
 			}
 			catch (ex) {
 				log(ex);
 			}
 		}
- 
+		 
 		function send(msg) {
 			
 			socket.send(msg);
-
+		
 		}
- 
+		 
 		window.onbeforeunload = function () {
 			try {
 				socket.close();
@@ -294,35 +314,41 @@
 			catch (ex) {
 			}
 		};
- 
+		 
 		function $(id) { return document.getElementById(id); }
 		function onkey(event) { if (event.keyCode == 13) { send(); } }
 	</script>
     <!-- BEGIN: Vendor JS-->
     <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
-
+    
     <!-- BEGIN: Page Vendor JS-->
     <script src="../static/app-assets/vendors/js/charts/apexcharts.min.js"></script>
     <script src="../static/app-assets/vendors/js/extensions/tether.min.js"></script>
     <script src="../static/app-assets/vendors/js/extensions/shepherd.min.js"></script>
     <!-- END: Page Vendor JS-->
-
+    
     <!-- BEGIN: Theme JS-->
     <script src="../static/app-assets/js/core/app-menu.js"></script>
     <script src="../static/app-assets/js/core/app.js"></script>
     <script src="../static/app-assets/js/scripts/components.js"></script>
     <!-- END: Theme JS-->
-    <script src="../static/app-assets/vendors/js/extensions/toastr.min.js"></script>
-
+    	<script src="../static/app-assets/vendors/js/extensions/toastr.min.js"></script>
     <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pages/dashboard-analytics.js"></script>
-
     <!-- END: Page JS-->
-
-	<script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
-	<script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-	
+    
+    <!-- BEGIN: Page Vendor JS-->
+    <script src="../static/app-assets/vendors/js/charts/echarts/echarts.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    
+    <!-- BEGIN: Page JS-->
+    <script src="../static/app-assets/js/scripts/charts/chart-echart.js"></script>
+    <!-- END: Page JS-->
+    
+    
+    <script src="https://cdn.staticfile.org/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </body>
 <!-- END: Body-->
 

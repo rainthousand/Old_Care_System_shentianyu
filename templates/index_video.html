@@ -15,13 +15,9 @@
 </head>
 <body>
 <h1 align="center" style="color: whitesmoke;">视频流媒体直播</h1>
-<div class="top">
-    <div class="recorder" id="recorder" align="center">
-        <a id="download"></a>
-        <script type="text/javascript" src="{{ url_for('static', filename='recorder.js') }}"></script>
-    </div>
-</div>
-<!--<img id="video" src="{{ url_for('static', filename='images/bg1.jpg') }}" alt="videostream">-->
+
 <img id="video" src="{{ url_for('video_viewer') }}" alt="videostream">
+{#<img id="video2" src="{{ url_for('fall_video_viewer') }}" alt="videostream2">#}
+
 </body>
 </html>
