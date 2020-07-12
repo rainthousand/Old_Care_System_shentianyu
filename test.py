@@ -9,4 +9,7 @@ from version.collect import collectingfaces, audioplayer
 #     cv2.imshow("face",face)
 
 # os.system("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")  #使用系统自带的播放器
-playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")
+# playsound("F:\\Pycharm_project\\care_sys\\version\\audios\\blink.mp3")
+from version.collect.trainingfacerecognition import training
+
+#training()

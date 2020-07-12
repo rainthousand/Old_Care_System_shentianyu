@@ -39,7 +39,7 @@ def query_database():
         id_card_to_type[str(employee.get('id'))] = 'employee'
 
     for volunteer in volunteers:
-        id_card_to_name[str(volunteer.get('id'))] = volunteer.get('username')
+        id_card_to_name[str(volunteer.get('id'))] = volunteer.get('name')
         id_card_to_type[str(volunteer.get('id'))] = 'volunteer'
 
     id_card_to_name['Unknown'] = '陌生人'
@@ -76,6 +76,7 @@ def get_new_stranger_frame(frame):
                                                cv2.COLOR_BGR2RGB))
         draw = ImageDraw.Draw(img_PIL)
         final_label = id_card_to_name[name]
+
         draw.text((left, top - 30), final_label,
                   font=ImageFont.truetype('./NotoSansCJK-Black.ttc',
                                           20), fill=(255, 0, 0))  # linux

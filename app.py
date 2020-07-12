@@ -27,7 +27,9 @@ config_class = config_dict['dev']
 app = Flask(__name__)
 app.config.from_object(config_class)
 user_socket_list = []
-classfy = 0
+classfy_fall = 0
+classfy_fire = 0
+classfy_invas = 0
 
 
 @app.route('/video', methods=['GET', 'POST'])
@@ -78,7 +80,9 @@ def video_socket():
     invas_k = 0
     first_frame = None
     time_end = 0
-    global classfy  # 1 fire ; 2 fall; 3 invasion
+    global classfy_fall  # 1 fire ; 2 fall; 3 invasion
+    global classfy_fire
+    global classfy_invas
 
     user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
     if user_socket is None:
@@ -87,6 +91,7 @@ def video_socket():
         time_start = time.time()
         print("WebSocket Connected!!!")
         camera = cv2.VideoCapture(0)
+        #camera = cv2.VideoCapture("rtmp://192.168.0.17:1935/live/home")  # 获取网络摄像机
         fall_vid = cv2.VideoCapture(fall_video_path)
         fall_fs = fall_vid.get(7)
         fire_vid = cv2.VideoCapture(fire_video_path)
@@ -95,25 +100,27 @@ def video_socket():
         while True:
             suc, fall = fall_vid.read() #摔倒检测
             if suc:
-                if fall_k == fall_fs - 1:  # 最后一帧
-                    fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
-                    event_db.addEvent(3, now, "location", "oldpeople falldown!!", 61)
-                    #send_message("The old person falls! Please taken immediate measure!")  #发消息
-                    fall_k = 0
+                classfy_fall =1
+                # if fall_k == fall_fs - 1:  # 最后一帧
+                #     fall_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                #     event_db.addEvent(3, now, "location", "oldpeople falldown!!", 61)
+                #     #send_message("The old person falls! Please taken immediate measure!")  #发消息
+                #     fall_k = 0
                 cv2.imwrite(pathfall, fall)
                 user_socket.send("2$" + ims.image_stream(pathfall))
-                fall_k += 1
+                #fall_k += 1
 
             succc, fire = fire_vid.read() #火灾检测
             if succc:
-                if fire_k == fire_fs - 1:
-                    fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
-                    event_db.addEvent(4,now,"location","fire!!fire!!",61)
-                    #send_message("The old person encouters fire! Please taken immediate measure!")
-                    fire_k = 0
+                classfy_fire = 1
+                # if fire_k == fire_fs - 1:
+                #     fire_vid.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                #     event_db.addEvent(4,now,"location","fire!!fire!!",61)
+                #     #send_message("The old person encouters fire! Please taken immediate measure!")
+                #     fire_k = 0
                 cv2.imwrite(pathfire, fire)
                 user_socket.send("4$" + ims.image_stream(pathfire))
-                fire_k += 1
+                # fire_k += 1
 
             ret, frame = camera.read()
             if ret:
@@ -135,6 +142,7 @@ def video_socket():
                 if invas_k % 10 == 0:
                     first_frame = frame_temp
                 frame_invas = event_handle.detect_invasion(frame_inv, first_frame)
+                classfy_invas = 1
                 invas_k += 1
                 cv2.imwrite(path_invas, frame_invas)
                 #send_message("The old person encouters invasion! Please taken immediate measure!")
@@ -148,7 +156,7 @@ def video_socket():
                 # cv2.imwrite(path_smile, frame_smile)
                 # user_socket.send("1$" + ims.image_stream(path_smile))
                 time_end = time.time()
-                if time_end-time_start>20:  #       60s结束socket
+                if time_end-time_start>120:  #       60s结束socket
                     break
             else:
                 print("no frame")
@@ -561,6 +569,9 @@ def event():
 # websocket传event
 @app.route('/event_ws')
 def event_send():
+    global classfy_fall  # 1 fire ; 2 fall; 3 invasion
+    global classfy_fire
+    global classfy_invas
     user_socket = request.environ.get("wsgi.websocket")  # type: WebSocket
     user_socket_list.append(user_socket)
     if user_socket is None:
@@ -573,10 +584,15 @@ def event_send():
         jsondatas_invasion = event_handle.event_to_json(2, now, "Watch the surveillance!!", "invasion", 61)
         for user in user_socket_list:
             try:
-                if event_handle .invasion_sign:
+                if classfy_invas == 1:
                     user.send(jsondatas_invasion)
-                user.send(jsondatas_fall)
-                user.send(jsondatas_fire)
+                    classfy_invas = 0
+                if classfy_fall ==1:
+                    user.send(jsondatas_fall)
+                    classfy_fall=0
+                if classfy_fire == 1:
+                    user.send(jsondatas_fire)
+                    classfy_fire=0
             except Exception as e:
                 continue
                 # user_socket_list.remove(user_socket)

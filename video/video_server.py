@@ -6,10 +6,10 @@ def get_img_from_camera_net():
 
     while True:
         ret, frame = cap.read()
-        cv2.imshow("capture", frame)
+        break
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        # if cv2.waitKey(1) & 0xFF == ord('q'):
+        #     break
 
     cap.release()
     cv2.destroyAllWindows()

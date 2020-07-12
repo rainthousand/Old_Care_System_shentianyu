@@ -8,6 +8,7 @@ python collectingfaces.py --id 106 --imagedir /home/reed/git-project/old_care_sy
 
 '''
 import argparse
+import threading
 
 from playsound import playsound
 
@@ -203,10 +204,12 @@ def get_face_collect_frame(image_dir, id):
     #audioplayer.play_audio(os.path.join(audio_dir, 'end_capturing.mp3'))
     global_judge=True
 
-    training()
+    # training()
 
     # 释放全部资源
     cam.release()
     cv2.destroyAllWindows()
+    t1 = threading.Thread(target=training())
+    t1.start()
 
 

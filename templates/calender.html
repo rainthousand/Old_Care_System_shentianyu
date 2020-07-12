@@ -387,7 +387,7 @@
 		    },
 		  });
 		  
-		alert('post');
+		{#alert('post');#}
 		  // render calendar
 		  calendar.render();
 		  $.ajax({
@@ -399,7 +399,7 @@
 		  	contentType:"application/json; charset=UTF-8",
 		  	dataType : "json",
 		  	success:function(data){
-				alert('success');
+				{#alert('success');#}
 				for(var i in data){
 					calendar.addEvent({
 					  id: "newEvent",
